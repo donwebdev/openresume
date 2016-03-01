@@ -5,9 +5,9 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# form_elements.php
-# Functions for creating the HTML of form elements.
-# Dropdowns, Text Fields, In-line Javascript Validation
+# admin_ajax.php
+# Handle ajax requests from the admin panel.
+# Calls c_admin_controller methods with ajax arguments.
 #
 #-------------------------------------------------------
 

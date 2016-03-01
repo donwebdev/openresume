@@ -5,9 +5,9 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# form_elements.php
-# Functions for creating the HTML of form elements.
-# Dropdowns, Text Fields, In-line Javascript Validation
+# html_header.php
+# Load Bootstrap and jQuery and all HTML headers.
+# Use Resume Object to load correct styles.
 #
 #-------------------------------------------------------
 
