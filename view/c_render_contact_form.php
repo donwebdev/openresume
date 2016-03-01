@@ -5,12 +5,10 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# index.php
-# Starts and ends the application stack
+# c_render_contact_form.php
+# Builds contact form based on visitor data
 #
 #-------------------------------------------------------
 
-//Die if we can't start
-require_once('application_start.php');
 
 ?>
