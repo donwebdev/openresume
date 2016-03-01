@@ -16,7 +16,6 @@
 require_once('constants.php');
 require_once('model/c_db.php');
 
-$db = new DB;
 
 # Check to see if installation is necessary
 if(DB_HOSTNAME===NULL || DB_USERNAME===NULL || DB_PASSWORD===NULL) {
@@ -25,12 +24,18 @@ if(DB_HOSTNAME===NULL || DB_USERNAME===NULL || DB_PASSWORD===NULL) {
 
 }
 
+
+# Instantiate the database wrapper
+$db = new DB;
+
+
 # Check the database connection
 if(!$db->connected) {
 
 	require_once('database_error.php');
 
 }
+
 
 # Load the models
 require_once('model/c_cover_letter.php');

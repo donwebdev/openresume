@@ -10,7 +10,13 @@
 #
 #-------------------------------------------------------
 
-//Die if we can't start
+# Load the model
 require_once('application_start.php');
+
+# Load the Resume View
+require_once('resume.php');
+
+# Output the Resume View and end execution
+require_once('application_end.php');
 
 ?>
