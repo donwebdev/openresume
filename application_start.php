@@ -30,7 +30,7 @@ $db = new DB;
 
 
 # Check the database connection
-if(!$db->connected) {
+if(!$db->has_connected) {
 
 	require_once('database_error.php');
 
@@ -42,7 +42,7 @@ require_once('model/c_cover_letter.php');
 require_once('model/c_resume.php');
 require_once('model/c_visitor.php');
 require_once('model/c_user.php');
-require_once('model/settings.php');
+require_once('model/c_settings.php');
 
 
 # Load the views
@@ -50,14 +50,15 @@ require_once('view/c_render_cover_letter.php');
 require_once('view/c_render_resume.php');
 require_once('view/form_elements.php');
 require_once('view/html_header.php');
+require_once('view/html_footer.php');
 
 
 # Instantiate all the objects we need
+$settings = new Settings;
 $visitor = new Visitor;
 $user = new User; 
 $cover_letter = new Cover_Letter;
 $resume = new Resume;
-
 
 
 ?>

@@ -5,11 +5,18 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# controller/ajax.php
-# Handle ajax requests from the resume frontend.
-# Calls c_contact_controller object mainly.
+# model/c_settings.php
+# Simple object for creating, editing, and retrieving
+# application wide settings. 
 #
 #-------------------------------------------------------
+
+
+class Settings {
+
+
+	
+}
 
 
 ?>
