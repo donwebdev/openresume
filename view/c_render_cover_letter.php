@@ -14,6 +14,7 @@
 
 class Cover_Letter_Output {
 	
+	public $output = 'Cover letter output, yay.';
 	
 }
 

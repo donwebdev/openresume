@@ -15,7 +15,7 @@
 
     
 class Visitor {
-	
+	/*
 	public $visitor = NULL;
 	public $impression = NULL;
 	private $visitor_type = NULL;
@@ -291,7 +291,7 @@ class Visitor {
 		$return = $db->update($table_name, $final_data, $conditions);
 		$db->query('SET foreign_key_checks=1;');
 		return $return;
-	}
+	}*/
 }
 
 ?>

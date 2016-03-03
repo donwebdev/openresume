@@ -18,15 +18,14 @@ require_once('model/c_db.php');
 
 
 # Check to see if installation is necessary
-if(DB_HOSTNAME===NULL || DB_USERNAME===NULL || DB_PASSWORD===NULL) {
+if(DB_NAME===NULL || DB_USER===NULL || DB_PASSWORD===NULL || DB_HOST===NULL) {
 
 	require_once('install.php');	
 
 }
 
-
 # Instantiate the database wrapper
-$db = new DB;
+$db = new DB(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
 
 
 # Check the database connection

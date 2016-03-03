@@ -13,8 +13,9 @@
 #-------------------------------------------------------
 
 # DB Connection Information
-define('DB_HOSTNAME',NULL);
-define('DB_USERNAME',NULL);
-define('DB_PASSWORD',NULL);
+define('DB_HOST','localhost');
+define('DB_NAME','open_resume');
+define('DB_USER','root');
+define('DB_PASSWORD','');
 
 ?>

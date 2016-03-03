@@ -13,6 +13,8 @@
 
 class Cover_Letter {
 	
+	# If the model determines a cover letter should be displayed, switch this to true later
+	public $render_cover_letter = false;
 	
 }
 

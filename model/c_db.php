@@ -288,24 +288,13 @@ class DB {
 	public $is_mysql = null;
 
 	/**
-	 * A list of incompatible SQL modes.
-	 *
-	 * @since 3.9.0
-	 * @access protected
-	 * @var array
-	 */
-	protected $incompatible_modes = array( 'NO_ZERO_DATE', 'ONLY_FULL_GROUP_BY',
-		'STRICT_TRANS_TABLES', 'STRICT_ALL_TABLES', 'TRADITIONAL' );
-
-	/**
 	 * Whether to use mysqli over mysql.
 	 *
 	 * @since 3.9.0
 	 * @access private
 	 * @var bool
 	 */
-	private $use_mysqli = false;
-
+	private $use_mysqli = true;
 	/**
 	 * Whether we've managed to successfully connect at some point
 	 *
@@ -553,7 +542,7 @@ class DB {
 		 *
 		 * @param array $incompatible_modes An array of incompatible modes.
 		 */
-		$incompatible_modes = (array) apply_filters( 'incompatible_sql_modes', $this->incompatible_modes );
+		$incompatible_modes = (array) $this->incompatible_modes;
 
 		foreach ( $modes as $i => $mode ) {
 			if ( in_array( $mode, $incompatible_modes ) ) {
@@ -593,43 +582,7 @@ class DB {
 		}
 		if ( ! $success ) {
 			$this->ready = false;
-			if ( ! did_action( 'template_redirect' ) ) {
-				wp_load_translations_early();
-
-				$message = '<h1>' . __( 'Can&#8217;t select database' ) . "</h1>\n";
-
-				$message .= '<p>' . sprintf(
-					/* translators: %s: database name */
-					__( 'We were able to connect to the database server (which means your username and password is okay) but not able to select the %s database.' ),
-					'<code>' . htmlspecialchars( $db, ENT_QUOTES ) . '</code>'
-				) . "</p>\n";
-
-				$message .= "<ul>\n";
-				$message .= '<li>' . __( 'Are you sure it exists?' ) . "</li>\n";
-
-				$message .= '<li>' . sprintf(
-					/* translators: 1: database user, 2: database name */
-					__( 'Does the user %1$s have permission to use the %2$s database?' ),
-					'<code>' . htmlspecialchars( $this->dbuser, ENT_QUOTES )  . '</code>',
-					'<code>' . htmlspecialchars( $db, ENT_QUOTES ) . '</code>'
-				) . "</li>\n";
-
-				$message .= '<li>' . sprintf(
-					/* translators: %s: database name */
-					__( 'On some systems the name of your database is prefixed with your username, so it would be like <code>username_%1$s</code>. Could that be the problem?' ),
-					htmlspecialchars( $db, ENT_QUOTES )
-				). "</li>\n";
-
-				$message .= "</ul>\n";
-
-				$message .= '<p>' . sprintf(
-					/* translators: %s: support forums URL */
-					__( 'If you don&#8217;t know how to set up a database you should <strong>contact your host</strong>. If all else fails you may find help at the <a href="%s">WordPress Support Forums</a>.' ),
-					__( 'https://wordpress.org/support/' )
-				) . "</p>\n";
-
-				$this->bail( $message, 'db_select_fail' );
-			}
+			
 		}
 	}
 
@@ -1099,7 +1052,7 @@ class DB {
 			$this->set_charset( $this->dbh );
 
 			$this->ready = true;
-			$this->set_sql_mode();
+			//$this->set_sql_mode();
 			$this->select( $this->dbname, $this->dbh );
 
 			return true;
@@ -1159,11 +1112,6 @@ class DB {
 			sleep( 1 );
 		}
 
-		// If template_redirect has already happened, it's too late for wp_die()/dead_db().
-		// Let's just return and hope for the best.
-		if ( did_action( 'template_redirect' ) ) {
-			return false;
-		}
 
 		if ( ! $allow_bail ) {
 			return false;
@@ -1223,7 +1171,6 @@ class DB {
 		 *
 		 * @param string $query Database query.
 		 */
-		$query = apply_filters( 'query', $query );
 
 		$this->flush();
 
@@ -1917,7 +1864,7 @@ class DB {
 		 * @param string $charset The character set to use. Default null.
 		 * @param string $table   The name of the table being checked.
 		 */
-		$charset = apply_filters( 'pre_get_table_charset', null, $table );
+		$charset = $table;
 		if ( null !== $charset ) {
 			return $charset;
 		}
@@ -2022,7 +1969,7 @@ class DB {
 		 * @param string $table   The name of the table being checked.
 		 * @param string $column  The name of the column being checked.
 		 */
-		$charset = apply_filters( 'pre_get_col_charset', null, $table, $column );
+		 
 		if ( null !== $charset ) {
 			return $charset;
 		}

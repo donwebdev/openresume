@@ -13,7 +13,8 @@
 
 
 class Resume_Output {
-
+	
+	public $output = 'Resume output, yay.';
 	
 }
 
