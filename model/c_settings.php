@@ -14,7 +14,19 @@
 
 class Settings {
 
+	public $setting = Array();
 
+	 
+	public function __construct() {
+		
+		global $db;
+		
+		# Retrieve all of the currently set settings
+		
+		$setting['gmt_offset'] = 0;
+		
+		
+	}
 	
 }
 

@@ -13,7 +13,7 @@
 
 class User {
 
-	
+	public $logged_in = false;
 	
 }
 

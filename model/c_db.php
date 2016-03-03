@@ -8,9 +8,19 @@
 # model/c_db.php
 # Typical database wrapper object.
 # Derived from Wordpress DB wrapper. (wpdb)
+# All specific wordpress functionality was stripped out
+# leaving just a wrapper that is arguably one of the most
+# friendly and compatible wrappers on the internet.
 #
 #-------------------------------------------------------
 
+
+# Compatibility constants with wpdb queries
+define( 'OBJECT', 'OBJECT' );
+define( 'object', 'OBJECT' ); // Back compat.
+define( 'OBJECT_K', 'OBJECT_K' );
+define( 'ARRAY_A', 'ARRAY_A' );
+define( 'ARRAY_N', 'ARRAY_N' );
 
 class DB {
 
@@ -321,6 +331,20 @@ class DB {
 	 * @param string $dbname     MySQL database name
 	 * @param string $dbhost     MySQL database host
 	 */
+	 
+	# Functions added by Don
+	
+	# Build a mysql timestamp based on time offset setting.
+	public function current_time() {
+		
+		global $settings;
+	
+		gmdate( 'Y-m-d H:i:s', (time() + ($settings->setting['gmt_offset'] * 3600)) );
+		
+	}
+	
+	# End of Don functions
+	 
 	public function __construct( $dbuser, $dbpassword, $dbname, $dbhost ) {
 		register_shutdown_function( array( $this, '__destruct' ) );
 
@@ -331,24 +355,15 @@ class DB {
 		 *  - ext/mysql is not loaded.
 		 */
 		if ( function_exists( 'mysqli_connect' ) ) {
-			if ( defined( 'WP_USE_EXT_MYSQL' ) ) {
-				$this->use_mysqli = ! WP_USE_EXT_MYSQL;
-			} elseif ( version_compare( phpversion(), '5.5', '>=' ) || ! function_exists( 'mysql_connect' ) ) {
-				$this->use_mysqli = true;
-			} elseif ( false !== strpos( $GLOBALS['wp_version'], '-' ) ) {
-				$this->use_mysqli = true;
-			}
+				$this->use_mysqli = true;			
+		} else {			
+				$this->use_mysqli = false;			
 		}
 
 		$this->dbuser = $dbuser;
 		$this->dbpassword = $dbpassword;
 		$this->dbname = $dbname;
 		$this->dbhost = $dbhost;
-
-		// wp-config.php creation will manually connect when ready.
-		if ( defined( 'WP_SETUP_CONFIG' ) ) {
-			return;
-		}
 
 		$this->db_connect();
 	}
@@ -617,7 +632,7 @@ class DB {
 	 * @param  string $string to escape
 	 * @return string escaped
 	 */
-	function _real_escape( $string ) {
+	function real_escape( $string ) {
 		if ( $this->dbh ) {
 			if ( $this->use_mysqli ) {
 				return mysqli_real_escape_string( $this->dbh, $string );
@@ -1626,9 +1641,6 @@ class DB {
 				$value['charset'] = false;
 			} else {
 				$value['charset'] = $this->get_col_charset( $table, $field );
-				if ( is_wp_error( $value['charset'] ) ) {
-					return false;
-				}
 			}
 
 			$data[ $field ] = $value;
@@ -2741,6 +2753,5 @@ class DB {
 		return preg_replace( '/[^0-9.].*/', '', $server_info );
 	}
 }
-
 
 ?>
