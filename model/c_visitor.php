@@ -18,11 +18,13 @@ class Visitor {
 	
 	public $visitor = NULL;
 	public $impression = NULL;
+	public $http_referer = NULL;
 	private $visitor_type = NULL;
 	
 	public function __construct()
 	{
 		{
+			if(isset($_SERVER['HTTP_REFERER'])) { $this->http_referer = $_SERVER['HTTP_REFERER']; }
 			$this->visitor();
 			$this->impression();
 		}
@@ -50,8 +52,8 @@ class Visitor {
 				
 				setcookie('visitor', $cookie, time() + 2592000);
 				
-				$url           = parse_url($_SERVER['HTTP_REFERER']);
-				$referer       = $_SERVER['HTTP_REFERER'];
+				$url           = parse_url($this->http_referer);
+				$referer       = $this->http_referer;
 				$user_agent    = get_browser($_SERVER['HTTP_USER_AGENT']);
 				$geo           = $this->geocode_ip($_SERVER['REMOTE_ADDR']);
 				$this->visitor = array(
@@ -63,7 +65,7 @@ class Visitor {
 					'user_agent' => $_SERVER['HTTP_USER_AGENT'],
 					'browser' => $user_agent->browser . ' ' . $user_agent->version,
 					'operating_system' => $user_agent->platform,
-					'referal_url' => $_SERVER['HTTP_REFERER'],
+					'referal_url' => $this->http_referer,
 					'country_code' => $geo->country_code,
 					'country_name' => $geo->country_name,
 					'region_code' => $geo->region_code,
@@ -98,7 +100,7 @@ class Visitor {
 			}
 			
 			if (strpos($_SERVER['REQUEST_URI'], '/admin_pages/ajax/remote.php') !== false) {
-				$url = $_SERVER['HTTP_REFERER'];
+				$url = $this->http_referer;
 			}
 			$impression_text_id = $this->random_string(7, 7);
 			$data               = array(
@@ -110,10 +112,10 @@ class Visitor {
 				'last_impression_id' => $_COOKIE['last_impression'],
 				'ip_address' => $_SERVER['REMOTE_ADDR'],
 				'impression_url' => $url,
-				'referal_url' => $_SERVER['HTTP_REFERER']
+				'referal_url' => $this->http_referer
 			);
 			
-			$this->insert('impressions', $data);
+			//$this->insert('impressions', $data);
 			$last_impression  = $db->insert_id;
 			$data['id']       = $last_impression;
 			$this->impression = $data;

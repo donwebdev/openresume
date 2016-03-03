@@ -15,18 +15,11 @@
 class Settings {
 
 	public $setting = Array();
+	public $setting_defaults = Array();
 
-	 
-	public function __construct() {
-		
-		global $db;
-		
-		# Retrieve all of the currently set settings
-		
-		$setting['gmt_offset'] = 0;
-		
-		
-	}
+    public function __construct() {
+			$this->setting['gmt_offset'] = 0;
+   }
 	
 }
 

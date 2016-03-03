@@ -59,5 +59,4 @@ $user = new User;
 $cover_letter = new Cover_Letter;
 $resume = new Resume;
 
-
 ?>

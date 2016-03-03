@@ -16,6 +16,6 @@
 define('DB_HOST','localhost');
 define('DB_NAME','openresume');
 define('DB_USER','root');
-define('DB_PASSWORD','12321321');
+define('DB_PASSWORD','');
 
 ?>

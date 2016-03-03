@@ -337,9 +337,8 @@ class DB {
 	# Build a mysql timestamp based on time offset setting.
 	public function current_time() {
 		
-		global $settings;
-	
-		gmdate( 'Y-m-d H:i:s', (time() + ($settings->setting['gmt_offset'] * 3600)) );
+		global $settings;	
+		return gmdate( 'Y-m-d H:i:s', (time() + ($settings->setting['gmt_offset'] * 3600)) );
 		
 	}
 	
@@ -444,32 +443,10 @@ class DB {
 	 * @since 3.1.0
 	 */
 	public function init_charset() {
-		if ( function_exists('is_multisite') && is_multisite() ) {
-			$this->charset = 'utf8';
-			if ( defined( 'DB_COLLATE' ) && DB_COLLATE ) {
-				$this->collate = DB_COLLATE;
-			} else {
-				$this->collate = 'utf8_general_ci';
-			}
-		} elseif ( defined( 'DB_COLLATE' ) ) {
-			$this->collate = DB_COLLATE;
-		}
-
-		if ( defined( 'DB_CHARSET' ) ) {
-			$this->charset = DB_CHARSET;
-		}
-
-		if ( ( $this->use_mysqli && ! ( $this->dbh instanceof mysqli ) ) || empty( $this->dbh ) ) {
-			return;
-		}
-
-		if ( 'utf8' === $this->charset && $this->has_cap( 'utf8mb4' ) ) {
-			$this->charset = 'utf8mb4';
-		}
-
-		if ( 'utf8mb4' === $this->charset && ( ! $this->collate || stripos( $this->collate, 'utf8_' ) === 0 ) ) {
-			$this->collate = 'utf8mb4_unicode_ci';
-		}
+		
+		$this->charset = 'utf8';
+		$this->collate = 'utf8_general_ci';
+		
 	}
 
 	/**
@@ -667,10 +644,10 @@ class DB {
 				if ( is_array($v) )
 					$data[$k] = $this->_escape( $v );
 				else
-					$data[$k] = $this->_real_escape( $v );
+					$data[$k] = $this->real_escape( $v );
 			}
 		} else {
-			$data = $this->_real_escape( $data );
+			$data = $this->real_escape( $data );
 		}
 
 		return $data;
@@ -717,7 +694,7 @@ class DB {
 	 */
 	public function escape_by_ref( &$string ) {
 		if ( ! is_float( $string ) )
-			$string = $this->_real_escape( $string );
+			$string = $this->real_escape( $string );
 	}
 
 	/**
@@ -826,15 +803,6 @@ class DB {
 		if ( $this->suppress_errors )
 			return false;
 
-		wp_load_translations_early();
-
-		if ( $caller = $this->get_caller() )
-			$error_str = sprintf( __( 'WordPress database error %1$s for query %2$s made by %3$s' ), $str, $this->last_query, $caller );
-		else
-			$error_str = sprintf( __( 'WordPress database error %1$s for query %2$s' ), $str, $this->last_query );
-
-		error_log( $error_str );
-
 		// Are we showing errors?
 		if ( ! $this->show_errors )
 			return false;
@@ -848,12 +816,6 @@ class DB {
 				$this->last_query
 			);
 
-			if ( defined( 'ERRORLOGFILE' ) ) {
-				error_log( $msg, 3, ERRORLOGFILE );
-			}
-			if ( defined( 'DIEONDBERROR' ) ) {
-				wp_die( $msg );
-			}
 		} else {
 			$str   = htmlspecialchars( $str, ENT_QUOTES );
 			$query = htmlspecialchars( $this->last_query, ENT_QUOTES );
@@ -1009,8 +971,6 @@ class DB {
 
 				if ( $this->has_connected ) {
 					$attempt_fallback = false;
-				} elseif ( defined( 'WP_USE_EXT_MYSQL' ) && ! WP_USE_EXT_MYSQL ) {
-					$attempt_fallback = false;
 				} elseif ( ! function_exists( 'mysql_connect' ) ) {
 					$attempt_fallback = false;
 				}
@@ -1025,13 +985,6 @@ class DB {
 		}
 
 		if ( ! $this->dbh && $allow_bail ) {
-			wp_load_translations_early();
-
-			// Load custom DB error template, if present.
-			if ( file_exists( WP_CONTENT_DIR . '/db-error.php' ) ) {
-				require_once( WP_CONTENT_DIR . '/db-error.php' );
-				die();
-			}
 
 			$message = '<h1>' . __( 'Error establishing a database connection' ) . "</h1>\n";
 
@@ -1103,18 +1056,9 @@ class DB {
 
 		$error_reporting = false;
 
-		// Disable warnings, as we don't want to see a multitude of "unable to connect" messages
-		if ( WP_DEBUG ) {
-			$error_reporting = error_reporting();
-			error_reporting( $error_reporting & ~E_WARNING );
-		}
-
 		for ( $tries = 1; $tries <= $this->reconnect_retries; $tries++ ) {
 			// On the last try, re-enable warnings. We want to see a single instance of the
 			// "unable to connect" message on the bail() screen, if it appears.
-			if ( $this->reconnect_retries === $tries && WP_DEBUG ) {
-				error_reporting( $error_reporting );
-			}
 
 			if ( $this->db_connect( false ) ) {
 				if ( $error_reporting ) {
@@ -1131,8 +1075,6 @@ class DB {
 		if ( ! $allow_bail ) {
 			return false;
 		}
-
-		wp_load_translations_early();
 
 		$message = '<h1>' . __( 'Error reconnecting to the database' ) . "</h1>\n";
 
@@ -1309,9 +1251,6 @@ class DB {
 		}
 		$this->num_queries++;
 
-		if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES ) {
-			$this->queries[] = array( $query, $this->timer_stop(), $this->get_caller() );
-		}
 	}
 
 	/**
@@ -1670,9 +1609,6 @@ class DB {
 				$value['length'] = false;
 			} else {
 				$value['length'] = $this->get_col_length( $table, $field );
-				if ( is_wp_error( $value['length'] ) ) {
-					return false;
-				}
 			}
 
 			$data[ $field ] = $value;
@@ -1890,10 +1826,7 @@ class DB {
 		$table_parts = explode( '.', $table );
 		$table = '`' . implode( '`.`', $table_parts ) . '`';
 		$results = $this->get_results( "SHOW FULL COLUMNS FROM $table" );
-		if ( ! $results ) {
-			return new WP_Error( 'wpdb_get_table_charset_failure' );
-		}
-
+		
 		foreach ( $results as $column ) {
 			$columns[ strtolower( $column->Field ) ] = $column;
 		}
@@ -1982,9 +1915,6 @@ class DB {
 		 * @param string $column  The name of the column being checked.
 		 */
 		 
-		if ( null !== $charset ) {
-			return $charset;
-		}
 
 		// Skip this entirely if this isn't a MySQL database.
 		if ( empty( $this->is_mysql ) ) {
@@ -1994,9 +1924,6 @@ class DB {
 		if ( empty( $this->table_charset[ $tablekey ] ) ) {
 			// This primes column information for us.
 			$table_charset = $this->get_table_charset( $table );
-			if ( is_wp_error( $table_charset ) ) {
-				return $table_charset;
-			}
 		}
 
 		// If still no column information, return the table charset.
@@ -2043,9 +1970,6 @@ class DB {
 		if ( empty( $this->col_meta[ $tablekey ] ) ) {
 			// This primes column information for us.
 			$table_charset = $this->get_table_charset( $table );
-			if ( is_wp_error( $table_charset ) ) {
-				return $table_charset;
-			}
 		}
 
 		if ( empty( $this->col_meta[ $tablekey ][ $columnkey ] ) ) {
@@ -2337,9 +2261,6 @@ class DB {
 
 			$this->check_current_query = false;
 			$row = $this->get_row( "SELECT " . implode( ', ', $sql ), ARRAY_A );
-			if ( ! $row ) {
-				return new WP_Error( 'wpdb_strip_invalid_text_failure' );
-			}
 
 			foreach ( array_keys( $data ) as $column ) {
 				if ( isset( $row["x_$column"] ) ) {
@@ -2370,10 +2291,7 @@ class DB {
 		$table = $this->get_table_from_query( $query );
 		if ( $table ) {
 			$charset = $this->get_table_charset( $table );
-			if ( is_wp_error( $charset ) ) {
-				return $charset;
-			}
-
+			
 			// We can't reliably strip text from tables containing binary/blob columns
 			if ( 'binary' === $charset ) {
 				return $query;
@@ -2390,9 +2308,6 @@ class DB {
 		);
 
 		$data = $this->strip_invalid_text( array( $data ) );
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
 
 		return $data[0]['value'];
 	}
@@ -2417,9 +2332,6 @@ class DB {
 		if ( ! $charset ) {
 			// Not a string column.
 			return $value;
-		} elseif ( is_wp_error( $charset ) ) {
-			// Bail on real errors.
-			return $charset;
 		}
 
 		$data = array(
@@ -2431,9 +2343,6 @@ class DB {
 		);
 
 		$data = $this->strip_invalid_text( $data );
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
 
 		return $data[ $column ]['value'];
 	}
@@ -2584,15 +2493,9 @@ class DB {
 	 * @return false|void
 	 */
 	public function bail( $message, $error_code = '500' ) {
-		if ( !$this->show_errors ) {
-			if ( class_exists( 'WP_Error', false ) ) {
-				$this->error = new WP_Error($error_code, $message);
-			} else {
+		if ( !$this->show_errors ) {			
 				$this->error = $message;
-			}
-			return false;
 		}
-		wp_die($message);
 	}
 
 
@@ -2633,11 +2536,13 @@ class DB {
 	 *
 	 * @return WP_Error|void
 	 */
+	 
 	public function check_database_version() {
-		global $wp_version, $required_mysql_version;
-		// Make sure the server has the required MySQL version
-		if ( version_compare($this->db_version(), $required_mysql_version, '<') )
-			return new WP_Error('database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher' ), $wp_version, $required_mysql_version ));
+		/*
+		
+		FILL THIS IN LATER TO MAKE SURE THE APP IS MORE COMPATIBLE
+		
+		*/
 	}
 
 	/**
@@ -2723,19 +2628,7 @@ class DB {
 		return false;
 	}
 
-	/**
-	 * Retrieve the name of the function that called wpdb.
-	 *
-	 * Searches up the list of functions until it reaches
-	 * the one that would most logically had called this method.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @return string|array The name of the calling function
-	 */
-	public function get_caller() {
-		return wp_debug_backtrace_summary( __CLASS__ );
-	}
+
 
 	/**
 	 * Retrieves the MySQL server version.
@@ -2753,5 +2646,43 @@ class DB {
 		return preg_replace( '/[^0-9.].*/', '', $server_info );
 	}
 }
+
+
+
+function mbstring_binary_safe_encoding( $reset = false ) {
+	static $encodings = array();
+	static $overloaded = null;
+
+	if ( is_null( $overloaded ) )
+		$overloaded = function_exists( 'mb_internal_encoding' ) && ( ini_get( 'mbstring.func_overload' ) & 2 );
+
+	if ( false === $overloaded )
+		return;
+
+	if ( ! $reset ) {
+		$encoding = mb_internal_encoding();
+		array_push( $encodings, $encoding );
+		mb_internal_encoding( 'ISO-8859-1' );
+	}
+
+	if ( $reset && $encodings ) {
+		$encoding = array_pop( $encodings );
+		mb_internal_encoding( $encoding );
+	}
+}
+
+
+
+/**
+ * Reset the mbstring internal encoding to a users previously set encoding.
+ *
+ * @see mbstring_binary_safe_encoding()
+ *
+ * @since 3.7.0
+ */
+function reset_mbstring_encoding() {
+	mbstring_binary_safe_encoding( true );
+}
+
 
 ?>
