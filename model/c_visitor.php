@@ -39,32 +39,55 @@ class Visitor {
 	public function visitor()
 	{
 		if ($this->visitor == NULL) {
+			
+			# Most likely an ajax request, lets not log these.
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 				return;
 			}
+			
 			global $db;
+			global $settings;
+			
+			# Get the cookie for the visitor info if the visitor cookie is set
 			if (isset($_COOKIE['visitor'])) {
 				$this->visitor = $db->get_row('SELECT * FROM visitors WHERE cookie="' . $_COOKIE['visitor'] . '"', ARRAY_A);
 			} else {
 				
-				#create a cookie and make sure it's unique				
+				
+				# Create a cookie and make sure it's unique				
 				do { $cookie = $this->random_string(32, 32); } while ($db->get_row('SELECT cookie FROM visitors WHERE cookie = "' . $cookie . '"') != null);
 				
-				setcookie('visitor', $cookie, time() + 2592000);
 				
+				# Parse user agent with Piwik DeviceDetector
+				$dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+								
+				$dd->parse();
+				
+				if ($dd->isBot()) {
+				  // handle bots,spiders,crawlers,...
+				  $filtered = 1;
+				  $botInfo = $dd->getBot();
+				} else {
+				  $filtered = 0;
+				  $clientInfo = $dd->getClient();
+				  $osInfo = $dd->getOs();
+				}				
+				
+				setcookie('visitor', $cookie, time() + 2592000);
+				 
 				$url           = parse_url($this->http_referer);
 				$referer       = $this->http_referer;
-				$user_agent    = get_browser($_SERVER['HTTP_USER_AGENT']);
 				$geo           = $this->geocode_ip($_SERVER['REMOTE_ADDR']);
 				$this->visitor = array(
 					'id' => NULL,
-					'filtered' => $this->filter(),
+					'filtered' => $filtered,
 					'created' => $db->current_time(),
 					'cookie' => $cookie,
 					'ip_address' => $_SERVER['REMOTE_ADDR'],
 					'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-					'browser' => $user_agent->browser . ' ' . $user_agent->version,
-					'operating_system' => $user_agent->platform,
+					'browser' => $clientInfo['name'],
+					'browser_version' => $clientInfo['version'],
+					'operating_system' => $osInfo['name'].' '.$osInfo['version'],
 					'referal_url' => $this->http_referer,
 					'country_code' => $geo->country_code,
 					'country_name' => $geo->country_name,
@@ -74,6 +97,7 @@ class Visitor {
 					'latitude' => $geo->latitude,
 					'longitude' => $geo->longitude
 				);
+								
 				$this->insert('visitors', $this->visitor);
 				$this->visitor['id'] = $db->insert_id;
 			}
@@ -106,39 +130,19 @@ class Visitor {
 			$data               = array(
 				'id' => NULL,
 				'text_id' => $impression_text_id,
-				'filtered' => $this->filter(),
+				'filtered' => $this->visitor['filtered'],
 				'created' => $db->current_time(),
 				'visitor_id' => $this->visitor['id'],
-				'last_impression_id' => $_COOKIE['last_impression'],
 				'ip_address' => $_SERVER['REMOTE_ADDR'],
 				'impression_url' => $url,
 				'referal_url' => $this->http_referer
 			);
 			
-			//$this->insert('impressions', $data);
+			$this->insert('impressions', $data);
 			$last_impression  = $db->insert_id;
-			$data['id']       = $last_impression;
-			$this->impression = $data;
-			setcookie('last_impression', $last_impression, time() + 2592000);
 			return $last_impression;
 			
 		}
-	}
-	
-	public function filter()
-	{
-		global $db;
-		global $user;
-		$ip_address   = $db->real_escape($_SERVER['REMOTE_ADDR']);
-		$user_agent   = $db->real_escape($_SERVER['HTTP_USER_AGENT']);
-		$filter_check = $db->query('SELECT * FROM click_filter WHERE (ip_address = "' . $ip_address . '" AND user_agent = "' . $user_agent . '" ) OR (ip_address = "' . $ip_address . '" AND user_agent = "" ) OR (ip_address = "" AND user_agent = "' . $user_agent . '" ) OR (ip_address = "' . $ip_address . '" AND user_agent IS NULL ) OR (ip_address IS NULL AND user_agent = "' . $user_agent . '" )');
-		
-		if ($filter_check > 0 && $user->logged_in === false) {
-			return "1";
-		} else {
-			return "0";
-		}
-		
 	}
 	
 	private function random_string($min, $max)
@@ -221,5 +225,6 @@ class Visitor {
 		return $return;
 	}
 }
+
 
 ?>

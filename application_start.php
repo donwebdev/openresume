@@ -43,6 +43,21 @@ require_once('model/c_visitor.php');
 require_once('model/c_user.php');
 require_once('model/c_settings.php');
 
+# SpyC
+require_once('libs/spyc/Spyc.php');
+
+# Piwik user agent parser
+require_once('libs/device-detector/DeviceDetector.php');
+require_once('libs/device-detector/Cache/Cache.php');
+require_once('libs/device-detector/Cache/StaticCache.php');
+require_once('libs/device-detector/Parser/ParserAbstract.php');
+require_once('libs/device-detector/Parser/Bot.php');
+require_once('libs/device-detector/Parser/OperatingSystem.php');
+require_once('libs/device-detector/Parser/VendorFragment.php');
+require_once('libs/device-detector/Parser/Client/ClientParserAbstract.php');
+require_once('libs/device-detector/Parser/Client/Browser/Engine.php');
+require_once('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
+
 
 # Load the views
 require_once('view/c_render_cover_letter.php');

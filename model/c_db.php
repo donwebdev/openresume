@@ -34,7 +34,7 @@ class DB {
 	 * @access private
 	 * @var bool
 	 */
-	var $show_errors = false;
+	var $show_errors = true;
 
 	/**
 	 * Whether to suppress errors during the DB bootstrapping.
@@ -808,25 +808,15 @@ class DB {
 			return false;
 
 		// If there is an error then take note of it
-		if ( is_multisite() ) {
-			$msg = sprintf(
-				"%s [%s]\n%s\n",
-				__( 'WordPress database error:' ),
-				$str,
-				$this->last_query
-			);
-
-		} else {
 			$str   = htmlspecialchars( $str, ENT_QUOTES );
 			$query = htmlspecialchars( $this->last_query, ENT_QUOTES );
 
 			printf(
 				'<div id="error"><p class="wpdberror"><strong>%s</strong> [%s]<br /><code>%s</code></p></div>',
-				__( 'WordPress database error:' ),
+				'Database Error',
 				$str,
 				$query
 			);
-		}
 	}
 
 	/**
