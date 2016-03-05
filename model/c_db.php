@@ -1918,12 +1918,12 @@ class DB {
 
 		// If still no column information, return the table charset.
 		if ( empty( $this->col_meta[ $tablekey ] ) ) {
-			return $this->table_charset[ $tablekey ];
+			//return $this->table_charset[ $tablekey ];
 		}
 
 		// If this column doesn't exist, return the table charset.
 		if ( empty( $this->col_meta[ $tablekey ][ $columnkey ] ) ) {
-			return $this->table_charset[ $tablekey ];
+			//return $this->table_charset[ $tablekey ];
 		}
 
 		// Return false when it's not a string column.

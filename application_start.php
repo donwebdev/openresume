@@ -13,14 +13,14 @@
 #-------------------------------------------------------
 
 # Include the files needed for install.php
-require_once('constants.php');
-require_once('model/c_db.php');
+require('constants.php');
+require('model/c_db.php');
 
 
 # Check to see if installation is necessary
 if(DB_NAME===NULL || DB_USER===NULL || DB_PASSWORD===NULL || DB_HOST===NULL) {
 
-	require_once('install.php');	
+	require('install.php');	
 
 }
 
@@ -31,40 +31,40 @@ $db = new DB(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
 # Check the database connection
 if(!$db->has_connected) {
 
-	require_once('database_error.php');
+	require('database_error.php');
 
 }
 
 
 # Load the models
-require_once('model/c_cover_letter.php');
-require_once('model/c_resume.php');
-require_once('model/c_visitor.php');
-require_once('model/c_user.php');
-require_once('model/c_settings.php');
+require('model/c_cover_letter.php');
+require('model/c_resume.php');
+require('model/c_visitor.php');
+require('model/c_user.php');
+require('model/c_settings.php');
 
 # SpyC
-require_once('libs/spyc/Spyc.php');
+require('libs/spyc/Spyc.php');
 
 # Piwik user agent parser
-require_once('libs/device-detector/DeviceDetector.php');
-require_once('libs/device-detector/Cache/Cache.php');
-require_once('libs/device-detector/Cache/StaticCache.php');
-require_once('libs/device-detector/Parser/ParserAbstract.php');
-require_once('libs/device-detector/Parser/Bot.php');
-require_once('libs/device-detector/Parser/OperatingSystem.php');
-require_once('libs/device-detector/Parser/VendorFragment.php');
-require_once('libs/device-detector/Parser/Client/ClientParserAbstract.php');
-require_once('libs/device-detector/Parser/Client/Browser/Engine.php');
-require_once('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
+require('libs/device-detector/DeviceDetector.php');
+require('libs/device-detector/Cache/Cache.php');
+require('libs/device-detector/Cache/StaticCache.php');
+require('libs/device-detector/Parser/ParserAbstract.php');
+require('libs/device-detector/Parser/Bot.php');
+require('libs/device-detector/Parser/OperatingSystem.php');
+require('libs/device-detector/Parser/VendorFragment.php');
+require('libs/device-detector/Parser/Client/ClientParserAbstract.php');
+require('libs/device-detector/Parser/Client/Browser/Engine.php');
+require('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 
 
 # Load the views
-require_once('view/c_render_cover_letter.php');
-require_once('view/c_render_resume.php');
-require_once('view/form_elements.php');
-require_once('view/html_header.php');
-require_once('view/html_footer.php');
+require('view/c_render_cover_letter.php');
+require('view/c_render_resume.php');
+require('view/form_elements.php');
+require('view/html_header.php');
+require('view/html_footer.php');
 
 
 # Instantiate all the objects we need

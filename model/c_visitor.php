@@ -93,7 +93,7 @@ class Visitor {
 					'country_name' => $geo->country_name,
 					'region_code' => $geo->region_code,
 					'region_name' => $geo->region_name,
-					'zipcode' => $geo->zipcode,
+					'zipcode' => $geo->zip_code,
 					'latitude' => $geo->latitude,
 					'longitude' => $geo->longitude
 				);
