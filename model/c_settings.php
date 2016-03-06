@@ -18,7 +18,19 @@ class Settings {
 	public $setting_defaults = Array();
 
     public function __construct() {
-			$this->setting['gmt_offset'] = 0;
+		
+			# Create Default Array
+			
+			$this->setting_defaults['gmt_offset'] = 0;
+			$this->setting_defaults['site_title'] = 'Open Resume';
+			$this->setting_defaults['language'] = 'english';
+			
+			
+			# Load all current settings
+		
+			$this->setting['gmt_offset'] = 0;		
+			$this->setting['site_title'] = 'Open Resume';
+			$this->setting['language'] = 'english';
    }
 	
 }

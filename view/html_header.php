@@ -12,8 +12,34 @@
 #-------------------------------------------------------
 
 
-function html_header() {
+function html_header($page_title='') {
+
+global $settings;
+
+if($page_title == '') {
 	
+	$page_title = $settings->setting['site_title'];
+	
+}
+	
+$output = '
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>'.$page_title.'</title>
+  
+  <script type="text/javascript" src="libs/jquery-1.12.1.min.js"></script>
+
+</head>
+
+<body>	
+	
+';
+	
+	
+return $output;
 	
 }
 

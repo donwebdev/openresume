@@ -128,11 +128,13 @@ class Form {
 	}
 	
 	
+	# Make a text field and do everything with it
+	
 	public function text_field($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
 
 		$output = '
 		<div class="field '.$field_name.'_div">
-			<input type="text" name="'.$field_name.'" class="'.$form_name.'_field '.$field_name.'" value="'.$field_value.'" '.$field_html.'>
+			<input type="text" name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_field '.$field_name.'" value="'.$field_value.'" '.$field_html.'>
 		</div>
 		<div class="error_text '.$field_name.'_error">
 			<div class="'.$field_name.'_field_required">'.$field_required.'</div>	

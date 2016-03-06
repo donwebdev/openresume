@@ -109,9 +109,18 @@ class Visitor {
 	public function impression($url = '')
 	{
 		if ($this->impression == NULL) {
+			
+			# Quit if it's an ajax request
+			
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 				return;
 			}
+			
+			# Quit if it's admin panel
+			if (strpos($url, '/admin/') !== false) {
+				return;
+			}
+			
 			global $db;
 			if ($url == '') {
 				if ($_SERVER['SERVER_PORT'] == '443') {
@@ -123,9 +132,6 @@ class Visitor {
 				$url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			}
 			
-			if (strpos($_SERVER['REQUEST_URI'], '/admin_pages/ajax/remote.php') !== false) {
-				$url = $this->http_referer;
-			}
 			$impression_text_id = $this->random_string(7, 7);
 			$data               = array(
 				'id' => NULL,

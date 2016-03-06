@@ -1,10 +1,15 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-</head>
+<?php
 
-<body>
-</body>
-</html>
+#-------------------------------------------------------
+#
+# OPEN RESUME by Don Westendorp
+# © 2016 - Released under GPL v3 Licensing
+#
+# admin/login.php
+# Create the login form here, displays all states of the login form
+# Also does forgot password form
+#
+#-------------------------------------------------------
+
+
+?>

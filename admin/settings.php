@@ -5,25 +5,10 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# view/html_footer.php
-# Creates HTML for the footer. 
-# Mainly date, copyright and credits.
+# admin/setting.php
+# Edit the application wide settings
 #
 #-------------------------------------------------------
-
-
-function html_footer() {
-	
-$output = '
-	
-</body>
-</html>
-
-';
-
-return $output;
-
-}
 
 
 ?>

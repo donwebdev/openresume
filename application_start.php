@@ -62,7 +62,7 @@ require('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 # Load the views
 require('view/c_render_cover_letter.php');
 require('view/c_render_resume.php');
-require('view/form_elements.php');
+require('view/c_form.php');
 require('view/html_header.php');
 require('view/html_footer.php');
 
