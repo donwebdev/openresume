@@ -21,4 +21,8 @@ define('DB_PASSWORD','');
 # Password salt, this is generated on install
 define('PW_SALT','random');
 
+# Version Number
+define('VERSION_STATE','Alpha');
+define('VERSION_NUMBER','0.1.03');
+
 ?>

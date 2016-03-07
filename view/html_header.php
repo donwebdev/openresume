@@ -29,12 +29,17 @@ $output = '
 <head>
 
   <title>'.$page_title.'</title>
-  
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">  
   <script type="text/javascript" src="libs/jquery-1.12.1.min.js"></script>
+  <script type="text/javascript" src="libs/bootstrap/js/bootstrap.js"></script>
 
 </head>
-
 <body>	
+
+
+<div class="container-fluid">
 	
 ';
 	
