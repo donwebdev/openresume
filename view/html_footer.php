@@ -17,7 +17,7 @@ function html_footer() {
 $output = '
 
 	
-<p id="footer" class="footer">This site powered by <a href="http://www.phpopenresume.com">OpenResume</a> - '.VERSION_STATE.' '.VERSION_NUMBER.' - &copy;'.date('Y').'</p>	
+	<p id="footer" class="footer">This site powered by <a href="http://www.phpopenresume.com">OpenResume</a> - '.VERSION_STATE.' '.VERSION_NUMBER.' - &copy;'.date('Y').'</p>	
 
 </div>
 	

@@ -15,6 +15,7 @@
 function html_header($page_title='') {
 
 global $settings;
+global $resume;
 
 if($page_title == '') {
 	
@@ -31,7 +32,8 @@ $output = '
   <title>'.$page_title.'</title>
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">  
+  <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">   
+  <link rel="stylesheet" href="view/styles/'.$resume->style.'">  
   <script type="text/javascript" src="libs/jquery-1.12.1.min.js"></script>
   <script type="text/javascript" src="libs/bootstrap/js/bootstrap.js"></script>
 

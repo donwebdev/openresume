@@ -23,6 +23,6 @@ define('PW_SALT','random');
 
 # Version Number
 define('VERSION_STATE','Alpha');
-define('VERSION_NUMBER','0.1.03');
+define('VERSION_NUMBER','0.1.04');
 
 ?>
