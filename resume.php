@@ -12,16 +12,14 @@
 #-------------------------------------------------------
 
 
-#Make a cover letter if we need one, else make a resume
-if($cover_letter->render_cover_letter === true) {
-	
-	$cover_letter_output = new Cover_Letter_Output; 
-	
-} else {	
-	
-	$resume_output = new Resume_Output; 
-	
+#Make a cover letter if we need one
+if($cover_letter->render_cover_letter === true) {	
+	$cover_letter_output = new Cover_Letter_Output($cover_letter); 	
 }
+	
+$resume_output = new Resume_Output($resume,$cover_letter); 
+	
+
 
 
 ?>

@@ -132,7 +132,8 @@ class Visitor {
 				$url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			}
 			
-			$impression_text_id = $this->random_string(7, 7);
+			do { $impression_text_id = $this->random_string(7, 7); } while ($db->get_row('SELECT text_id FROM impressions WHERE text_id = "' . $impression_text_id . '"') != null);
+			
 			$data               = array(
 				'id' => NULL,
 				'text_id' => $impression_text_id,

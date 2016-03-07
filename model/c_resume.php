@@ -87,16 +87,14 @@ class Resume {
 		
 		# Get resume sections
 		
-		$resume_sections = $db->get_results('SELECT id,item_order FROM resume_sections WHERE resume_id = '.$resume_id.' ORDER BY item_order ASC');	
+		$resume_sections_results = $db->get_results('SELECT id,item_order FROM resume_sections WHERE resume_id = '.$resume_id.' ORDER BY item_order ASC');	
 		
-		foreach($resume_sections as $row) {
-				
-				$this->resume_sections[$row->item_order] = new resume_section($row->id);	
+		foreach($resume_sections_results as $row) {
 			
-		}
-	
-	
-	
+			
+				$this->resume_sections[$row->item_order] = $this->resume_section($row->id);
+				
+		}	
 	}
 	
 	# We do the logic here for each section type
@@ -107,34 +105,37 @@ class Resume {
 		
 		global $db;
 		
+		$output_array = array();
+		
 		$section = $db->get_row('SELECT * FROM resume_sections WHERE id = '.$section_id);		
 	
-		$section_items = $db->get_results('SELECT * FROM resume_items WHERE resume_id = '.$resume_id.' ORDER BY item_order ASC');
+		$section_items = $db->get_results('SELECT * FROM resume_items WHERE resume_section_id = '.$section->id.' ORDER BY item_order ASC');
 		
 		$k = $section->item_order;
 		
 		# Section fields the view needs
-		$this->resume_sections[$k]['title'] = $section->title;
-		$this->resume_sections[$k]['sub_title'] = $section->sub_title;
-		$this->resume_sections[$k]['description'] = $section->description;
+		$output_array['title'] = $section->title;
+		$output_array['sub_title'] = $section->sub_title;
+		$output_array['description'] = $section->description;
+		$output_array['section_type'] = $section->section_type;
 		
 		# Section item array for the view
-		$this->resume_sections[$k]['section_items'] = array();
+		$output_array['section_items'] = array();
 		
 		# Simple resume items that just list in order with no additional behavior
 		# These types are mainly differiantiated in the view
 		if($section->section_type=='Text' || $section->section_type=='Bullet Points') {
-		
+						
 			foreach($section_items as $row) {
 		
-				$this->resume_sections[$k]['section_items'][$row->item_order]['value'] = $row->value;				
+				$output_array['section_items'][$row->item_order]['value'] = $row->value;				
 				
 	
 				# Get item type for this item if it has one
 				if($row->resume_item_type_id !== null) {
 							
 					$item_type = $db->get_row('SELECT * FROM resume_item_types WHERE id = '.$item['resume_item_type_id']);							
-					$this->resume_sections[$k]['section_items'][$row->item_order]['item_type'] = $item_type->name;
+					$output_array['section_items'][$row->item_order]['item_type'] = $item_type->name;
 				
 														
 				}
@@ -147,6 +148,8 @@ class Resume {
 		# Next item type will go here
 		
 		
+		
+		return $output_array;
 		
 	}
 	
