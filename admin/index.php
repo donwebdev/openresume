@@ -11,7 +11,7 @@
 #-------------------------------------------------------
 
 # Load the model
-require('../application_start.php');
+require('admin_start.php');
 
 # Check if logged in
 
@@ -49,6 +49,6 @@ require('login.php');
 
 
 # Output the Resume View and end execution
-require('../application_end.php');
+require('admin_end.php');
 
 ?>
