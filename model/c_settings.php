@@ -29,6 +29,7 @@ class Settings {
 		$defaults['your_address_2'] = '';
 		$defaults['your_phone'] = '(123) 456-7890';
 		$defaults['your_email'] = 'you@email.com';
+		$defaults['your_location'] = 'Timbuktu';
 		
 					
 		# Load all current settings, overrides default settings	

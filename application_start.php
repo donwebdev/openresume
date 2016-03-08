@@ -74,4 +74,7 @@ $user = new User;
 $cover_letter = new Cover_Letter;
 $resume = new Resume;
 
+# Load the language
+require('language/'.$settings->setting['language'].'/frontend.php');
+
 ?>

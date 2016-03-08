@@ -44,7 +44,7 @@ class Resume {
 			$resume_id = $resume_row->id;
 			
 			# Since we're looking at the main resume we load the secondary resumes too.
-			$secondary_resumes = $db->get_results('SELECT id FROM resumes WHERE display_type = "Secondary" ORDER BY secondary_resume_order ASC');	
+			$secondary_resumes = $db->get_results('SELECT id FROM resumes WHERE display_type = "Secondary" AND deleted IS NULL ORDER BY secondary_resume_order ASC');	
 			
 			# Create new resume objects here
 			# The view will check for these and render them as well
@@ -87,10 +87,9 @@ class Resume {
 		
 		# Get resume sections
 		
-		$resume_sections_results = $db->get_results('SELECT id,item_order FROM resume_sections WHERE resume_id = '.$resume_id.' ORDER BY item_order ASC');	
+		$resume_sections_results = $db->get_results('SELECT id,item_order FROM resume_sections WHERE resume_id = '.$resume_id.' AND deleted IS NULL ORDER BY item_order ASC');	
 		
 		foreach($resume_sections_results as $row) {
-			
 			
 				$this->resume_sections[$row->item_order] = $this->resume_section($row->id);
 				
@@ -109,7 +108,7 @@ class Resume {
 		
 		$section = $db->get_row('SELECT * FROM resume_sections WHERE id = '.$section_id);		
 	
-		$section_items = $db->get_results('SELECT * FROM resume_items WHERE resume_section_id = '.$section->id.' ORDER BY item_order ASC');
+		$section_items = $db->get_results('SELECT * FROM resume_items WHERE resume_section_id = '.$section->id.' AND deleted IS NULL ORDER BY item_order ASC');
 		
 		$k = $section->item_order;
 		
@@ -121,6 +120,7 @@ class Resume {
 		
 		# Section item array for the view
 		$output_array['section_items'] = array();
+		
 		
 		# Simple resume items that just list in order with no additional behavior
 		# These types are mainly differiantiated in the view

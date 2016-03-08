@@ -1,0 +1,208 @@
+/*
+
+Bootstrap Overrides
+
+*/
+
+body { 
+	background-color:#f3f3f3; 
+	padding: 0;
+}
+
+.container, .container-fluid {
+	margin-top:20px;
+	max-width: 700px;
+	background-color:#fff;	
+	border: 1px solid #ddd;
+	padding: 0;
+}
+
+.row {
+	max-width: 700px;	
+	margin: 0;
+	padding-left:30px;
+	padding-right:30px;
+}
+
+@media (max-width: 760px) {
+	
+
+	.container, .container-fluid {
+		margin:0;
+		border: none;
+		padding:0;
+		max-width: 760px;	
+	}
+	
+	.row {
+		margin:0;
+		border: none;
+		padding:10px;
+	}
+
+}
+
+
+/*
+
+OpenResume Styles
+
+*/
+
+.resume_container {
+	padding-bottom:40px;	
+}
+
+.portrait {
+	border: 2px solid #eee;
+}
+
+.portrait_container {	
+	padding:0;
+	text-align:right;
+}
+
+.contact_info_container {
+	padding:0;
+	vertical-align:middle;
+}
+
+.resume_header {	
+	padding-top:30px;		
+}
+
+.resume_header > .row {	
+	padding:0;	
+}
+
+.resume_name {
+	font-size: 48px;
+	margin: 0;
+	margin-top:20px;
+	color:#ff4f00;	
+}
+
+.resume_title {
+	font-size: 32px;
+	margin: 0;
+	margin-top: 10px;
+	margin-left: 2px;	
+}
+
+.contact_button_container {
+	margin-top:25px;	
+}
+
+.contact_button, .contact_button:active, .contact_button:visited {
+	display:inline-block;
+	background-color: #0275d8;
+	color: #fff;
+	padding: 16px 30px;
+	margin: 0;
+	margin-bottom:10px;
+	font-size:14px;
+	line-height:14px;
+	font-weight:bold;
+	vertical-align:top;	
+}
+
+.contact_button:hover {	
+	background-color: #0695e8;
+	color: #fff;	
+}
+
+.location {
+	display:inline-block;
+	line-height:14px;
+	margin: 0;
+	padding: 16px 30px;
+	vertical-align:top;	
+}
+
+.section_name {
+	color:#ff4f00;	
+}
+
+.resume_item {
+	margin-left:5px;
+}
+
+.resume_item_list {
+	margin-left:-10px;
+}
+
+p.resume_item {	
+	text-align:justify;		
+}
+
+.footer {
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+.right {
+	float:right;
+}
+
+
+@media (max-width: 650px) {
+
+	.resume_name {	
+		font-size: 36px;		
+	}
+	
+	.resume_title {	
+		font-size: 20px;		
+	}
+	
+	.portrait {	
+		height: 150px;		
+	}
+	
+	.contact_button, .contact_button:active, .contact_button:visited {	
+		padding: 10px 20px;		
+	}
+	
+	.location {
+		padding: 10px 20px;		
+	}
+
+}
+
+
+@media (max-width: 470px) {
+	
+	body {	
+		font-size:13px;		
+	}
+	
+	.resume_name {
+		font-size: 36px;
+		text-align:center;
+		margin-top:10px;		
+	}
+	
+	.resume_title {	
+		font-size: 20px;
+		text-align:center;		
+	}
+	
+	.portrait {	
+		height:auto;
+		float:none !important;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;		
+	}
+	
+
+	.contact_button_container {		
+		align-content:center;
+		text-align:center;
+	}
+
+	.section_name {	
+		font-size: 20px;		
+	}
+	
+}

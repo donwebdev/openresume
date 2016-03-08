@@ -25,6 +25,7 @@ class Resume_Output {
 		# Make the header
 		$this->output = $this->resume_header($resume,$cover_letter);
 		
+		
 		# Iterate the section arrays to make the sections
 		foreach($resume->resume_sections as $section) {
 			
@@ -42,80 +43,67 @@ class Resume_Output {
 	# Header HTML
 	public function resume_header($resume,$cover_letter) {
 		
+		global $settings;
+		
 		$output = '
-	<header class="container">
-		<div class="row">
-			<div class="col-md-8">';
+	<header class="row resume_header">';
+			
+		# Get portrait here		
+		if($resume->portrait!='') {			
+			
+			$output .= '
+				<img class="img-responsive pull-right media-object portrait" src="images/'.$resume->portrait.'">
+			';
+			
+		}	
+		
+			
+			$output .= '
+			<div class="media-body contact_info_container">
+			';
 	
 		# Personal Information	
 		if($resume->name!='') {
 		
 			$output .= '
-			<h1>'.$resume->name.'</h1>';
+				<h1 class="resume_name">'.$resume->name.'</h1>';
 			
 		}
 	
 		if($resume->title!='') {
 		
 			$output .= '
-			<h2>'.$resume->title.'</h2>';
+				<h2 class="resume_title">'.$resume->title.'</h2>';
 			
 		}
 		
-		# Contact Information
-		$output .= '';
 	
-		if($resume->email!='') {
-		
-			$output .= '
-				<h4><a href="mailto:'.$resume->email.'">'.$resume->email.'</a></h4>';
-			
-		}
-	
-		if($resume->phone!='') {
-		
-			$output .= '
-				<h4>'.$resume->phone.'</h4>';
-			
-		}
-	
-		if($resume->address_1!='') {
-		
-			$output .= '
-				<h4>'.$resume->address_1.'</h4>';
-			
-		}
-	
-		if($resume->address_2!='') {
-		
-			$output .= '
-				<h4>'.$resume->address_2.'</h4>';
-			
-		}
-		
 		$output .= '
 			</div>';
-		
-		
-		# Get portrait here		
-		if($resume->portrait!='') {			
-			
-			$output .= '
-			<div class="col-md-4">
-				<img class="img-responsive" src="images/'.$resume->portrait.'">
-			</div>
-			
-			';
-			
-		}
 	
+	
+		# Contact Button - Runs some AJAX that gets contact details and the contact form
+		
 		$output .= '
-		</div>	
-	</header>
-	
-	
-	
-	';			
+		
+			<div class="contact_button_container">
+				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="">'.CONTACT_ME.' &raquo;</a>';
+				
+		if($settings->setting['your_location']!='') {		
+		
+		
+				$output .= '
+				<span class="well location">'.LOCATED_IN.' '.$settings->setting['your_location'].'</span>';
+				
+		}
+		
+		$output .= '
+			</div>';	
+			
+				
+		
+	$output .= '
+	</header>';	
 	
 		return $output;
 		
@@ -124,10 +112,45 @@ class Resume_Output {
 	public function resume_section($section) {
 		
 		$output = '
-	<div class="container">';
+	<div class="row">';
+	
 	
 		$output .= '
-		<h3>'.$section['title'].'</h3>';
+		<h3 class="section_name">'.$section['title'].'</h3>';
+		
+		# Section type specific behavior here
+		
+		if($section['section_type']=='Bullet Points') {
+		
+			$output .= '
+			<ul>';		
+		
+			# Load all the resume section items normally
+			
+			foreach($section['section_items'] as $key => $value) {
+			
+				$output .= $this->resume_item($section,$value);	
+				
+			}
+		
+			$output .= '
+			</ul>';		
+		
+		
+		# Normal behavior if no type is matched
+			
+		} else {			
+		
+			# Load all the resume section items normally
+			
+			foreach($section['section_items'] as $key => $value) {
+			
+				$output .= $this->resume_item($section,$value);	
+				
+			}
+			
+		}
+		
 		
 		$output .= '
 	</div>';
@@ -136,7 +159,28 @@ class Resume_Output {
 		
 	}
 	
-	public function resume_item() {
+	public function resume_item($section,$item) {
+		
+		# Text
+		if($section['section_type']=='Text') {
+		
+			$output = '
+			<p class="resume_item">'.$item['value'].'</p>';
+		
+		}
+		
+	
+		# Bullet Points
+		if($section['section_type']=='Bullet Points') {
+		
+			$output = '
+				<li class="resume_item_list">'.$item['value'].'</li>';
+		
+		}
+		
+	
+		
+		return $output;
 		
 	}
 	

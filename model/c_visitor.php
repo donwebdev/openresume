@@ -30,6 +30,7 @@ class Visitor {
 		}
 	}
 	
+	# Manually log a visitor and a url
 	public function log($url = '')
 	{
 		$this->visitor();
@@ -50,7 +51,9 @@ class Visitor {
 			
 			# Get the cookie for the visitor info if the visitor cookie is set
 			if (isset($_COOKIE['visitor'])) {
+				
 				$this->visitor = $db->get_row('SELECT * FROM visitors WHERE cookie="' . $_COOKIE['visitor'] . '"', ARRAY_A);
+				
 			} else {
 				
 				
@@ -64,7 +67,7 @@ class Visitor {
 				$dd->parse();
 				
 				if ($dd->isBot()) {
-				  // handle bots,spiders,crawlers,...
+				  # handle bots,spiders,crawlers,...
 				  $filtered = 1;
 				  $botInfo = $dd->getBot();
 				} else {
