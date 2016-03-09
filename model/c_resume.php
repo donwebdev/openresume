@@ -24,6 +24,8 @@ class Resume {
 	public $email;
 	public $title;
 	public $portrait;
+	public $contact_details_display;
+	public $contact_form_details_display;
 
 	public function __construct($resume_id='') {
 	
@@ -75,6 +77,8 @@ class Resume {
 		$this->resume_name = $resume_row->name;
 		$this->title = $resume_row->title;
 		$this->portrait = $resume_row->portrait;	
+		$this->contact_details_display = $resume_row->contact_details_display;	
+		$this->contact_form_details_display = $resume_row->contact_form_details_display;	
 		
 		# Check for resume overrides, kind of a bowl of spaghetti but still simple
 		# I would normally put this in a loop, but it's a small amount of functionality
@@ -85,8 +89,7 @@ class Resume {
 		if($resume_row->override_email!==null) { $this->email = $resume_row->override_email; } else { $this->email = $settings->setting['your_email']; }
 		
 		
-		# Get resume sections
-		
+		# Get resume sections		
 		$resume_sections_results = $db->get_results('SELECT id,item_order FROM resume_sections WHERE resume_id = '.$resume_id.' AND deleted IS NULL ORDER BY item_order ASC');	
 		
 		foreach($resume_sections_results as $row) {

@@ -16,7 +16,7 @@ class Resume_Output {
 	
 	public $output;
 	
-	public function __construct($resume,$cover_letter) {
+	public function __construct($resume,$cover_letter,$contact_form) {
 		
 		global $db;
 		global $settings;

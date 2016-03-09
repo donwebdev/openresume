@@ -60,6 +60,7 @@ require('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 
 
 # Load the views
+require('view/c_render_contact_form.php');
 require('view/c_render_cover_letter.php');
 require('view/c_render_resume.php');
 require('view/c_form.php');
@@ -73,6 +74,7 @@ $visitor = new Visitor;
 $user = new User; 
 $cover_letter = new Cover_Letter;
 $resume = new Resume;
+
 
 # Load the language
 require('language/'.$settings->setting['language'].'/frontend.php');

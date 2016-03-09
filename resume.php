@@ -17,9 +17,10 @@ if($cover_letter->render_cover_letter === true) {
 	$cover_letter_output = new Cover_Letter_Output($cover_letter); 	
 }
 	
-$resume_output = new Resume_Output($resume,$cover_letter); 
-	
+$contact_form = new Contact_Form($resume);
 
+$resume_output = new Resume_Output($resume,$cover_letter,$contact_form); 
+	
 
 
 ?>
