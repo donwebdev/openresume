@@ -33,12 +33,12 @@ class Contact_Form {
 		
 		
 		# Render contact info directly if the setting is set
+			
 		
 			
 		# Contact Button - Runs some AJAX that gets contact details and the contact form
 		
-		$output .= '
-		
+		$output .= '		
 			<div class="contact_button_container">
 				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="">'.CONTACT_ME.' &raquo;</a>';
 				
