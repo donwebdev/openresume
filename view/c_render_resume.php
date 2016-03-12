@@ -33,9 +33,10 @@ class Resume_Output {
 			
 		}
 		
-		
-		
 		# Make the footer
+		
+		
+		
 		
 	}
 	
@@ -52,7 +53,7 @@ class Resume_Output {
 		if($resume->portrait!='') {			
 			
 			$output .= '
-				<img class="img-responsive pull-right media-object portrait" src="images/'.$resume->portrait.'">
+				<img class="img-responsive media-object portrait" src="images/'.$resume->portrait.'">
 			';
 			
 		}	

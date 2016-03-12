@@ -77,8 +77,8 @@ class Resume {
 		$this->resume_name = $resume_row->name;
 		$this->title = $resume_row->title;
 		$this->portrait = $resume_row->portrait;	
-		$this->contact_details_display = $resume_row->contact_details_display;	
-		$this->contact_form_details_display = $resume_row->contact_form_details_display;	
+		$this->show_contact_details = $resume_row->show_contact_details;	
+		$this->show_contact_form = $resume_row->show_contact_form;	
 		
 		# Check for resume overrides, kind of a bowl of spaghetti but still simple
 		# I would normally put this in a loop, but it's a small amount of functionality
