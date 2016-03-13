@@ -18,6 +18,8 @@ class Visitor {
 	
 	public $visitor = NULL;
 	public $impression = NULL;
+	public $impression_id = NULL;
+	public $id = NULL;
 	public $http_referer = NULL;
 	private $visitor_type = NULL;
 	
@@ -53,6 +55,8 @@ class Visitor {
 			if (isset($_COOKIE['visitor'])) {
 				
 				$this->visitor = $db->get_row('SELECT * FROM visitors WHERE cookie="' . $_COOKIE['visitor'] . '"', ARRAY_A);
+				# Just making this easier to get to
+				$this->id = $this->visitor['id'];
 				
 			} else {
 				
@@ -101,8 +105,9 @@ class Visitor {
 					'longitude' => $geo->longitude
 				);
 								
-				$this->insert('visitors', $this->visitor);
+				$db->insert('visitors', $this->visitor);
 				$this->visitor['id'] = $db->insert_id;
+				$this->id = $db->insert_id;
 			}
 		}
 		return $this->visitor;
@@ -148,8 +153,9 @@ class Visitor {
 				'referal_url' => $this->http_referer
 			);
 			
-			$this->insert('impressions', $data);
+			$db->insert('impressions', $data);
 			$last_impression  = $db->insert_id;
+			$this->impression_id = $impression_text_id;
 			return $last_impression;
 			
 		}
@@ -190,50 +196,6 @@ class Visitor {
 		}
 	}
 	
-	public function insert($table_name, $data)
-	{
-		global $db;
-		$final_data = array();
-		if (is_array($data)) {
-			foreach ($data as $key => $value) {
-				if (strpos($key, '_id') !== false) {
-					if ($value == '') {
-						$final_data[$key] = 0;
-					} elseif (is_null($value)) {
-						$final_data[$key] = 0;
-					} else {
-						$final_data[$key] = $value;
-					}
-				} else {
-					$final_data[$key] = $value;
-				}
-			}
-		}
-		$return = $db->insert($table_name, $final_data);
-		return $return;
-	}
-	
-	public function update($table_name, $data, $conditions)
-	{
-		global $db;
-		if (is_array($data)) {
-			foreach ($data as $key => $value) {
-				if (strpos($key, '_id') !== false) {
-					if ($value == '') {
-						$final_data[$key] = 0;
-					} elseif (is_null($value)) {
-						$final_data[$key] = 0;
-					} else {
-						$final_data[$key] = $value;
-					}
-				} else {
-					$final_data[$key] = $value;
-				}
-			}
-		}
-		$return = $db->update($table_name, $final_data, $conditions);
-		return $return;
-	}
 }
 
 

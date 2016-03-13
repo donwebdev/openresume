@@ -21,8 +21,6 @@ class Contact_Form {
 	
 	public function __construct($resume) {
 
-		global $settings;
-
 		# Make this a reference to the resume object instead of a copy
 		$this->resume = &$resume;	
 		
@@ -83,8 +81,6 @@ class Contact_Form {
 	
 	# Output a contact form with either the contact information, a contact form, or both
 	public function contact_form() {
-		
-		global $settings;
 	
 		$output = '';
 		$i = 0;
@@ -154,8 +150,6 @@ class Contact_Form {
 	# Output list of contact info if the setting is set
 	public function contact_info() { 
 	
-		global $settings;
-	
 		$output = '';
 	
 		if($this->resume->show_contact_details==1) {
@@ -170,7 +164,6 @@ class Contact_Form {
 	# Ajax output
 	public function contact_info_ajax() { 
 	
-		global $settings;
 	
 		if($this->resume->show_phone == 1) {
 		

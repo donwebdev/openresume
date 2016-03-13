@@ -35,6 +35,7 @@ $output = '<!DOCTYPE html>
   <script type="text/javascript" src="libs/jquery-1.12.1.min.js"></script>
   <script type="text/javascript" src="libs/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="view/js/contact.js"></script>
+  <script type="text/javascript" src="view/js/ajax_handler.js"></script>
   <script type="text/javascript" src="controller/js/form_controller.js"></script>
 
 

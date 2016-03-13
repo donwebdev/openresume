@@ -36,12 +36,14 @@ class Resume {
 		global $db;	
 		global $settings;
 		
+		
 		# If resume id is set we load that resume
 		if(isset($_GET['resume_id']) && is_numeric($_GET['resume_id'])) {
 			
 			$resume_id = $_GET['resume_id'];
 			
 		}
+		
 		
 		# If resume isn't set, load the main resume
 		if($resume_id=='') {
@@ -68,12 +70,14 @@ class Resume {
 						
 		}
 		
+		
 		# If resume is deleted just return here and don't load anything
 		if($resume_row->deleted !== null) {
 			
 			return;
 			
 		}
+		
 		
 		# Set up the needed variables here, lot of text, but convenient later
 		$this->id = $resume_row->id;
@@ -87,6 +91,7 @@ class Resume {
 		$this->show_phone = $resume_row->show_phone;
 		$this->show_email = $resume_row->show_email;	
 		$this->show_address = $resume_row->show_address;		
+		
 		
 		# Check for resume overrides, kind of a bowl of spaghetti but still simple
 		# I would normally put this in a loop, but it's a small amount of functionality

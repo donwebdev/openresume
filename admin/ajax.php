@@ -5,7 +5,7 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# ajax.php
+# admin/ajax.php
 # Handle ajax requests and send them to the right objects
 # Output based on ajax request received
 #
@@ -15,7 +15,7 @@
 $ajax = true;
 
 # Start the application
-require_once('application_start.php');
+require_once('admin_start.php');
 
 # Rules for requests
 require_once('controller/c_ajax.php');

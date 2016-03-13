@@ -132,7 +132,7 @@ class Resume_Output {
 			# Load all the resume section items normally
 			
 			$output .= '
-				<h3 class="section_name">'.$section['title'].'</h3>';
+		<h3 class="section_name">'.$section['title'].'</h3>';
 			
 			foreach($section['section_items'] as $key => $value) {
 			
@@ -175,8 +175,7 @@ class Resume_Output {
 				'.$item['value'];
 			
 			
-		}
-		
+		}	
 	
 		
 		return $output;

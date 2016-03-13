@@ -69,12 +69,13 @@ require('view/c_form.php');
 require('view/html_header.php');
 require('view/html_footer.php');
 
+$settings = new Settings;
+
 # Don't make objects if this is ajax
 
 if(!isset($ajax)) {
 
 # Instantiate all the model objects we need
-$settings = new Settings;
 $visitor = new Visitor;
 $user = new User; 
 $cover_letter = new Cover_Letter;
