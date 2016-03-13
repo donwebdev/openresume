@@ -23,7 +23,7 @@ class Resume_Output {
 		global $cover_letter;
 		
 		# Make the header
-		$this->output = $this->resume_header($resume,$cover_letter);
+		$this->output = $this->resume_header($resume,$cover_letter,$contact_form);
 		
 		
 		# Iterate the section arrays to make the sections
@@ -42,7 +42,7 @@ class Resume_Output {
 	
 	
 	# Header HTML
-	public function resume_header($resume,$cover_letter) {
+	public function resume_header($resume,$cover_letter,$contact_form) {
 		
 		global $settings;
 		
@@ -85,21 +85,7 @@ class Resume_Output {
 	
 		# Contact Button - Runs some AJAX that gets contact details and the contact form
 		
-		$output .= '
-		
-			<div class="contact_button_container">
-				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="">'.CONTACT_ME.' &raquo;</a>';
-				
-		if($settings->setting['your_location']!='') {		
-		
-		
-				$output .= '
-				<span class="well location">'.LOCATED_IN.' '.$settings->setting['your_location'].'</span>';
-				
-		}
-		
-		$output .= '
-			</div>';	
+		$output .= $contact_form->output;
 			
 				
 		
@@ -113,16 +99,17 @@ class Resume_Output {
 	public function resume_section($section) {
 		
 		$output = '
-	<div class="row">';
+	<div class="row section">';
 	
 	
-		$output .= '
-		<h3 class="section_name">'.$section['title'].'</h3>';
 		
 		# Section type specific behavior here
 		
 		if($section['section_type']=='Bullet Points') {
-		
+			
+			$output .= '
+		<h3 class="section_name section_bullet_points">'.$section['title'].'</h3>';
+			
 			$output .= '
 			<ul>';		
 		
@@ -143,6 +130,9 @@ class Resume_Output {
 		} else {			
 		
 			# Load all the resume section items normally
+			
+			$output .= '
+				<h3 class="section_name">'.$section['title'].'</h3>';
 			
 			foreach($section['section_items'] as $key => $value) {
 			
@@ -166,17 +156,25 @@ class Resume_Output {
 		if($section['section_type']=='Text') {
 		
 			$output = '
-			<p class="resume_item">'.$item['value'].'</p>';
+			<p>'.$item['value'].'</p>';
 		
 		}
 		
 	
 		# Bullet Points
-		if($section['section_type']=='Bullet Points') {
+		elseif($section['section_type']=='Bullet Points') {
 		
 			$output = '
-				<li class="resume_item_list">'.$item['value'].'</li>';
+				<li>'.$item['value'].'</li>';
 		
+		}
+		
+		else {
+		
+			$output = '
+				'.$item['value'];
+			
+			
 		}
 		
 	

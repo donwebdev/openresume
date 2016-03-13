@@ -33,7 +33,7 @@ class Form {
 		$this->form_name = $form_name;
 
 		# Check to see if this form has been posted
-		if($isset($_POST['form_name']) && $_POST['form_name']==$form_name) {
+		if(isset($_POST['form_name']) && $_POST['form_name']==$form_name) {
 			
 		}
 
@@ -42,18 +42,21 @@ class Form {
 			
 			
 			# Create HTML for this form element by supplying arguments
-			$this->fields[$field_name] = $this->$settings['field_type'](
+			if(isset($this->$settings['field_type'])) {
 			
-				$settings['field_name'],
-				$settings['field_required'],
-				$settings['field_value'],
-				$settings['field_children'],
-				$settings['field_error_text'],
-				$settings['field_error_conditions'],
-				$settings['field_html']
+				$this->fields[$field_name] = $this->$settings['field_type'](
 				
-			);
+					$settings['field_name'],
+					$settings['field_required'],
+					$settings['field_value'],
+					$settings['field_children'],
+					$settings['field_error_text'],
+					$settings['field_error_conditions'],
+					$settings['field_html']
+					
+				);
 			
+			}
 			
 		}	
 		

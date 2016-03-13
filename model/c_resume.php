@@ -15,6 +15,7 @@ class Resume {
 
 	public $secondary_resumes = array();
 	public $resume_sections = array();
+	public $id;
 	public $display_type;
 	public $style;
 	public $name;
@@ -24,8 +25,11 @@ class Resume {
 	public $email;
 	public $title;
 	public $portrait;
-	public $contact_details_display;
-	public $contact_form_details_display;
+	public $show_contact_details;
+	public $show_contact_form;
+	public $show_phone;
+	public $show_email;
+	public $show_address;
 
 	public function __construct($resume_id='') {
 	
@@ -72,6 +76,7 @@ class Resume {
 		}
 		
 		# Set up the needed variables here, lot of text, but convenient later
+		$this->id = $resume_row->id;
 		$this->display_type = $resume_row->display_type;
 		$this->style = $resume_row->style;
 		$this->resume_name = $resume_row->name;
@@ -79,6 +84,9 @@ class Resume {
 		$this->portrait = $resume_row->portrait;	
 		$this->show_contact_details = $resume_row->show_contact_details;	
 		$this->show_contact_form = $resume_row->show_contact_form;	
+		$this->show_phone = $resume_row->show_phone;
+		$this->show_email = $resume_row->show_email;	
+		$this->show_address = $resume_row->show_address;		
 		
 		# Check for resume overrides, kind of a bowl of spaghetti but still simple
 		# I would normally put this in a loop, but it's a small amount of functionality

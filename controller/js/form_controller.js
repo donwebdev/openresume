@@ -1,4 +1,17 @@
-// JavaScript Document
+/*
+
+-------------------------------------------------------
+
+ OPEN RESUME by Don Westendorp
+ © 2016 - Released under GPL v3 Licensing
+
+ view/form_controller.js
+ Javascript for validating and submitting forms
+
+-------------------------------------------------------
+
+*/
+
 
 var FormValidator = function () {
 	

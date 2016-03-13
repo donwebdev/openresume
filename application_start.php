@@ -43,8 +43,10 @@ require('model/c_visitor.php');
 require('model/c_user.php');
 require('model/c_settings.php');
 
-# SpyC
+
+# SpyC for Piwik
 require('libs/spyc/Spyc.php');
+
 
 # Piwik user agent parser
 require('libs/device-detector/DeviceDetector.php');
@@ -67,14 +69,18 @@ require('view/c_form.php');
 require('view/html_header.php');
 require('view/html_footer.php');
 
+# Don't make objects if this is ajax
 
-# Instantiate all the objects we need
+if(!isset($ajax)) {
+
+# Instantiate all the model objects we need
 $settings = new Settings;
 $visitor = new Visitor;
 $user = new User; 
 $cover_letter = new Cover_Letter;
 $resume = new Resume;
 
+}
 
 # Load the language
 require('language/'.$settings->setting['language'].'/frontend.php');
