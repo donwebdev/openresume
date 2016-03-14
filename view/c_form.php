@@ -57,17 +57,7 @@ class Form {
 			# Create HTML for this form element by supplying arguments
 			if(method_exists($this,$settings['field_type'])) {
 			
-				$this->fields[$settings['field_name']] = $this->$settings['field_type'](
-				
-					$settings['field_name'],
-					$settings['field_required'],
-					$settings['field_value'],
-					$settings['field_children'],
-					$settings['field_error_text'],
-					$settings['field_error_conditions'],
-					$settings['field_html']
-					
-				);
+				$this->fields[$settings['field_name']] = $this->$settings['field_type']($settings);
 			
 			}
 			
@@ -132,10 +122,10 @@ class Form {
 	
 	# Make a hidden form element, pretty easy.
 	
-	public function hidden($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
+	public function hidden($settings) {
 
 		$output = '
-		<input type="hidden" name="'.$field_name.'" value="'.$field_value.'" '.$field_html.'>
+		<input type="hidden" name="'.$settings['field_name'].'" value="'.$settings['field_value'].'" '.$settings['field_html'].'>
 		';
 		
 		return $output;
@@ -145,14 +135,14 @@ class Form {
 	
 	# Make a text field and do everything with it
 	
-	public function text($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
+	public function text($settings) {
 
 		$output = '
-		<div class="form_field '.$field_name.'_div">
-			<input type="text" name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_form_field '.$field_name.'" value="'.$field_value.'" '.$field_html.'>
+		<div class="form_field '.$settings['field_name'].'_div">
+			<input type="text" name="'.$settings['field_name'].'" id="'.$this->form_name.'_'.$settings['field_name'].'" class="'.$this->form_name.'_form_field '.$settings['field_name'].'" value="'.$settings['field_value'].'" '.$settings['field_html'].'>
 		</div>
-		<div class="error_text '.$field_name.'_error">
-			<div class="'.$field_name.'_field_error_text">'.$field_error_text.'</div>			
+		<div class="error_text '.$settings['field_name'].'_error">
+			<div class="'.$settings['field_name'].'_field_error_text">'.$settings['field_error_text'].'</div>			
 		</div>
 		';
 		
@@ -166,14 +156,14 @@ class Form {
 	}
 	
 	
-	public function textarea($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
+	public function textarea($settings) {
 
 		$output = '
-		<div class="form_field '.$field_name.'_div">
-			<textarea name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_field '.$field_name.'" '.$field_html.'>'.$field_value.'</textarea>
+		<div class="form_field '.$settings['field_name'].'_div">
+			<textarea name="'.$settings['field_name'].'" id="'.$this->form_name.'_'.$settings['field_name'].'" class="'.$this->form_name.'_field '.$settings['field_name'].'" '.$settings['field_html'].'>'.$settings['field_value'].'</textarea>
 		</div>
-		<div class="error_text '.$field_name.'_error">
-			<div class="'.$field_name.'_field_error_text">'.$field_error_text.'</div>			
+		<div class="error_text '.$settings['field_name'].'_error">
+			<div class="'.$settings['field_name'].'_field_error_text">'.$settings['field_error_text'].'</div>			
 		</div>
 		';	
 		

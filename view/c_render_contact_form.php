@@ -221,6 +221,7 @@ class Contact_Form {
 						
 		$form[$i]['field_type'] = 'text';
 		$form[$i]['field_name'] = 'name';
+		$form[$i]['field_title'] = YOUR_NAME;
 		$form[$i]['field_required'] = true;
 		$form[$i]['field_value'] = '';
 		$form[$i]['field_children'] = '';
@@ -231,6 +232,7 @@ class Contact_Form {
 						
 		$form[$i]['field_type'] = 'text';
 		$form[$i]['field_name'] = 'email';
+		$form[$i]['field_title'] = YOUR_EMAIL;
 		$form[$i]['field_required'] = true;
 		$form[$i]['field_value'] = '';
 		$form[$i]['field_children'] = '';
@@ -241,6 +243,7 @@ class Contact_Form {
 						
 		$form[$i]['field_type'] = 'textarea';
 		$form[$i]['field_name'] = 'message';
+		$form[$i]['field_title'] = YOUR_MESSAGE;
 		$form[$i]['field_required'] = true;
 		$form[$i]['field_value'] = '';
 		$form[$i]['field_children'] = '';
