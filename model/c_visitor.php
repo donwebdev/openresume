@@ -43,11 +43,6 @@ class Visitor {
 	{
 		if ($this->visitor == NULL) {
 			
-			# Most likely an ajax request, lets not log these.
-			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-				return;
-			}
-			
 			global $db;
 			global $settings;
 			
@@ -125,7 +120,7 @@ class Visitor {
 			}
 			
 			# Quit if it's admin panel
-			if (strpos($url, '/admin/') !== false) {
+			if (strpos($url, '/admin') !== false) {
 				return;
 			}
 			

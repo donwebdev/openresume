@@ -96,7 +96,12 @@ class Ajax {
 	# Sanitize output here so it can be returned in the most compatible way
 	public function output() {
 		 
-				
+		# Remove all extra whitespace and line breaks
+		$this->output = trim(preg_replace('/[\s\t\n\r\s]+/', ' ', $this->output));	
+		
+		# Escape all single quotes
+		$this->output = str_replace("'", "\\'",$this->output);
+		
 		return $this->output;
 		
 	}
@@ -105,9 +110,9 @@ class Ajax {
 	# Get contact details
 	private function contact_details() {
 	
-		$contact_form = new Contact_Form($this->resume);
+		$contact_form = new Contact_Form($this->resume,true);
 		
-		$contact_form->contact_info_ajax();    
+		$contact_form->contact_info_ajax_output();
 		
 		return $contact_form->ajax_output;
 			

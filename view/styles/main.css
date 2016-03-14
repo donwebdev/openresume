@@ -52,6 +52,28 @@ These styles all override Bootstrap
 
 ---------------------------------------*/
 
+/*
+
+Main Styles
+
+*/
+
+
+.right {
+	float: 			right;
+}
+
+.cursor_hand:hover {
+	cursor:pointer;	
+}
+
+
+/* 
+
+Form Styles
+
+*/
+
 
 
 /* 
@@ -87,12 +109,38 @@ Contact Form Styles
 	display: 		none;
 }
 
+.contact_form_top {
+
+	margin-bottom: 	17px;
+	border-top: 	5px solid #ff4f00;
+	
+}
+
+.contact_form_container {
+
+	margin: 6px 20px 0 20px;	
+	
+}
+
 .contact_form_header {
 
 	font-size: 		26px;
 	color: 			#ff4f00;
-	margin: 		30px 20px 10px 20px;
+	margin: 		0 14px 10px 12px;
 	
+}
+
+.contact_form_close_button {
+
+	margin-top: 	10px;
+	margin-right: 	10px; 		
+	
+}
+
+.contact_form_details {
+
+	margin: 0 20px 20px 20px;
+
 }
 
 .contact_button_container {
@@ -192,11 +240,6 @@ Resume Styles
 	margin-top: 	20px;
 	margin-bottom: 	20px;
 }
-
-.right {
-	float: 			right;
-}
-
 
 @media (max-width: 650px) {
 

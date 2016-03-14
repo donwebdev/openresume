@@ -31,9 +31,22 @@ class Form {
 
 		# The form name is passed with the post so that the right controller is used		
 		$this->form_name = $form_name;
+		$this->form_header = $this->form_header();			
+		$this->form_footer = $this->form_footer();
 
 		# Check to see if this form has been posted
 		if(isset($_POST['form_name']) && $_POST['form_name']==$form_name) {
+
+			# Run form controller here if it's a controlled form
+			
+			switch($form_name) {
+			
+				case 'contact_form':
+				
+				
+				break;	
+				
+			}
 			
 		}
 
@@ -42,9 +55,9 @@ class Form {
 			
 			
 			# Create HTML for this form element by supplying arguments
-			if(isset($this->$settings['field_type'])) {
+			if(method_exists($this,$settings['field_type'])) {
 			
-				$this->fields[$field_name] = $this->$settings['field_type'](
+				$this->fields[$settings['field_name']] = $this->$settings['field_type'](
 				
 					$settings['field_name'],
 					$settings['field_required'],
@@ -93,18 +106,14 @@ class Form {
 	
 	# HTML Header for the form, includes the form validation javascript.
 
-	public function form_header($form_name,$edit_id) {
-		
-		if($edit_id!='') {
-			
-		}
+	public function form_header() {
 		
 		$output = '
-		<form id="'.$form_name.'">
-		<input type="hidden" name="form_id" value="'.$form_name.'">
+		<form id="'.$this->form_name.'">
+		<div class="form_container '.$this->form_name.'_container">
+		<input type="hidden" name="form_name" value="'.$this->form_name.'">
 		';
-		
-		
+			
 		return $output;
 		
 	}
@@ -113,7 +122,10 @@ class Form {
 	
 	public function form_footer() {
 		
-		$output = "</div></form>";
+		$output = '
+		</div></form>';
+		
+		return $output;
 		
 	}
 	
@@ -133,14 +145,13 @@ class Form {
 	
 	# Make a text field and do everything with it
 	
-	public function text_field($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
+	public function text($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
 
 		$output = '
-		<div class="field '.$field_name.'_div">
-			<input type="text" name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_field '.$field_name.'" value="'.$field_value.'" '.$field_html.'>
+		<div class="form_field '.$field_name.'_div">
+			<input type="text" name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_form_field '.$field_name.'" value="'.$field_value.'" '.$field_html.'>
 		</div>
 		<div class="error_text '.$field_name.'_error">
-			<div class="'.$field_name.'_field_required">'.$field_required.'</div>	
 			<div class="'.$field_name.'_field_error_text">'.$field_error_text.'</div>			
 		</div>
 		';
@@ -155,7 +166,18 @@ class Form {
 	}
 	
 	
-	public function text_area() {
+	public function textarea($field_name,$field_required,$field_value,$field_children,$field_error_text,$field_error_conditions,$field_html) {
+
+		$output = '
+		<div class="form_field '.$field_name.'_div">
+			<textarea name="'.$field_name.'" id="'.$this->form_name.'_'.$field_name.'" class="'.$this->form_name.'_field '.$field_name.'" '.$field_html.'>'.$field_value.'</textarea>
+		</div>
+		<div class="error_text '.$field_name.'_error">
+			<div class="'.$field_name.'_field_error_text">'.$field_error_text.'</div>			
+		</div>
+		';	
+		
+		return $output;
 		
 	}
 	
@@ -185,7 +207,11 @@ class Form {
 	}
 	
 	
-	public function submit() {
+	public function submit($submit_text) {
+		
+		$output = '<button class="btn btn-primary '.$this->form_name.'_submit_button" id="'.$this->form_name.'_submit_button" type="submit">'.$submit_text.'</button>';
+		
+		return $output;
 		
 	}
 	

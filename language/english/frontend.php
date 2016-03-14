@@ -14,6 +14,7 @@
 # c_render_resume.php
 define('CONTACT_ME','Contact Me');
 define('LOCATED_IN','Located In');
+define('SEND_MESSAGE','Send Message');
 define('SEND_ME_A_MESSAGE','Send Me A Message');
 
 

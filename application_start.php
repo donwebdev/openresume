@@ -69,6 +69,11 @@ require('view/c_form.php');
 require('view/html_header.php');
 require('view/html_footer.php');
 
+# Load the controllers
+require('controller/c_form_controller.php');
+require('controller/c_contact_controller.php');
+
+
 $settings = new Settings;
 
 # Don't make objects if this is ajax
