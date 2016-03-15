@@ -25,7 +25,9 @@ class Form {
 	public $form_javascript;
 	public $form_header;
 	public $form_footer;
-	public $fields = Array();	
+	public $fields = array();	
+	
+	private $form_fields_array = array();
 
 	public function __construct($form_name,$form_fields_array,$edit_id='') {
 
@@ -46,39 +48,45 @@ class Form {
 				
 				break;	
 				
-			}
-			
+			}			
 		}
+		
 
 		# Iterate through all the fields and build the output array
-		foreach($form_fields_array as $field_name => $settings) {
-			
+		foreach($form_fields_array as $field_name => $settings) {			
 			
 			# Create HTML for this form element by supplying arguments
-			if(method_exists($this,$settings['field_type'])) {
+			if(method_exists($this,$settings['type'])) {
 			
-				$this->fields[$settings['field_name']] = $this->$settings['field_type']($settings);
+				$this->fields[$settings['name']] = $this->$settings['type']($settings);
 			
 			}
 			
-		}	
-		
+		}			
 	
 	}
 
 
 	# Make javascript to validate the form here
-
-	public function form_javascript($form_name,$form_fields_array) {
+	private function form_javascript() {
 		
 		$output = '
 		
 		<script type="text/javascript">
 		
+		';
+		
+		# Submission javascript ajax
+		
+		$output = '
+		
+			
 		
 		';
 		
-		foreach($form_fields_array as $field_name => $settings) {
+		
+		# Fill out each error validation javascript
+		foreach($this->form_fields_array as $field_name => $settings) {
 			
 			
 			
@@ -96,7 +104,7 @@ class Form {
 	
 	# HTML Header for the form, includes the form validation javascript.
 
-	public function form_header() {
+	private function form_header() {
 		
 		$output = '
 		<form id="'.$this->form_name.'">
@@ -110,7 +118,7 @@ class Form {
 	
 	# HTML Footer for the form, just closes everything up.
 	
-	public function form_footer() {
+	private function form_footer() {
 		
 		$output = '
 		</div></form>';
@@ -122,10 +130,10 @@ class Form {
 	
 	# Make a hidden form element, pretty easy.
 	
-	public function hidden($settings) {
+	private function hidden($settings) {
 
 		$output = '
-		<input type="hidden" name="'.$settings['field_name'].'" value="'.$settings['field_value'].'" '.$settings['field_html'].'>
+		<input type="hidden" name="'.$settings['name'].'" value="'.$settings['value'].'" '.$settings['html'].'>
 		';
 		
 		return $output;
@@ -135,14 +143,22 @@ class Form {
 	
 	# Make a text field and do everything with it
 	
-	public function text($settings) {
+	private function text($settings) {
+
+		$data_validation = '';
+		
+		if($settings['validation']!='') {
+		
+			$data_validation = 'data-validate="'.$settings['validation'].'"';
+			
+		}
 
 		$output = '
-		<div class="form_field '.$settings['field_name'].'_div">
-			<input type="text" name="'.$settings['field_name'].'" id="'.$this->form_name.'_'.$settings['field_name'].'" class="'.$this->form_name.'_form_field '.$settings['field_name'].'" value="'.$settings['field_value'].'" '.$settings['field_html'].'>
+		<div class="form_field '.$settings['name'].'_div">
+			<input type="text" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" '.$data_validation.' '.$settings['html'].'>
 		</div>
-		<div class="error_text '.$settings['field_name'].'_error">
-			<div class="'.$settings['field_name'].'_field_error_text">'.$settings['field_error_text'].'</div>			
+		<div class="error_text '.$settings['name'].'_error">
+			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			
 		</div>
 		';
 		
@@ -151,19 +167,19 @@ class Form {
 	}
 	
 	
-	public function password_field() {
+	private function password_field() {
 		
 	}
 	
 	
-	public function textarea($settings) {
+	private function textarea($settings) {
 
 		$output = '
-		<div class="form_field '.$settings['field_name'].'_div">
-			<textarea name="'.$settings['field_name'].'" id="'.$this->form_name.'_'.$settings['field_name'].'" class="'.$this->form_name.'_field '.$settings['field_name'].'" '.$settings['field_html'].'>'.$settings['field_value'].'</textarea>
+		<div class="form_field '.$settings['name'].'_div">
+			<textarea placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_field '.$this->form_name.'_'.$settings['name'].'" '.$settings['html'].'>'.$settings['value'].'</textarea>
 		</div>
-		<div class="error_text '.$settings['field_name'].'_error">
-			<div class="'.$settings['field_name'].'_field_error_text">'.$settings['field_error_text'].'</div>			
+		<div class="error_text '.$settings['name'].'_error">
+			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			
 		</div>
 		';	
 		
@@ -172,34 +188,34 @@ class Form {
 	}
 	
 	
-	public function dropdown() {
+	private function dropdown() {
 		
 	}
 	
 	
-	public function dropdown_from_enum() {
+	private function dropdown_from_enum() {
 		
 	}
 	
 	
-	public function dropdown_from_table() {
+	private function dropdown_from_table() {
 		
 	}
 		
 		
-	public function checkbox() {
+	private function checkbox() {
 		
 	}
 	
 	
-	public function radio() {
+	private function radio() {
 		
 	}
 	
 	
 	public function submit($submit_text) {
 		
-		$output = '<button class="btn btn-primary '.$this->form_name.'_submit_button" id="'.$this->form_name.'_submit_button" type="submit">'.$submit_text.'</button>';
+		$output = '<button class="btn btn-primary '.$this->form_name.'_submit_button" id="'.$this->form_name.'_submit_button">'.$submit_text.'</button>';
 		
 		return $output;
 		

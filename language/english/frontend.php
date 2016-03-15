@@ -11,10 +11,10 @@
 #-------------------------------------------------------
 
 
-# c_render_resume.php
+# view/c_render_resume.php
 
 
-# c_render_contact_form.php
+# view/c_render_contact_form.php
 define('CONTACT_ME','Contact Me');
 define('LOCATED_IN','Located In');
 define('SEND_MESSAGE','Send Message');

@@ -79,13 +79,14 @@ class Resume_Output {
 		}
 		
 	
-		$output .= '
-			</div>';
-	
-	
 		# Contact Button - Runs some AJAX that gets contact details and the contact form
 		
 		$output .= $contact_form->output;
+		
+	
+		$output .= '
+			</div>';
+	
 			
 				
 		

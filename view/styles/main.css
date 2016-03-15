@@ -74,6 +74,31 @@ Form Styles
 
 */
 
+.form_field {
+
+	margin-top: 	4px;	
+	margin-bottom: 	4px;	
+	
+}
+
+.form_field input {
+	
+	padding: 		6px 4px;
+	font-size: 		16px;
+	width: 			100%;
+
+}
+
+.form_field textarea {
+
+	width: 			100%;
+	font-size: 		16px;
+	padding: 		6px 4px;
+	margin: 0;
+	
+}
+
+
 
 
 /* 
@@ -83,6 +108,7 @@ Contact Form Styles
 */
 
 .overlay {
+
   	opacity:    	0.8; 
   	background: 	#000; 
   	width:      	100%;
@@ -92,41 +118,59 @@ Contact Form Styles
   	left:       	0; 
   	position:   	fixed;
 	display: 		none;
+
 }
 
 .contact_form {
+
 	z-index:   		101;
-	width: 			400px;
-	height: 		450px;
+	width: 			350px;
+	height: 		460px;
 	margin: 		0 auto;
 	background: 	#fff;
 	position: 		fixed;
 	left: 			50%;
 	top: 			50%;
-	margin-left: 	-200px;
-	margin-top: 	-225px;
+	margin-left: 	-175px;
+	margin-top: 	-230px;
     box-shadow: 	0px 0px 10px #111;
 	display: 		none;
+
+}
+
+.contact_form_hide_details {
+
+	height: 		320px;
+	margin-top: 	-160px;	
+	
 }
 
 .contact_form_top {
 
-	margin-bottom: 	17px;
+	margin-bottom: 	20px;
 	border-top: 	5px solid #ff4f00;
 	
 }
 
 .contact_form_container {
 
-	margin: 6px 20px 0 20px;	
+	margin-top: 	14px;
+	padding: 		0 30px 10px 20px;
+	background: 	#fff;	
 	
 }
 
 .contact_form_header {
 
-	font-size: 		26px;
+	font-size: 		24px;
 	color: 			#ff4f00;
-	margin: 		0 14px 10px 12px;
+	margin: 		0 16px 10px 12px;
+	
+}
+
+.contact_form_message {
+
+	height: 		80px;
 	
 }
 
@@ -139,7 +183,7 @@ Contact Form Styles
 
 .contact_form_details {
 
-	margin: 0 20px 20px 20px;
+	margin: 0 20px 15px 20px;
 
 }
 
@@ -167,7 +211,6 @@ Contact Form Styles
 
 .contact_info_container {
 	padding: 		0;
-	vertical-align: middle;
 }
 
 .location {
@@ -202,6 +245,7 @@ Resume Styles
 
 .resume_header {	
 	padding-top: 	30px;		
+	vertical-align: middle;
 }
 
 .resume_header > .row {	
@@ -219,7 +263,23 @@ Resume Styles
 	font-size: 		32px;
 	margin: 		0;
 	margin-top: 	10px;
-	margin-left: 	2px;	
+	margin-left: 	2px;
+}
+
+.contact_details {
+	margin-top: 	15px;
+}
+
+.contact_details div.contact_form_email_phone_container {
+	display: inline-block;
+	margin-right: 	30px;
+	margin-left: 	2px;
+}
+
+.contact_details div.contact_form_address {
+	display: inline-block;
+	margin-right: 	30px;
+	margin-left: 	2px;
 }
 
 .section_name {

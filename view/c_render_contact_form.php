@@ -159,7 +159,17 @@ class Contact_Form {
 		if($this->resume->show_contact_details==1) {
 					
 			$output .= '
-				<div class="contact_details" id="contact_form_details_'.$this->resume->id.'">				
+				<div class="contact_details" id="contact_form_details_'.$this->resume->id.'">';				
+				
+			$output .= '
+					<script type="text/javascript">
+						$(function() {
+							'.$this->contact_info_ajax().'
+						});						
+					</script>
+					';			
+				
+			$output .= '
 				</div>';
 		
 		}
@@ -181,24 +191,40 @@ class Contact_Form {
 	# Ajax output
 	public function contact_info_ajax_output() { 
 	
+		# Create a wrapper if email or phone are set
+		if($this->resume->show_email == 1 || $this->resume->show_phone == 1) {
 	
-		if($this->resume->show_phone == 1) {
+				
+			$this->ajax_output .= '
+							<div class="contact_form_email_phone_container">';
+	
 		
-		$this->ajax_output .= '
-						<div class="contact_form_phone">
-							'.$this->resume->phone.'
-						</div>';
+			if($this->resume->show_email == 1) {
+				
+				$this->ajax_output .= '
+								<div class="contact_form_email">
+									<a href="mailto:'.$this->resume->email.'" class="contact_form_email_link">'.$this->resume->email.'</a>							
+								</div>';
+					
+				}
+				
+			
+				if($this->resume->show_phone == 1) {
+				
+				
+				$this->ajax_output .= '
+								<div class="contact_form_phone">
+									'.$this->resume->phone.'
+								</div>';
+					
+				}					
+			
+			$this->ajax_output .= '
+							</div>';
+			
 			
 		}
 		
-		if($this->resume->show_email == 1) {
-		
-		$this->ajax_output .= '
-						<div class="contact_form_email">
-							<a href="'.$this->resume->email.'" class="contact_form_email_link">'.$this->resume->email.'</a>							
-						</div>';
-			
-		}
 		
 		if($this->resume->show_address == 1) {
 		
@@ -219,37 +245,34 @@ class Contact_Form {
 	
 		$i = 0;
 						
-		$form[$i]['field_type'] = 'text';
-		$form[$i]['field_name'] = 'name';
-		$form[$i]['field_title'] = YOUR_NAME;
-		$form[$i]['field_required'] = true;
-		$form[$i]['field_value'] = '';
-		$form[$i]['field_children'] = '';
-		$form[$i]['field_error_text'] = '';
-		$form[$i]['field_error_conditions'] = '';
-		$form[$i]['field_html'] = '';
+		$form[$i]['type'] = 'text';
+		$form[$i]['name'] = 'name';
+		$form[$i]['title'] = YOUR_NAME;
+		$form[$i]['validation'] = 'required';
+		$form[$i]['value'] = '';
+		$form[$i]['children'] = '';
+		$form[$i]['error_text'] = '';
+		$form[$i]['html'] = '';
 		$i++;
 						
-		$form[$i]['field_type'] = 'text';
-		$form[$i]['field_name'] = 'email';
-		$form[$i]['field_title'] = YOUR_EMAIL;
-		$form[$i]['field_required'] = true;
-		$form[$i]['field_value'] = '';
-		$form[$i]['field_children'] = '';
-		$form[$i]['field_error_text'] = '';
-		$form[$i]['field_error_conditions'] = '';
-		$form[$i]['field_html'] = '';
+		$form[$i]['type'] = 'text';
+		$form[$i]['name'] = 'email';
+		$form[$i]['title'] = YOUR_EMAIL;
+		$form[$i]['validation'] = 'required,email';
+		$form[$i]['value'] = '';
+		$form[$i]['children'] = '';
+		$form[$i]['error_text'] = '';
+		$form[$i]['html'] = '';
 		$i++;
 						
-		$form[$i]['field_type'] = 'textarea';
-		$form[$i]['field_name'] = 'message';
-		$form[$i]['field_title'] = YOUR_MESSAGE;
-		$form[$i]['field_required'] = true;
-		$form[$i]['field_value'] = '';
-		$form[$i]['field_children'] = '';
-		$form[$i]['field_error_text'] = '';
-		$form[$i]['field_error_conditions'] = '';
-		$form[$i]['field_html'] = '';
+		$form[$i]['type'] = 'textarea';
+		$form[$i]['name'] = 'message';
+		$form[$i]['title'] = YOUR_MESSAGE;
+		$form[$i]['validation'] = 'required';
+		$form[$i]['value'] = '';
+		$form[$i]['children'] = '';
+		$form[$i]['error_text'] = '';
+		$form[$i]['html'] = '';
 		
 		return $form;
 		
