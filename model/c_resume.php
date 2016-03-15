@@ -15,6 +15,9 @@ class Resume {
 
 	public $secondary_resumes = array();
 	public $resume_sections = array();
+	
+	
+	# Making these variables public for easier readibility in the application
 	public $id;
 	public $display_type;
 	public $style;
