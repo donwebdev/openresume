@@ -184,14 +184,14 @@
 		arrowShow: true,
 		arrowSize: 5,
 		breakNewLines: true,
-		elementPosition: "bottom",
+		elementPosition: "top right",
 		globalPosition: "top right",
 		style: "bootstrap",
 		className: "error",
-		showAnimation: "slideDown",
-		showDuration: 400,
+		showAnimation: "fadeIn",
+		showDuration: 100,
 		hideAnimation: "slideUp",
-		hideDuration: 200,
+		hideDuration: 100,
 		gap: 5
 	};
 

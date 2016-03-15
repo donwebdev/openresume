@@ -33,6 +33,7 @@ class Form {
 
 		# The form name is passed with the post so that the right controller is used		
 		$this->form_name = $form_name;
+		$this->form_javascript = $this->form_javascript();	
 		$this->form_header = $this->form_header();			
 		$this->form_footer = $this->form_footer();
 
@@ -73,12 +74,12 @@ class Form {
 		$output = '
 		
 		<script type="text/javascript">
-		
+				
 		';
 		
 		# Submission javascript ajax
 		
-		$output = '
+		$output .= '
 		
 			
 		
@@ -86,11 +87,11 @@ class Form {
 		
 		
 		# Fill out each error validation javascript
-		foreach($this->form_fields_array as $field_name => $settings) {
-			
+		foreach($this->form_fields_array as $field_name => $settings) {	
 			
 			
 		}
+		
 		
 		$output .= '
 		
@@ -98,6 +99,8 @@ class Form {
 		
 		
 		';
+		
+		return $output;
 		
 	}
 	
@@ -145,17 +148,9 @@ class Form {
 	
 	private function text($settings) {
 
-		$data_validation = '';
-		
-		if($settings['validation']!='') {
-		
-			$data_validation = 'data-validate="'.$settings['validation'].'"';
-			
-		}
-
 		$output = '
 		<div class="form_field '.$settings['name'].'_div">
-			<input type="text" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" '.$data_validation.' '.$settings['html'].'>
+			<input type="text" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" data-validate="'.$settings['validation'].'" '.$settings['html'].'>
 		</div>
 		<div class="error_text '.$settings['name'].'_error">
 			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			
@@ -176,7 +171,7 @@ class Form {
 
 		$output = '
 		<div class="form_field '.$settings['name'].'_div">
-			<textarea placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_field '.$this->form_name.'_'.$settings['name'].'" '.$settings['html'].'>'.$settings['value'].'</textarea>
+			<textarea placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_field '.$this->form_name.'_'.$settings['name'].'"  data-validate="'.$settings['validation'].'" '.$settings['html'].'>'.$settings['value'].'</textarea>
 		</div>
 		<div class="error_text '.$settings['name'].'_error">
 			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			

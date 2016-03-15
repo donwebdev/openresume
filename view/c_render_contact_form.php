@@ -133,7 +133,8 @@ class Contact_Form {
 				<h2 class="contact_form_header">'.SEND_ME_A_MESSAGE.'</h2>';
 		
 		
-		# Get form fields from form object		
+		# Get form fields from form object	
+		$output .= $form->form_javascript;		
 		$output .= $form->form_header;				
 		$output .= $form->fields['name'];
 		$output .= $form->fields['email'];				
@@ -248,7 +249,7 @@ class Contact_Form {
 		$form[$i]['type'] = 'text';
 		$form[$i]['name'] = 'name';
 		$form[$i]['title'] = YOUR_NAME;
-		$form[$i]['validation'] = 'required';
+		$form[$i]['validation'] = 'required,min(3,hello)';
 		$form[$i]['value'] = '';
 		$form[$i]['children'] = '';
 		$form[$i]['error_text'] = '';
