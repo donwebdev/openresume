@@ -87,8 +87,27 @@ function ajax_request(request_type,impression_id,url,container,behavior_loading,
 }
 
 
-function ajax_post() {
+function ajax_post(form_object,r_id) {
 	
+	$.ajax({
+    
+		type : 'POST',
+    	url : 'ajax.php?request_type=post&r_id='+r_id,
+    	data : $('#'+form_object.name).serialize()
+	
+	}).done(function(html) {
+		
+		console.log(html);	
+			
+	}).fail(function() {
+		
+		
+	});
+	
+	
+
+			
+	console.log();
 	
 }
 

@@ -107,6 +107,23 @@ class Ajax {
 	}
 	
 	
+	# The post handler
+	private function post() {
+	
+		$output = 'post<br>';
+		
+		foreach($_POST as $key => $value) {
+		
+			$output .= $key.' -> '.$value.'<br>';	
+			
+		}
+		
+		return $output;
+			
+		
+	}
+	
+	
 	# Get contact details
 	private function contact_details() {
 	

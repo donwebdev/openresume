@@ -63,12 +63,12 @@ class Contact_Form {
 		
 		$output .= '		
 			<div class="contact_button_container">
-				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.'); '.$this->contact_info_ajax().'">'.CONTACT_ME.' &raquo;</a>';
+				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.'); '.$this->contact_info_ajax().'">'.LANG_CONTACT_ME.' &raquo;</a>';
 				
 		if($settings->setting['your_location']!='') {					
 		
 				$output .= '
-				<span class="well location">'.LOCATED_IN.' '.$settings->setting['your_location'].'</span>';
+				<span class="well location">'.LANG_LOCATED_IN.' '.$settings->setting['your_location'].'</span>';
 				
 		}
 		
@@ -120,7 +120,7 @@ class Contact_Form {
 		if($show_details === true) {
 			
 			$output .= '
-				<h2 class="contact_form_header">'.CONTACT_ME.'</h2>
+				<h2 class="contact_form_header">'.LANG_CONTACT_ME.'</h2>
 					<div class="contact_form_details" id="contact_form_details_'.$this->resume->id.'">				
 					</div>';
 					
@@ -130,7 +130,7 @@ class Contact_Form {
 		# Create the contact form
 		
 		$output .= '
-				<h2 class="contact_form_header">'.SEND_ME_A_MESSAGE.'</h2>';
+				<h2 class="contact_form_header">'.LANG_SEND_ME_A_MESSAGE.'</h2>';
 		
 		
 		# Get form fields from form object	
@@ -139,7 +139,7 @@ class Contact_Form {
 		$output .= $form->fields['name'];
 		$output .= $form->fields['email'];				
 		$output .= $form->fields['message'];		
-		$output .= $form->submit(SEND_MESSAGE);					
+		$output .= $form->submit(LANG_SEND_MESSAGE);					
 		$output .= $form->form_footer;
 				
 		
@@ -248,7 +248,7 @@ class Contact_Form {
 						
 		$form[$i]['type'] = 'text';
 		$form[$i]['name'] = 'name';
-		$form[$i]['title'] = YOUR_NAME;
+		$form[$i]['title'] = LANG_YOUR_NAME;
 		$form[$i]['validation'] = 'required,min(3,hello)';
 		$form[$i]['value'] = '';
 		$form[$i]['children'] = '';
@@ -258,7 +258,7 @@ class Contact_Form {
 						
 		$form[$i]['type'] = 'text';
 		$form[$i]['name'] = 'email';
-		$form[$i]['title'] = YOUR_EMAIL;
+		$form[$i]['title'] = LANG_YOUR_EMAIL;
 		$form[$i]['validation'] = 'required,email';
 		$form[$i]['value'] = '';
 		$form[$i]['children'] = '';
@@ -268,7 +268,7 @@ class Contact_Form {
 						
 		$form[$i]['type'] = 'textarea';
 		$form[$i]['name'] = 'message';
-		$form[$i]['title'] = YOUR_MESSAGE;
+		$form[$i]['title'] = LANG_YOUR_MESSAGE;
 		$form[$i]['validation'] = 'required';
 		$form[$i]['value'] = '';
 		$form[$i]['children'] = '';

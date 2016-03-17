@@ -1,3 +1,10 @@
+<?php 
+# Load the language
+require('../language/'.$_GET['language'].'/frontend.php');
+?>
+
+//<script type="text/javascript">
+
 /** Verify.js - v0.0.1 - 2013/06/12
  * https://github.com/jpillora/verify
  * Copyright (c) 2013 Jaime Pillora - MIT
@@ -1149,7 +1156,7 @@ var ValidationForm = null;
 	  */
 	  if(success===true) {
 	  
-	  	ajax_post(this);
+	  	ajax_post(this,'<?= $_GET['r_id'] ?>');
 	  
 	  }
 	  
@@ -1777,35 +1784,35 @@ log("plugin added.");
      */
     currency: {
       regex: /^\-?\$?\d{1,2}(,?\d{3})*(\.\d+)?$/,
-      message: "Invalid monetary value"
+      message: "<?= LANG_INVALID_MONETARY_VALUE ?>"
     },
     email: {
       regex: /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      message: "Invalid email address"
+      message: "<?= LANG_INVALID_EMAIL_ADDRESS ?>"
     },
     url: {
       regex: /^https?:\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]/,
-      message: "Invalid URL"
+      message: "<?= LANG_INVALID_URL ?>"
     },
     alphanumeric: {
       regex: /^[0-9A-Za-z]+$/,
-      message: "Use digits and letters only"
+      message: "<?= LANG_USE_DIGITS_AND_LETTERS_ONLY ?>"
     },
     street_number: {
       regex: /^\d+[A-Za-z]?(-\d+)?[A-Za-z]?$/,
-      message: "Street Number only"
+      message: "<?= LANG_STREET_NUMBER_ONLY ?>"
     },
     number: {
       regex: /^\d+$/,
-      message: "Use digits only"
+      message: "<?= LANG_USE_DIGITS_ONLY ?>"
     },
     numberSpace: {
       regex: /^[\d\ ]+$/,
-      message: "Use digits and spaces only"
+      message: "<?= LANG_USE_DIGITS_AND_SPACES_ONLY ?>"
     },
     postcode: {
       regex: /^\d{4}$/,
-      message: "Invalid postcode"
+      message: "<?= LANG_INVALID_POSTCODE ?>"
     },
     date: {
       fn: function(r) {
@@ -1813,7 +1820,7 @@ log("plugin added.");
           return true;
         return r.message;
       },
-      message: "Invalid date"
+      message: "<?= LANG_INVALID_DATE ?>"
     },
     required: {
 
@@ -1851,9 +1858,9 @@ log("plugin added.");
         return true;
       },
       messages: {
-        "all": "This field is required",
-        "multiple": "Please select an option",
-        "single": "This checkbox is required"
+        "all": "<?= LANG_THIS_FIELD_IS_REQUIRED ?>",
+        "multiple": "<?= LANG_PLEASE_SELECT_AN_OPTION ?>",
+        "single": "<?= LANG_THIS_CHECKBOX_IS_REQUIRED ?>"
       }
     },
     regex: {
@@ -1889,13 +1896,13 @@ log("plugin added.");
       r.val(r.val().replace(/\D/g,''));
       var v = r.val();
       if(!v.match(/^\+?[\d\s]+$/))
-        return "Use digits and spaces only";
+        return "<?= LANG_USE_DIGITS_AND_SPACES_ONLY ?>";
       if(v.match(/^\+/))
         return true; //allow all international
       if(!v.match(/^0/))
-        return "Number must start with 0";
+        return "<?= LANG_NUMBER_MUST_START_WITH_0 ?>";
       if(v.replace(/\s/g,"").length !== 10)
-        return "Must be 10 digits long";
+        return "<?= LANG_MUST_BE_10_DIGITS_LONG ?>";
       return true;
     },
     size: function(r){
@@ -1903,12 +1910,12 @@ log("plugin added.");
       if(exactOrLower !== undefined && upper === undefined) {
         var exact = parseInt(exactOrLower, 10);
         if(r.val().length !== exact)
-          return  "Must be "+exact+" characters";
+          return  "<?= LANG_MUST_BE ?> "+exact+" <?= LANG_CHARACTERS ?>";
       } else if(exactOrLower !== undefined && upper !== undefined) {
         var lower = parseInt(exactOrLower, 10);
         upper = parseInt(upper, 10);
         if(v.length < lower || upper < v.length)
-          return "Must be between "+lower+" and "+upper+" characters";
+          return "<?= LANG_MUST_BE_BETWEEN ?> "+lower+" <?= LANG_AND ?> "+upper+" <?= LANG_CHARACTERS ?>";
       } else {
         r.warn("size validator parameter error on field: " + r.field.attr('name'));
       }
@@ -1918,13 +1925,13 @@ log("plugin added.");
     min: function(r) {
       var v = r.val(), min = parseInt(r.args[0], 10);
       if(v.length < min)
-        return "Must be at least " + min + " characters";
+        return "<?= LANG_MUST_BE_AT_LEAST ?> " + min + " <?= LANG_CHARACTERS ?>";
       return true;
     },
     max: function(r) {
       var v = r.val(), max = parseInt(r.args[0], 10);
       if(v.length > max)
-        return "Must be at most " + max + " characters";
+        return "<?= LANG_MUST_BE_AT_MOST ?> " + max + " <?= LANG_CHARACTERS ?>";
       return true;
     },
 
@@ -1933,7 +1940,7 @@ log("plugin added.");
           places = r.args[0] ? parseInt(r.args[0], 10) : 2;
 
       if(!vStr.match(/^\d+(,\d{3})*(\.\d+)?$/))
-        return "Invalid decimal value";
+        return "<?= LANG_INVALID_DECIMAL_VALUE ?>";
 
       var v = parseFloat(vStr.replace(/[^\d\.]/g,'')),
           factor = Math.pow(10,places);
@@ -1948,7 +1955,7 @@ log("plugin added.");
           suffix = r.args[1] || '',
           min = parseFloat(r.args[0]);
       if(v < min)
-        return "Must be greater than " + min + suffix;
+        return "<?= LANG_MUST_BE_GREATER_THAN ?> " + min + suffix;
       return true;
     },
     maxVal: function(r) {
@@ -1956,7 +1963,7 @@ log("plugin added.");
           suffix = r.args[1] || '',
           max = parseFloat(r.args[0]);
       if(v > max)
-        return "Must be less than " + max + suffix;
+        return "<?= LANG_MUST_BE_LESS_THAN ?> " + max + suffix;
       return true;
     },
     rangeVal: function(r) {
@@ -1966,13 +1973,13 @@ log("plugin added.");
           min = parseFloat(r.args[0]),
           max = parseFloat(r.args[1]);
       if(v > max || v < min)
-        return "Must be between " + prefix + min + suffix + "\nand " + prefix + max + suffix;
+        return "<?= LANG_MUST_BE_BETWEEN ?>" + prefix + min + suffix + "\n<?= LANG_AND ?> " + prefix + max + suffix;
       return true;
     },
 
     agreement: function(r){
       if(!r.field.is(":checked"))
-        return "You must agree to continue";
+        return "<?= LANG_YOU_MUST_AGREE_TO_CONTINUE ?>";
       return true;
     },
     minAge: function(r){
@@ -1987,9 +1994,9 @@ log("plugin added.");
       var fieldDate = $.verify.utils.parseDate(r.val());
 
       if(fieldDate === "Invalid Date")
-        return "Invalid Date";
+        return "<?= LANG_INVALID_DATE ?>";
       if(fieldDate > minDate)
-        return "You must be at least " + age;
+        return "<?= LANG_YOU_MUST_BE_AT_LEAST ?> " + age;
       return true;
     }
   });
@@ -2008,14 +2015,14 @@ log("plugin added.");
 
       var startDate = $.verify.utils.parseDate(start.val());
       if(!startDate)
-        return "Invalid Start Date";
+        return "<?= LANG_INVALID_START_DATE ?>";
 
       var endDate = $.verify.utils.parseDate(end.val());
       if(!endDate)
-        return "Invalid End Date";
+        return "<?= LANG_INVALID_END_DATE ?>";
 
       if(startDate >= endDate)
-        return "Start Date must come before End Date";
+        return "<?= LANG_START_DATE_MUST_COME_BEFORE_END_DATE ?>";
 
       return true;
     },
