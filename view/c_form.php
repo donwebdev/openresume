@@ -7,8 +7,7 @@
 # © 2016 - Released under GPL v3 Licensing
 #
 # model/c_form.php
-# Simple object for creating and validating forms
-# Ajax compatible stuff
+# Simple object for creating form html
 #
 #-------------------------------------------------------
 
@@ -68,35 +67,14 @@ class Form {
 	}
 
 
-	# Make javascript to validate the form here
+	# Make javascript for anything the form needs here
+	# Currendtly not used for anything
 	private function form_javascript() {
 		
 		$output = '
 		
 		<script type="text/javascript">
-				
-		';
-		
-		# Submission javascript ajax
-		
-		$output .= '
-		
-			
-		
-		';
-		
-		
-		# Fill out each error validation javascript
-		foreach($this->form_fields_array as $field_name => $settings) {	
-			
-			
-		}
-		
-		
-		$output .= '
-		
-		</script>
-		
+		</script>		
 		
 		';
 		
@@ -111,7 +89,7 @@ class Form {
 		
 		$output = '
 		<form id="'.$this->form_name.'">
-		<div class="form_container '.$this->form_name.'_container">
+		<div id="'.$this->form_name.'_container" class="form_container '.$this->form_name.'_container">
 		<input type="hidden" name="form_name" value="'.$this->form_name.'">
 		';
 			

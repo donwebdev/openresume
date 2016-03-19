@@ -91,6 +91,10 @@ function ajax_post(form_object,r_id) {
 	
 	data = $('#'+form_object.name).serialize();
 	
+	console.log('#'+form_object.name+'_container');
+	
+	$('#'+form_object.name+'_container').html('loading');
+	
 	$.ajax({
     
 		type : 'POST',
@@ -99,7 +103,7 @@ function ajax_post(form_object,r_id) {
 	
 	}).done(function(html) {
 		
-		console.log(html);	
+		$('#'+form_object.name+'_container').html(html);	
 			
 	}).fail(function() {
 		

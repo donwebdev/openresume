@@ -110,7 +110,12 @@ class Ajax {
 	# The post handler
 	private function post() {
 	
-		$output = 'post<br>';
+	
+		$form = new Form_Controller;
+	
+		$output = $form->output;
+	
+		$output .= '<br>post<br>';
 		
 		foreach($_POST as $key => $value) {
 		
