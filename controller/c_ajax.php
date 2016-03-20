@@ -18,7 +18,6 @@ class Ajax {
 	private $settings;
 	private $resume;
 	private $cover_letter;
-	private $contact_form;	
 	public $output = '';
 	
 	public function __construct($login_required = false) {
@@ -111,9 +110,9 @@ class Ajax {
 	private function post() {
 	
 	
-		$form = new Form_Controller;
+		$form_controller = new Form_Controller;
 	
-		$output = $form->output;
+		$output = $form_controller->output;
 	
 		$output .= '<br>post<br>';
 		

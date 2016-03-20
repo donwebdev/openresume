@@ -75,7 +75,8 @@ class Resume {
 		
 		
 		# If resume is deleted just return here and don't load anything
-		if($resume_row->deleted !== null) {
+		# If resume doesn't exist, just return, someone is doing something they shouldn't be
+		if($resume_row->deleted !== null || $resume_row === null) {
 			
 			return;
 			
@@ -112,7 +113,8 @@ class Resume {
 			
 				$this->resume_sections[$row->item_order] = $this->resume_section($row->id);
 				
-		}	
+		}
+		
 	}
 	
 	# We do the logic here for each section type

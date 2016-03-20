@@ -136,6 +136,7 @@ class Contact_Form {
 		# Get form fields from form object	
 		$output .= $form->form_javascript;		
 		$output .= $form->form_header;				
+		$output .= $form->fields['resume_id'];		
 		$output .= $form->fields['name'];
 		$output .= $form->fields['email'];				
 		$output .= $form->fields['message'];		
@@ -239,12 +240,37 @@ class Contact_Form {
 		
 	}
 	
+	
+	# Message for when form creation was successful
+	public function success_message() {
+		
+	}
+	
+	
 	# Create form fields array
 	public function form_fields() {
+	
+		global $resume;
 	
 		$form = array();
 	
 		$i = 0;
+						
+		$form[$i]['type'] = 'hidden';
+		$form[$i]['name'] = 'resume_id';
+		$form[$i]['title'] = '';
+		$form[$i]['validation'] = '';
+		
+		if(isset($resume->id)) {
+			$form[$i]['value'] = $resume->id;
+		} else {
+			$form[$i]['value'] = '';			
+		}
+		
+		$form[$i]['children'] = '';
+		$form[$i]['error_text'] = '';
+		$form[$i]['html'] = '';
+		$i++;
 						
 		$form[$i]['type'] = 'text';
 		$form[$i]['name'] = 'name';

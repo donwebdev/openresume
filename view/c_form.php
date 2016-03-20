@@ -28,29 +28,13 @@ class Form {
 	
 	private $form_fields_array = array();
 
-	public function __construct($form_name,$form_fields_array,$edit_id='') {
+	public function __construct($form_name,$form_fields_array) {
 
 		# The form name is passed with the post so that the right controller is used		
 		$this->form_name = $form_name;
 		$this->form_javascript = $this->form_javascript();	
 		$this->form_header = $this->form_header();			
 		$this->form_footer = $this->form_footer();
-
-		# Check to see if this form has been posted
-		if(isset($_POST['form_name']) && $_POST['form_name']==$form_name) {
-
-			# Run form controller here if it's a controlled form
-			
-			switch($form_name) {
-			
-				case 'contact_form':
-				
-				
-				break;	
-				
-			}			
-		}
-		
 
 		# Iterate through all the fields and build the output array
 		foreach($form_fields_array as $field_name => $settings) {			
