@@ -74,6 +74,12 @@ class Form_Controller {
 	# Do the validation loop here 
 	public function validate($form_array) {
 		
+		foreach ($form_array as $key => $value) {
+		
+			# Break down the validation string into objects
+			
+		}
+		
 	}
 	
 	# Make this prettier later maybe
@@ -85,6 +91,39 @@ class Form_Controller {
 		 
 	}
 	
+	public function validate_required($value) {
+				
+		if($value=='') {
+			
+			$this->valid = false;
+			
+		}		
+		
+	}
+	
+	public function validate_min($value,$conditions) {
+		
+		
+		
+	}
+	
+	public function validate_max($value,$conditions) {
+		
+		
+		
+	}
+	
+	public function validate_email($value) {
+		
+		
+		
+	}
+	
+	public function validate_text($value) {
+		
+		
+		
+	}
 	
 }
 
