@@ -14,39 +14,20 @@
 */
 
 
-// Do animation functions and grab details
-function contact_form_toggle(id,get_details) {
-
+// Do animation functions for the contact form
+function contact_form_toggle(id,get_details) {	
+	
 	// Show form, get details if we are told
 	if($('#contact_form_overlay_'+id).css('display') === 'none') {
-				
-		$('#contact_form_overlay_'+id).fadeIn(200);$
-		$('#contact_form_'+id).css('top','45%');
-		$('#contact_form_'+id).css('opacity','0.0');
-		$('#contact_form_'+id).show().animate({top: "50%", opacity: "1.0"}, 200);
 		
-		
-		if(get_details === 1) {
-		
-			contact_get_details(id);
-		
-		}
-		
+		$('#contact_form_'+id).css('display','block');		
+		$('#contact_form_overlay_'+id).fadeIn(200);
+		$('#contact_form_'+id).switchClass('contact_form_hidden', 'contact_form_visible', 200);
 		
 	} else {
 		
 		$('#contact_form_overlay_'+id).fadeOut(200);
-		$('#contact_form_'+id).css('top','50%');
-		$('#contact_form_'+id).css('opacity','1.0');
-		$('#contact_form_'+id).show().animate({top: "45%", opacity: "0.0"}, 200);
-		
+		$('#contact_form_'+id).switchClass('contact_form_visible', 'contact_form_hidden', 200, '', $(this).css('display','none'));
 	}
-	
-}
-
-// Ajax to grab details
-function contact_get_details(id) {
-
-
 	
 }

@@ -120,6 +120,21 @@ Contact Form Styles
 
 }
 
+.contact_form_hidden {
+	
+	top: 			45%;
+	opacity: 		0;
+	display: 		none;
+	
+}
+
+.contact_form_visible {
+	
+	top: 			50%;
+	opacity: 		1.0;
+	
+}
+
 .contact_form {
 
 	z-index:   		101;
@@ -129,11 +144,9 @@ Contact Form Styles
 	background: 	#fff;
 	position: 		fixed;
 	left: 			50%;
-	top: 			50%;
 	margin-left: 	-175px;
 	margin-top: 	-215px;
     box-shadow: 	0px 0px 10px #111;
-	display: 		none;
 
 }
 
@@ -220,6 +233,74 @@ Contact Form Styles
 	vertical-align: top;	
 }
 
+@media (max-width: 650px) {
+	
+	.contact_form_header {
+	
+		font-size: 		18px;
+		font-weight: 	bold;
+		
+	}
+	
+	.contact_form_container input, .contact_form_container textarea {
+	
+		font-size: 		14px;
+		padding:  		2px;
+		
+	}
+	
+	 .contact_form_container textarea {
+		 
+		height:  		60px;	 
+		 
+	 }
+	 
+	 .contact_form_top {
+		
+		margin-bottom: 	12px; 
+		 
+	 }
+
+	.contact_form {
+	
+		height: 		370px;
+		margin-top: 	-185px;		
+	
+	}
+	
+	.contact_form_hide_details {
+		
+	}
+	
+}
+
+@media (max-width: 470px) {
+
+	.contact_form {
+	
+		width: 			100%;
+		height: 		100%;
+		position: 		fixed;
+		top: 			0;
+		left: 			0;
+		right: 			0;
+		margin: 		0;
+    	box-shadow: 	none;
+	}
+
+	.contact_form_hidden {
+		
+		top: 			-5%;
+		
+	}
+	
+	.contact_form_visible {
+		
+		top: 			0%;
+		
+	}
+	
+}
 
 
 /*

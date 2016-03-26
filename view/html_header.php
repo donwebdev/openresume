@@ -34,6 +34,7 @@ $output = '<!DOCTYPE html>
   <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">   
   <link rel="stylesheet" href="view/styles/'.$resume->style.'">  
   <script type="text/javascript" src="libs/jquery-1.12.1.min.js"></script>
+  <script type="text/javascript" src="libs/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="libs/notify.js"></script>
   <script type="text/javascript" src="libs/verify.php?r_id='.$visitor->impression_id.'&language='.$settings->setting['language'].'"></script>
   <script type="text/javascript" src="libs/bootstrap/js/bootstrap.js"></script>

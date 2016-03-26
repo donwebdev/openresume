@@ -109,7 +109,7 @@ class Contact_Form {
 		
 		$output .= '
 			<div class="overlay" id="contact_form_overlay_'.$this->resume->id.'" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.')"></div>
-			<div class="contact_form '.$details_class.'" id="contact_form_'.$this->resume->id.'">
+			<div class="contact_form contact_form_hidden '.$details_class.'" id="contact_form_'.$this->resume->id.'">
 				<div class="contact_form_top"><button class="btn btn-secondary right contact_form_close_button" type="submit" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.')">X</button></div>	
 		';
 		
@@ -275,7 +275,7 @@ class Contact_Form {
 		$form[$i]['type'] = 'text';
 		$form[$i]['name'] = 'name';
 		$form[$i]['title'] = LANG_YOUR_NAME;
-		$form[$i]['validation'] = 'required,min(3,hello)';
+		$form[$i]['validation'] = 'required,min(3)';
 		$form[$i]['value'] = '';
 		$form[$i]['children'] = '';
 		$form[$i]['error_text'] = '';
