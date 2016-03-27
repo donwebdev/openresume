@@ -47,7 +47,7 @@ class Resume_Output {
 		global $settings;
 		
 		$output = '
-	<header class="row resume_header">';
+	<header class="row resume_header" id="resume_header">';
 			
 		# Get portrait here		
 		if($resume->portrait!='') {			
@@ -57,7 +57,6 @@ class Resume_Output {
 			';
 			
 		}	
-		
 			
 			$output .= '
 			<div class="media-body contact_info_container">
@@ -79,30 +78,67 @@ class Resume_Output {
 		}
 		
 	
-		# Contact Button - Runs some AJAX that gets contact details and the contact form
-		
+		# Contact Button - Runs some AJAX that gets contact details and the contact form		
 		$output .= $contact_form->output;
-		
 	
 		$output .= '
 			</div>';
-	
-			
 				
 		
 	$output .= '
 	</header>';	
 	
+	
+	if($settings->setting['fixed_header'] == 1) {
+		
+		$output .= '
+	<div id="resume_fixed_header" class="resume_fixed_header resume_fixed_header_hidden">
+		<div class="resume_fixed_header_content">';
+	
+		# Contact Button - Runs some AJAX that gets contact details and the contact form		
+		$output .= $contact_form->output;
+	
+		# Get portrait here		
+		if($resume->portrait!='') {			
+			
+			$output .= '
+				<img class="img-responsive media-object portrait" src="images/'.$resume->portrait.'">
+			';
+			
+		}	
+		
+		
+		# Personal Information	
+		if($resume->name!='') {
+		
+			$output .= '
+			<h1 class="resume_name">'.$resume->name.'</h1>';
+			
+		}
+	
+		if($resume->title!='') {
+		
+			$output .= '
+			<h2 class="resume_title">'.$resume->title.'</h2>';
+			
+		}
+		
+		$output .= '
+		</div>
+	</div>';
+		
+		
+	}
+	
 		return $output;
 		
 	}
+	
 	
 	public function resume_section($section) {
 		
 		$output = '
 	<div class="row section">';
-	
-	
 		
 		# Section type specific behavior here
 		
@@ -176,8 +212,7 @@ class Resume_Output {
 				'.$item['value'];
 			
 			
-		}	
-	
+		}		
 		
 		return $output;
 		

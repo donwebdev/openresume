@@ -64,7 +64,7 @@ Main Styles
 }
 
 .cursor_hand:hover {
-	cursor:pointer;	
+	cursor: 		pointer;	
 }
 
 
@@ -74,29 +74,73 @@ Form Styles
 
 */
 
-.form_field {
-	
-	margin-bottom: 	6px;	
-	
+.form_field {	
+	margin-bottom: 	6px;		
 }
 
-.form_field input {
-	
+.form_field input {	
 	padding: 		6px 4px;
 	font-size: 		16px;
 	width: 			100%;
-
 }
 
 .form_field textarea {
-
 	width: 			100%;
 	font-size: 		16px;
 	padding: 		6px 4px;
-	margin: 0;
+	margin: 		0;	
+}
+
+.notifyjs-bootstrap-base {
+	border-color:  	#c33 !important;
+	padding: 		5px 10px 4px 10px !important;
+	margin-right:  	-3px !important;	
+}
+	
+.notifyjs-bootstrap-error {
+	background-image: none !important;	
 	
 }
 
+.form_result_loading_symbol {
+	margin: 		auto auto;	
+}
+
+.form_result_loading {
+	display: 		block;
+	width: 			100%;	
+}
+
+/* 
+
+Ajax Result Animations
+
+*/
+
+.form_result_loading_1 {
+	background-color: #fff;	
+}
+
+.form_result_loading_2 {
+	background-color: #ffc;	
+}
+
+.form_result_success_1 {
+	background-color: #ff9;	
+}
+
+.form_result_success_2 {
+	background-color: #fff;
+}
+	
+@media (max-width: 650px) {
+	.notifyjs-bootstrap-base {
+		
+		padding: 	3px 10px 2px 30px !important;
+		font-size: 	12px;	
+	}
+
+}
 
 
 
@@ -107,7 +151,6 @@ Contact Form Styles
 */
 
 .overlay {
-
   	opacity:    	0.8; 
   	background: 	#000; 
   	width:      	100%;
@@ -117,26 +160,20 @@ Contact Form Styles
   	left:       	0; 
   	position:   	fixed;
 	display: 		none;
-
 }
 
 .contact_form_hidden {
-	
 	top: 			45%;
 	opacity: 		0;
-	display: 		none;
-	
+	display: 		none;	
 }
 
 .contact_form_visible {
-	
 	top: 			50%;
-	opacity: 		1.0;
-	
+	opacity: 		1.0;	
 }
 
 .contact_form {
-
 	z-index:   		101;
 	width: 			350px;
 	height: 		430px;
@@ -147,25 +184,20 @@ Contact Form Styles
 	margin-left: 	-175px;
 	margin-top: 	-215px;
     box-shadow: 	0px 0px 10px #111;
-
 }
 
 .contact_form_hide_details {
-
 	height: 		320px;
 	margin-top: 	-160px;	
 	
 }
 
 .contact_form_top {
-
 	margin-bottom: 	20px;
-	border-top: 	5px solid #ff4f00;
-	
+	border-top: 	5px solid #ff4f00;	
 }
 
 .contact_form_container {
-
 	margin-top: 	14px;
 	padding: 		0 30px 10px 20px;
 	background: 	#fff;	
@@ -173,30 +205,23 @@ Contact Form Styles
 }
 
 .contact_form_header {
-
 	font-size: 		24px;
 	color: 			#ff4f00;
-	margin: 		0 16px 10px 12px;
-	
+	margin: 		0 16px 10px 12px;	
 }
 
 .contact_form_message {
-
-	height: 		80px;
-	
+	height: 		80px;	
 }
 
 .contact_form_close_button {
-
 	margin-top: 	10px;
 	margin-right: 	10px; 		
 	
 }
 
 .contact_form_details {
-
 	margin: 0 20px 15px 20px;
-
 }
 
 .contact_button_container {
@@ -234,19 +259,14 @@ Contact Form Styles
 }
 
 @media (max-width: 650px) {
-	
 	.contact_form_header {
-	
 		font-size: 		18px;
-		font-weight: 	bold;
-		
+		font-weight: 	bold;	
 	}
 	
 	.contact_form_container input, .contact_form_container textarea {
-	
 		font-size: 		14px;
-		padding:  		2px;
-		
+		padding:  		2px;	
 	}
 	
 	 .contact_form_container textarea {
@@ -262,22 +282,18 @@ Contact Form Styles
 	 }
 
 	.contact_form {
-	
 		height: 		370px;
 		margin-top: 	-185px;		
 	
 	}
 	
-	.contact_form_hide_details {
-		
+	.contact_form_hide_details {	
 	}
 	
 }
 
 @media (max-width: 470px) {
-
 	.contact_form {
-	
 		width: 			100%;
 		height: 		100%;
 		position: 		fixed;
@@ -289,15 +305,11 @@ Contact Form Styles
 	}
 
 	.contact_form_hidden {
-		
-		top: 			-5%;
-		
+		top: 			-5%;	
 	}
 	
 	.contact_form_visible {
-		
-		top: 			0%;
-		
+		top: 			0%;	
 	}
 	
 }
@@ -308,6 +320,7 @@ Contact Form Styles
 Resume Styles
 
 */
+
 .resume_container {
 	padding-bottom: 40px;	
 }
@@ -351,13 +364,13 @@ Resume Styles
 }
 
 .contact_details div.contact_form_email_phone_container {
-	display: inline-block;
+	display: 		inline-block;
 	margin-right: 	30px;
 	margin-left: 	2px;
 }
 
 .contact_details div.contact_form_address {
-	display: inline-block;
+	display: 		inline-block;
 	margin-right: 	30px;
 	margin-left: 	2px;
 }
@@ -382,7 +395,6 @@ Resume Styles
 }
 
 @media (max-width: 650px) {
-
 	.resume_name {	
 		font-size: 	36px;		
 	}
@@ -407,7 +419,6 @@ Resume Styles
 
 
 @media (max-width: 470px) {
-	
 	body {	
 		font-size: 		13px;		
 	}
@@ -441,4 +452,271 @@ Resume Styles
 		font-size: 		20px;		
 	}
 	
+}
+
+/*
+
+Resume Fixed Header Styles
+
+*/
+
+.resume_fixed_header {
+	position: 		fixed;	
+	width:  		100%;
+	background-color: #fff;
+	border-bottom: 	4px solid #ff4f00;
+    box-shadow: 	0px 0px 5px #666;	
+}
+
+.resume_fixed_header_hidden {
+	top: 			-90px;
+	left: 			0;
+	opacity: 		0.0;	
+}
+
+.resume_fixed_header_visible {
+	top: 			0px;
+	left: 			0;
+	opacity: 		1.0;	
+}
+
+.resume_fixed_header_content {
+	margin: 		0 auto;
+	width:  		680px;
+	padding-bottom: 20px;	
+}
+
+.resume_fixed_header_content .resume_name {
+	font-size: 		24px;
+	font-weight: 	bold;
+	margin-top: 	5px;	
+}
+
+.resume_fixed_header_content .resume_title {
+	font-size: 		18px;
+	margin: 		0;
+	margin-top: 	5px;	
+}
+
+.resume_fixed_header_content .contact_button { 
+	float: 			right; 
+}
+
+.resume_fixed_header_content .location { 
+	display: 		none; 
+}
+
+.resume_fixed_header_content .contact_button_container {
+	margin-top: 	16px;
+	padding-top: 	-2px;
+}
+
+.resume_fixed_header_content .portrait { 
+	float: 			left;
+	margin: 		0;
+	margin-top: 	-8px;
+	margin-right: 	8px;
+	height: 		70px;
+}
+
+@media (max-width: 740px) {
+	.resume_fixed_header_content {
+		margin: 		0 auto;
+		width:  		100%;
+		padding: 		0 20px 20px 20px;	
+	}
+
+}
+
+@media (max-width: 650px) {
+	.resume_fixed_header_content {		
+		padding: 		0 10px 12px 10px;	
+	}
+
+	.resume_fixed_header_content .resume_name {
+		font-size: 		18px;
+		margin-top: 	5px;	
+	}
+	
+	.resume_fixed_header_content .resume_title {
+		font-size: 		13px;
+		margin: 		0;
+		margin-top: 	5px;	
+	}
+
+	.resume_fixed_header_content .portrait {	
+		height: 		52px;
+	}
+	
+}
+
+@media (max-width: 470px) {
+	.resume_fixed_header_content .portrait { 	
+		display: 		none;	
+	}
+
+	.resume_fixed_header_content .resume_name,	.resume_fixed_header_content .resume_title {
+		text-align: 	left;	
+	}
+	
+	.resume_fixed_header_content {		
+		padding: 		0 10px 12px 10px;	
+	}
+
+}
+
+/*
+
+Loading ring styles
+
+*/
+
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.uil-ring-css {
+  background: none;
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+.uil-ring-css > div {
+  position: absolute;
+  display: block;
+  width: 160px;
+  height: 160px;
+  top: 20px;
+  left: 20px;
+  border-radius: 80px;
+  box-shadow: 0 6px 0 0 #ff4f00;
+  -ms-animation: uil-ring-anim 1.5s linear infinite;
+  -moz-animation: uil-ring-anim 1.5s linear infinite;
+  -webkit-animation: uil-ring-anim 1.5s linear infinite;
+  -o-animation: uil-ring-anim 1.5s linear infinite;
+  animation: uil-ring-anim 1.5s linear infinite;
 }

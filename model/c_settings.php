@@ -23,6 +23,7 @@ class Settings {
 		# Default settings	
 		$defaults['gmt_offset'] = 0;		
 		$defaults['site_title'] = 'Open Resume';
+		$defaults['fixed_header'] = '1';
 		$defaults['language'] = 'english';
 		$defaults['your_name'] = 'Your Name';
 		$defaults['your_address_1'] = '';
