@@ -23,6 +23,9 @@ define('LANG_YOUR_NAME','Your Name');
 define('LANG_YOUR_EMAIL','Your Email');
 define('LANG_YOUR_MESSAGE','Your Message');
 
+define('LANG_CONTACT_SUCCESS','Message Sent');
+define('LANG_CONTACT_MESSAGE_RECEIVED','Thank you for contacting me');
+define('LANG_CONTACT_MESSAGE_CLOSE','Closing in');
 
 
 # verify.php

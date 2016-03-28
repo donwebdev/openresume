@@ -114,6 +114,10 @@ class Ajax {
 	
 		$output = $form_controller->output;
 	
+		/*
+	
+		POST INFO DEBUGGER
+	
 		$output .= '<br>post<br>';
 		
 		foreach($_POST as $key => $value) {
@@ -121,6 +125,8 @@ class Ajax {
 			$output .= $key.' -> '.$value.'<br>';	
 			
 		}
+	
+		*/
 		
 		return $output;
 			

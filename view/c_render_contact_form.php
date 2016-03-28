@@ -30,20 +30,16 @@ class Contact_Form {
 			# Render contact form
 			if($this->resume->show_contact_form==1) {
 			
-				# Create the contact button
-		
+				# Create the contact button		
 				$this->output .= $this->contact_button();
 		
-				# Create the contact form
-		
+				# Create the contact form		
 				$this->output .= $this->contact_form();
 				
 				
-			} elseif($this->resume->show_contact_details==1) {
+			} elseif($this->resume->show_contact_details==1) {				
 				
-				
-				# Show contact details at the top of the resume
-		
+				# Show contact details at the top of the resume		
 				$this->output .= $this->contact_info();
 				
 			}
@@ -59,8 +55,7 @@ class Contact_Form {
 	
 		$output = '';
 				
-		# Contact Button - Runs some AJAX that gets contact details and the contact form
-		
+		# Contact Button - Runs some AJAX that gets contact details and the contact form		
 		$output .= '		
 			<div class="contact_button_container">
 				<a href="javascript:void(0)" class="btn btn-lg contact_button" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.'); '.$this->contact_info_ajax().'">'.LANG_CONTACT_ME.' &raquo;</a>';
@@ -90,8 +85,7 @@ class Contact_Form {
 		
 		$form = new Form('contact_form',$form);
 		
-		# Determine if we're showing the Contact Details on the form		
-		
+		# Determine if we're showing the Contact Details on the form				
 		if($this->resume->show_contact_details==1 && ($this->resume->show_phone == 1 || $this->resume->show_email == 1 || $this->resume->show_address == 1)) {
 		
 			$show_details = true;
@@ -105,8 +99,7 @@ class Contact_Form {
 		}
 		
 		
-		# Form wrapper starts here
-		
+		# Form wrapper starts here		
 		$output .= '
 			<div class="overlay" id="contact_form_overlay_'.$this->resume->id.'" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.')"></div>
 			<div class="contact_form contact_form_hidden '.$details_class.'" id="contact_form_'.$this->resume->id.'">
@@ -115,8 +108,7 @@ class Contact_Form {
 		
 		
 		# Put the contact details at the top of the form if we're supposed to
-		# Don't show this if nothing is set to show
-		
+		# Don't show this if nothing is set to show		
 		if($show_details === true) {
 			
 			$output .= '
@@ -127,8 +119,7 @@ class Contact_Form {
 		}
 		
 		
-		# Create the contact form
-		
+		# Create the contact form		
 		$output .= '
 				<h2 class="contact_form_header">'.LANG_SEND_ME_A_MESSAGE.'</h2>';
 		
@@ -243,14 +234,37 @@ class Contact_Form {
 	
 	# Message for when form creation was successful
 	public function success_message() {
+  		
+		# Simple thank you message with a script that automatically closes the dialog		
+		return '
+			
+			<script type="text/javascript">
+			
+			</script>
+			
+			<div class="bs-callout bs-callout-success contact_success_message">
+				<h4>
+					'.LANG_CONTACT_SUCCESS.'
+				</h4>
+				<p class="contact_thank_you_message">
+					'.LANG_CONTACT_MESSAGE_RECEIVED.'
+				</p>
+				<div class="contact_thank_you_message">
+					<a class="cursor_hand" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.');">
+						'.LANG_CONTACT_MESSAGE_CLOSE.'
+						<span id="contact_form_countdown">3</span>
+					</a>
+				</div>
+			</div>
+			
+			';
 		
+	
 	}
 	
 	
 	# Create form fields array
 	public function form_fields() {
-	
-		global $resume;
 	
 		$form = array();
 	
@@ -261,8 +275,8 @@ class Contact_Form {
 		$form[$i]['title'] = '';
 		$form[$i]['validation'] = '';
 		
-		if(isset($resume->id)) {
-			$form[$i]['value'] = $resume->id;
+		if(isset($this->resume->id)) {
+			$form[$i]['value'] = $this->resume->id;
 		} else {
 			$form[$i]['value'] = '';			
 		}

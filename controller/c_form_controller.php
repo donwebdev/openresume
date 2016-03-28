@@ -13,7 +13,7 @@
 
 class Form_Controller {
 
-	public $output = 'form output';
+	public $output = 'Form Output';
 	public $valid = true;
 	
 	public function __construct($form_name='') {

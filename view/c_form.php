@@ -112,7 +112,7 @@ class Form {
 
 		$output = '
 		<div class="form_field '.$settings['name'].'_div">
-			<input type="text" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" data-validate="'.$settings['validation'].'" '.$settings['html'].'>
+			<input type="text" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="form-control '.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" data-validate="'.$settings['validation'].'" '.$settings['html'].'>
 		</div>
 		<div class="error_text '.$settings['name'].'_error">
 			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			
@@ -133,7 +133,7 @@ class Form {
 
 		$output = '
 		<div class="form_field '.$settings['name'].'_div">
-			<textarea placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="'.$this->form_name.'_field '.$this->form_name.'_'.$settings['name'].'"  data-validate="'.$settings['validation'].'" '.$settings['html'].'>'.$settings['value'].'</textarea>
+			<textarea placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="form-control '.$this->form_name.'_field '.$this->form_name.'_'.$settings['name'].'"  data-validate="'.$settings['validation'].'" '.$settings['html'].'>'.$settings['value'].'</textarea>
 		</div>
 		<div class="error_text '.$settings['name'].'_error">
 			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			

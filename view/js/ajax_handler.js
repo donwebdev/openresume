@@ -94,7 +94,7 @@ function ajax_post(form_object,r_id) {
 		
 	loading_height = $('#'+form_object.name+'_container').css('height');
 	
-	$('#'+form_object.name+'_container').html('<div id="'+form_object.name+'_loading" class="form_result_loading form_result_loading_1"><div class="uil-ring-css form_result_loading_symbol" style="transform:scale(0.4);"><div></div></div></div>');
+	$('#'+form_object.name+'_container').html('<div id="'+form_object.name+'_loading" class="form_result_loading form_result_loading_1"><div class="uil-ring-css form_result_loading_symbol" style="transform:scale(0.4);"><div></div>');
 	
 	$('#'+form_object.name+'_loading').css('height',loading_height);
 	
@@ -120,13 +120,14 @@ function ajax_post(form_object,r_id) {
 	}).done(function(html) {
 		
 		// Animation for form result success
-		post_loading = 0;
+		post_loading = 0;	
+		$('#'+form_object.name+'_loading').css('height','auto');
 		$('#'+form_object.name+'_loading').removeClass('form_result_loading_1');	
 		$('#'+form_object.name+'_loading').removeClass('form_result_loading_2');	
 		$('#'+form_object.name+'_loading').addClass('form_result_success_1');	
-		$('#'+form_object.name+'_loading').switchClass('form_result_success_1', 'form_result_success_2',  500);
+		$('#'+form_object.name+'_loading').switchClass('form_result_success_1', 'form_result_success_2',  1500);
 		$('#'+form_object.name+'_loading').html('<div id="'+form_object.name+'_result" class="'+form_object.name+'_result" style="display:none;">'+html+'</div>');	
-		$('#'+form_object.name+'_result').fadeIn(1000);
+		$('#'+form_object.name+'_result').fadeIn(1500);
 			
 	}).fail(function() {
 		

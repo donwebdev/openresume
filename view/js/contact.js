@@ -27,7 +27,7 @@ function contact_form_toggle(id,get_details) {
 	} else {
 		
 		$('#contact_form_overlay_'+id).fadeOut(200);
-		$('#contact_form_'+id).switchClass('contact_form_visible', 'contact_form_hidden', 200, '', $('#contact_form_'+id).css('display','none'));
+		$('#contact_form_'+id).switchClass('contact_form_visible', 'contact_form_hidden', 200, '', function() { $('#contact_form_'+id).css('display','none') });
 	}
 	
 }

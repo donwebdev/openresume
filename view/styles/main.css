@@ -79,20 +79,15 @@ Form Styles
 }
 
 .form_field input {	
-	padding: 		6px 4px;
-	font-size: 		16px;
-	width: 			100%;
+	padding: 		6px 8px;
 }
 
 .form_field textarea {
-	width: 			100%;
-	font-size: 		16px;
-	padding: 		6px 4px;
-	margin: 		0;	
+	padding: 		6px 8px;
 }
 
 .notifyjs-bootstrap-base {
-	border-color:  	#c33 !important;
+	border-color:  	#c99 !important;
 	padding: 		5px 10px 4px 10px !important;
 	margin-right:  	-3px !important;	
 }
@@ -122,7 +117,7 @@ Ajax Result Animations
 }
 
 .form_result_loading_2 {
-	background-color: #ffc;	
+	background-color: #f6f6f6;	
 }
 
 .form_result_success_1 {
@@ -134,8 +129,8 @@ Ajax Result Animations
 }
 	
 @media (max-width: 650px) {
-	.notifyjs-bootstrap-base {
-		
+	
+	.notifyjs-bootstrap-base {		
 		padding: 	3px 10px 2px 30px !important;
 		font-size: 	12px;	
 	}
@@ -188,8 +183,7 @@ Contact Form Styles
 
 .contact_form_hide_details {
 	height: 		320px;
-	margin-top: 	-160px;	
-	
+	margin-top: 	-160px;		
 }
 
 .contact_form_top {
@@ -200,8 +194,7 @@ Contact Form Styles
 .contact_form_container {
 	margin-top: 	14px;
 	padding: 		0 30px 10px 20px;
-	background: 	#fff;	
-	
+	background: 	#fff;		
 }
 
 .contact_form_header {
@@ -211,13 +204,12 @@ Contact Form Styles
 }
 
 .contact_form_message {
-	height: 		80px;	
+	height: 		80px !important;	
 }
 
 .contact_form_close_button {
 	margin-top: 	10px;
 	margin-right: 	10px; 		
-	
 }
 
 .contact_form_details {
@@ -269,22 +261,17 @@ Contact Form Styles
 		padding:  		2px;	
 	}
 	
-	 .contact_form_container textarea {
-		 
-		height:  		60px;	 
-		 
-	 }
+	.contact_form_container textarea {		 
+		height:  		60px !important;	 		 
+	}
 	 
-	 .contact_form_top {
-		
-		margin-bottom: 	12px; 
-		 
-	 }
+	.contact_form_top {		
+		margin-bottom: 	12px; 		 
+	}
 
 	.contact_form {
 		height: 		370px;
 		margin-top: 	-185px;		
-	
 	}
 	
 	.contact_form_hide_details {	
@@ -313,6 +300,7 @@ Contact Form Styles
 	}
 	
 }
+
 
 
 /*

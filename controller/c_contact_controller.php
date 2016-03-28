@@ -14,7 +14,8 @@
 class Contact_Form_Controller {
 	
 	public $output = 'Contact Form Output';	
-	public $form_controller;	
+	private $form_controller;	
+	private $contact_form;
 
 	public function __construct($form_controller) {
 		
@@ -36,13 +37,13 @@ class Contact_Form_Controller {
 		}
 		
 		# Create a contact form object to get the form array
-		$contact_form = new Contact_Form($resume,true);	
+		$this->contact_form = new Contact_Form($resume,true);	
 		
 		# Check to see if this visitor is spamming
 		$this->spam_check();
 		
 		# Validate the post data based on conditions
-		$data = $this->form_controller->validate($contact_form->form_fields());
+		$data = $this->form_controller->validate($this->contact_form->form_fields());
 		
 		# Post the data into the database
 		if($form_controller->valid === true) {
@@ -68,17 +69,18 @@ class Contact_Form_Controller {
 	
 	# Validate each field to do any special checks we need
 	private function validate($form_array) {
-  
-		global $form_controller;
-		
-		$form_controller->validate($form_array);
+  		
+		$this->form_controller($form_array);
 		
 	}
 	
 	# Insert data into database
 	# Send email to site owner
-	private function success($data) {
+	private function success($data) {	
 	
+		global $db;
+  		
+		$this->output = $this->contact_form->success_message();
 		
 		
 	}
