@@ -240,16 +240,41 @@ class Contact_Form {
 			
 			<script type="text/javascript">
 			
+				var contact_countdown = 3;
+			
+				$( document ).ready(function() {
+					
+					contact_countdown_interval = setInterval(function() {
+						contact_countdown--;
+						if(contact_countdown < 1) {
+							
+							if($("#contact_form_'.$this->resume->id.'").is(":visible")) {
+								contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.');
+							}							
+							
+							clearInterval(contact_countdown_interval);
+							
+							$("#contact_thank_you_message").html("")
+							
+						} else {
+							$("#contact_form_countdown").html(contact_countdown);
+						}
+						
+						
+					},1000);
+					
+				});
+				
 			</script>
 			
 			<div class="bs-callout bs-callout-success contact_success_message">
 				<h4>
 					'.LANG_CONTACT_SUCCESS.'
 				</h4>
-				<p class="contact_thank_you_message">
-					'.LANG_CONTACT_MESSAGE_RECEIVED.'
-				</p>
 				<div class="contact_thank_you_message">
+					'.LANG_CONTACT_MESSAGE_RECEIVED.'
+				</div>
+				<div class="contact_thank_you_message" id="contact_thank_you_message">
 					<a class="cursor_hand" onclick="contact_form_toggle('.$this->resume->id.','.$this->resume->show_contact_details.');">
 						'.LANG_CONTACT_MESSAGE_CLOSE.'
 						<span id="contact_form_countdown">3</span>
