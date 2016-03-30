@@ -15,9 +15,11 @@ class Form_Controller {
 
 	public $output = 'Form Output';
 	public $valid = true;
+	public $ajax;
 	
-	public function __construct($form_name='') {
+	public function __construct($ajax_handler,$form_name='') {
 		
+		$this->ajax = &$ajax_handler;
 
 		# Check if a form name is set in get or post
 		if($form_name == '' && isset($_REQUEST['form_name'])) {

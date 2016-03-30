@@ -17,8 +17,10 @@
 class Visitor {
 	
 	public $visitor = NULL;
+	public $filtered = NULL;
 	public $impression = NULL;
 	public $impression_id = NULL;
+	public $impression_num_id = NULL;
 	public $id = NULL;
 	public $http_referer = NULL;
 	private $visitor_type = NULL;
@@ -52,13 +54,13 @@ class Visitor {
 				$this->visitor = $db->get_row('SELECT * FROM visitors WHERE cookie="' . $_COOKIE['visitor'] . '"', ARRAY_A);
 				# Just making this easier to get to
 				$this->id = $this->visitor['id'];
+				$this->filtered = $this->visitor['filtered'];
 				
 			} else {
 				
 				
 				# Create a cookie and make sure it's unique				
-				do { $cookie = $this->random_string(32, 32); } while ($db->get_row('SELECT cookie FROM visitors WHERE cookie = "' . $cookie . '"') != null);
-				
+				do { $cookie = $this->random_string(32, 32); } while ($db->get_row('SELECT cookie FROM visitors WHERE cookie = "' . $cookie . '"') != null);				
 				
 				# Parse user agent with Piwik DeviceDetector
 				$dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
@@ -103,6 +105,7 @@ class Visitor {
 				$db->insert('visitors', $this->visitor);
 				$this->visitor['id'] = $db->insert_id;
 				$this->id = $db->insert_id;
+				$this->filtered = $filtered;
 			}
 		}
 		return $this->visitor;
@@ -149,9 +152,8 @@ class Visitor {
 			);
 			
 			$db->insert('impressions', $data);
-			$last_impression  = $db->insert_id;
+			$this->impression_num_id  = $db->insert_id;
 			$this->impression_id = $impression_text_id;
-			return $last_impression;
 			
 		}
 	}

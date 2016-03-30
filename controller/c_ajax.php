@@ -13,7 +13,7 @@
 
 class Ajax {
 	
-	private $visitor;
+	public $visitor;
 	private $user;
 	private $settings;
 	private $resume;
@@ -110,7 +110,7 @@ class Ajax {
 	private function post() {
 	
 	
-		$form_controller = new Form_Controller;
+		$form_controller = new Form_Controller($this);
 	
 		$output = $form_controller->output;
 	
