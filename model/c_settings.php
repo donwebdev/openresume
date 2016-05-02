@@ -21,6 +21,7 @@ class Settings {
 		global $db;
 					
 		# Default settings	
+		$defaults['admin_url'] = '';		
 		$defaults['gmt_offset'] = 0;		
 		$defaults['site_title'] = 'Open Resume';
 		$defaults['fixed_header'] = '1';
@@ -36,7 +37,7 @@ class Settings {
 		# Load all current settings, overrides default settings	
 		$settings = $db->get_results('SELECT * FROM settings');
 		
-		# The amount of settings in the database is less than it should beb
+		# The amount of settings in the database is less than it should be
 		# Check against all existing settings and fix it
 		if($db->num_rows != count($defaults)) {
 			

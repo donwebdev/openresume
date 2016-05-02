@@ -58,31 +58,48 @@ class Contact_Form_Controller {
 	private function spam_check() {
 	
 		global $ajax_handler;
+		global $db;
 		
-		$is_spam = false; print_r($ajax_handler);
+		$is_spam = false;
 	
 		# Visitor has cookies disabled, don't trust them	
 		if(!isset($this->form_controller->ajax->visitor->id)) {
 	
-			//$is_spam = true;
+			$is_spam = true;
 			
 		}
 	
 		# Visitor is already a recognized bot
 		elseif($this->form_controller->ajax->visitor->filtered == 1) {
 		
-			//$is_spam = true;
+			$is_spam = true;
 			
 		}
 		
 	
-		# Visitor has submitted more than 4 times in 24 hours, that's enough
-		
-		
-		# Visitor's IP has submitted more than 12 times in 24 hours, certainly plenty.
+		if($is_spam===false) {
 	
+			# Visitor has submitted more than 4 times in 24 hours, that's enough			
+			$submissions = $db->query('SELECT id FROM messages WHERE visitor_id = '.$this->form_controller->ajax->visitor->id.' AND created >= "'.date('Y-m-d H:i:s',time() - 86400).'"');
+			
+			if($submissions > 4) {
+
+				$is_spam = true;
+				
+			}
 		
-	
+		
+			# Visitor's IP has submitted more than 8 times in 24 hours, certainly plenty.			
+			$submissions = $db->query('SELECT id FROM messages WHERE ip_address  = "'.$this->form_controller->ajax->visitor->visitor['ip_address'].'" AND created >= "'.date('Y-m-d H:i:s',time() - 86400).'"');
+			
+			if($submissions > 8) {
+
+				$is_spam = true;
+				
+			}
+			
+		}
+		
 		
 		# No spammers here please
 		if($is_spam === true) ( die() );
@@ -97,10 +114,10 @@ class Contact_Form_Controller {
 	}
 	
 	# Insert data into database
-	# Send email to site owner
 	private function success($data) {	
 	
 		global $db;
+		global $settings;		
 		
 		$insert_data = array(
 			'id' => NULL,
@@ -111,19 +128,34 @@ class Contact_Form_Controller {
 			'name' => $_POST['name'],
 			'email' => $_POST['email'],
 			'message' => $_POST['message'],
+			'ip_address' => $_SERVER['REMOTE_ADDR'],
 		);
 						
-		$db->insert('messages', $insert_data);
+		$db->insert('messages', $insert_data);		
 		
+		$this->output = $this->contact_form->success_message();	
 		
-		$this->output = $this->contact_form->success_message();
+		# Message format
+		$message = '
+			
+			'.LANG_EMAIL_RECEIVED_MESSAGE.'
+			
+			'.$_POST['message'].'
+			
+			<a href="'.$settings['admin_url'].'">'.LANG_EMAIL_LOGIN_TO_ADMIN.'</a>
+	
+			'.LANG_EMAIL_GENERATED_BY.' '.VERSION_STATE.' '.VERSION_NUMBER.'
 		
+		';
+			
+		# Send email to site owner	
+		mail($settings['your_email'],'OpenResume - New message from '.$_POST['name'],$message);
+
 		
 	}
 
-
 }
-	
+
 
 
 ?>
