@@ -13,11 +13,9 @@
 
 
 
-
 #Build HTML Output
 $output = html_header_admin();
-if(isset($cover_letter_output)) { $output .= $cover_letter_output->output; }
-if(isset($resume_output)) { $output .= $resume_output->output; }
+$output .= $admin_output;
 $output .= html_footer();
 
 

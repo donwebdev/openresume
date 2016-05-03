@@ -124,7 +124,18 @@ class Form {
 	}
 	
 	
-	private function password_field() {
+	private function password_field($settings) {
+
+		$output = '
+		<div class="form_field '.$settings['name'].'_div">
+			<input type="password" placeholder="'.$settings['title'].'" name="'.$settings['name'].'" id="'.$this->form_name.'_'.$settings['name'].'" class="form-control '.$this->form_name.'_form_field '.$this->form_name.'_'.$settings['name'].'" value="'.$settings['value'].'" data-validate="'.$settings['validation'].'" '.$settings['html'].'>
+		</div>
+		<div class="error_text '.$settings['name'].'_error">
+			<div class="'.$settings['name'].'_field_error_text">'.$settings['error_text'].'</div>			
+		</div>
+		';
+		
+		return $output;
 		
 	}
 	

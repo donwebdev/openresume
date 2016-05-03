@@ -10,4 +10,15 @@
 #
 #-------------------------------------------------------
 
+
+# admin/login.php
+define('LANG_YOUR_EMAIL','Email');
+define('LANG_YOUR_PASSWORD','Password');
+define('LANG_LOGIN','Admin Login');
+define('LANG_LOGIN_BUTTON','Login');
+define('LANG_FORGOTTEN_PASSWORD','Forgotten Password');
+
+
+
+
 ?>

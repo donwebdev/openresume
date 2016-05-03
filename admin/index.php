@@ -20,8 +20,14 @@ if($user->logged_in === false) {
 require('login.php');
 
 } else {
+
+	if(!isset($_GET['admin_page'])) {
+		$admin_page = 'resume';	
+	} else {
+		$admin_page = $_GET['admin_page'];
+	}
 	
-	switch($_GET['admin_page']) {
+	switch($admin_page) {
 		
 		case 'resume':
 			require('resume.php');

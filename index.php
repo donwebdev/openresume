@@ -11,12 +11,12 @@
 #-------------------------------------------------------
 
 # Load the model
-require_once('application_start.php');
+require('application_start.php');
 
 # Load the Resume View
-require_once('resume.php');
+require('resume.php');
 
 # Output the Resume View and end execution
-require_once('application_end.php');
+require('application_end.php');
 
 ?>
