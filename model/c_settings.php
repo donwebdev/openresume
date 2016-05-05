@@ -26,6 +26,7 @@ class Settings {
 		$defaults['site_title'] = 'Open Resume';
 		$defaults['fixed_header'] = '1';
 		$defaults['language'] = 'english';
+		$defaults['contact_form_email'] = 1;
 		$defaults['your_name'] = 'Your Name';
 		$defaults['your_address_1'] = '';
 		$defaults['your_address_2'] = '';

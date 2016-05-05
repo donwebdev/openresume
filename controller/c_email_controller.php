@@ -19,14 +19,48 @@ class Email_Controller {
 	
 	public function send_email($email_type,$params) {
 	
+		if(method_exists($this,$email_type)) {
 		
+			$this->$email_type($params);
+			
+		}
+		
+	}
+	
+	private function email($to,$from,$subject,$message) {
+	
+		$headers = 	'From: '. $from . "\r\n" .
+					'Reply-To: '. $from . "\r\n" .
+					'X-Mailer: PHP/' . phpversion();
+	
+		mail($to,$subject,$message,$headers);
 		
 	}
 	
 	
 	private function contact_form($params) {
 	
+		global $db;
+		global $settings;
 		
+		$subject = LANG_EMAIL_SUBJECT.$params['name'];
+			
+		$message = '
+			
+			'.LANG_EMAIL_RECEIVED_MESSAGE.'
+			
+			'.$params['name'].'
+			'.$params['email'].'
+			
+			'.$params['message'].'
+			
+			<a href="'.$settings['admin_url'].'">'.LANG_EMAIL_LOGIN_TO_ADMIN.'</a>
+	
+			'.LANG_EMAIL_GENERATED_BY.' '.VERSION_STATE.' '.VERSION_NUMBER.'
+		
+		';
+	
+		$this->email($settings['your_email'],$subject,$message,$settings['site_email']);	
 		
 	}
 	

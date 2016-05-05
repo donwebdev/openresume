@@ -107,6 +107,7 @@ class User {
 	public function user_logout($user_id) {
 		
 		global $db;
+		global $settings;
 		
 		# Delete all logins for this user
 		$db->query('DELETE FROM user_login WHERE user_id = '.$user_id);
@@ -116,6 +117,8 @@ class User {
 		
 		# Log that the user logged out
 		$this->user_login_log($user_id,'logout');	
+		
+		header('Location: '.$settings->setting['admin_url']);
 				
 	}
 	

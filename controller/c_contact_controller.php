@@ -117,6 +117,7 @@ class Contact_Form_Controller {
 	private function success($data) {	
 	
 		global $db;
+		global $email;
 		global $settings;		
 		
 		$insert_data = array(
@@ -134,22 +135,14 @@ class Contact_Form_Controller {
 		$db->insert('messages', $insert_data);		
 		
 		$this->output = $this->contact_form->success_message();	
+
+		# Send the email
+		$email_params['name'] = $_POST['name'];
+		$email_params['email'] = $_POST['email'];
+		$email_params['message'] = $_POST['message'];
 		
-		# Message format
-		$message = '
-			
-			'.LANG_EMAIL_RECEIVED_MESSAGE.'
-			
-			'.$_POST['message'].'
-			
-			<a href="'.$settings['admin_url'].'">'.LANG_EMAIL_LOGIN_TO_ADMIN.'</a>
-	
-			'.LANG_EMAIL_GENERATED_BY.' '.VERSION_STATE.' '.VERSION_NUMBER.'
-		
-		';
-			
-		# Send email to site owner	
-		mail($settings['your_email'],LANG_EMAIL_SUBJECT.$_POST['name'],$message);
+		$email->send_email('contact_form',$email_params);
+
 
 		
 	}

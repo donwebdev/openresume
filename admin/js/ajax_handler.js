@@ -41,11 +41,11 @@ var ajax_handlers = {
 			
 			// Animation for form result success
 			login_loading = 0;
-	$('#login_form').html(html);
+			
 			// Login was successful, refresh the page		
 			if(html == 'Login Successful') {
 
-	
+				window.location = window.location.href;
 			
 			// Login failed, just say it failed			
 			} else if(html == 'Login Failed') {
@@ -54,7 +54,6 @@ var ajax_handlers = {
 
 			// Login returned custom text, put it in the container			
 			} else {
-	
 	
 	
 				
@@ -68,4 +67,4 @@ var ajax_handlers = {
 	}
 
 
-}
+};
