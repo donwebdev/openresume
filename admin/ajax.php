@@ -18,11 +18,11 @@ $ajax = true;
 require_once('admin_start.php');
 
 # Rules for requests
-require_once('controller/c_ajax.php');
+require_once('../controller/c_ajax.php');
 
 $ajax_handler = new Ajax();
 
 # Output the output
-echo $ajax->output();
+echo $ajax_handler->output();
 
 ?>

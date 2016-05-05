@@ -16,10 +16,10 @@ class User {
 
 	public $logged_in = false;
 	public $id;
-	
+	public $details;
 	
 	# Checks to see if a cookie is valid and logs the user in
-	private function validate_cookie($cookie) {
+	public function validate_cookie($cookie) {
 		
 		global $db;
 		global $settings;
@@ -35,6 +35,7 @@ class User {
 				
 			} else {
 				
+				$this->id = $valid['id'];
 				$this->logged_in = true;
 				
 			}
@@ -49,51 +50,16 @@ class User {
 	}
 	
 	
-	# Creates a cookie after a successful login
-	private function create_cookie($user_id) {
-		
-		global $db;
-		global $settings;
-				
-		do { $cookie = $this->random_string(128,128); } while ($db->get_row('SELECT cookie FROM impressions WHERE cookie = "' . $cookie . '"') != NULL);
-		
-		setcookie('openresume_admin',$cookie,time()+$settings->setting['cookie_time']);
-		
-		$insert_data = array(
-			'id' => NULL,
-			'user_id' => $user_id,
-			'cookie' => $cookie,
-			'created' => $db->current_time(),
-			'ip_address' => $_SERVER['REMOTE_ADDR'],
-			'user_agent' => $_SERVER['HTTP_USER_AGENT']
-		);
-						
-		$db->insert('user_login', $insert_data);		
-		
-	}
-	
-	
-	# Turns a string into a hashed password
-	private function do_the_hash($password) {
-		
-		# Add the salt to the password
-		$hash = password_hash($password.PW_SALT,PASSWORD_BCRYPT);
-		
-		return $hash;
-		
-	}
-	
-	
 	# Creates a new user from submitted data
-	public function create_user($user_data) {
+	public function create_user($email,$password) {
 		
 		global $db;
 		
 		$insert_data = array(
 			'id' => NULL,
 			'created' => $db->current_time(),
-			'ip_address' => $_SERVER['REMOTE_ADDR'],
-			'user_agent' => $_SERVER['HTTP_USER_AGENT']
+			'email' => $email,
+			'password' => $this->do_the_hash($password)
 		);
 						
 		$db->insert('users', $insert_data);		
@@ -106,33 +72,33 @@ class User {
 		
 		global $db;
 		
-		$password = $this->do_the_hash($password);
+		$user = $db->get_row('SELECT * FROM users WHERE email = "' . $email . '"',ARRAY_A);
 		
-		$user = $db->get_row('SELECT * FROM user WHERE email = "' . $email . '" AND password = "'.$password.'"');
-		
-		# User is verified, log them in
+		# User is exists, validate their password
 		if($user !== NULL) {
+			
+			# Validate password
+			if($this->verify_password($password,$user['password'])) {
+			
+				$this->user_login_log($user['id'],'login_successful');		
+			
+				$this->create_cookie($user['id']);
+			
+				# User is now logged in					
+				$this->logged_in = true;	
 		
-			$this->user_login_log($user['id'],'login_successful');		
+			# Password is wrong
+			} else {
 		
-			$this->create_cookie($user['id']);
+				$this->user_login_log($user['id'],'wrong_password');
 		
-		# User is not verified, return an error	
+			}
+		
+		# User does not exist, return an error	
 		} else {
 			
-			  # Check if the email exists		
-			$user = $db->get_row('SELECT * FROM user WHERE email = "' . $email . '"');
-			
-			# Email was valid, log it here
-			if($user !== NULL) {
-			
-				$this->user_login_log($user['id'],'wrong_password');	
-				
-			} else {
-			
-				$this->user_login_log(NULL,'wrong_username');
-			
-			}
+			$this->user_login_log(NULL,'wrong_username');
+
 		}	
 	}
 	
@@ -146,10 +112,10 @@ class User {
 		$db->query('DELETE FROM user_login WHERE user_id = '.$user_id);
 		
 		# Destroy the cookie
-		setcoookie('openresume_admin','',1);
+		setcookie('openresume_admin','',1);
 		
 		# Log that the user logged out
-		$this->user_login_log($user['id'],'logout');	
+		$this->user_login_log($user_id,'logout');	
 				
 	}
 	
@@ -178,6 +144,8 @@ class User {
 	public function password_reset_request($user_id) {
 		
 		global $db;
+		global $email;
+				
 
 	}
 	
@@ -186,7 +154,60 @@ class User {
 	public function password_reset($reset_key) {
 
 		global $db;		
+		global $email;
+				
 		
+	}
+	
+	
+	# Creates a cookie after a successful login
+	private function create_cookie($user_id) {
+		
+		global $db;
+		global $settings;
+				
+		do { $cookie = $this->random_string(128,128); } while ($db->get_row('SELECT cookie FROM user_login WHERE cookie = "' . $cookie . '"') != NULL);
+		
+		setcookie('openresume_admin',$cookie,time()+$settings->setting['cookie_time']);
+		
+		$insert_data = array(
+			'id' => NULL,
+			'user_id' => $user_id,
+			'cookie' => $cookie,
+			'created' => $db->current_time(),
+			'ip_address' => $_SERVER['REMOTE_ADDR'],
+			'user_agent' => $_SERVER['HTTP_USER_AGENT']
+		);
+						
+		$db->insert('user_login', $insert_data);
+		
+	}
+	
+	
+	# Turns a string into a hash
+	private function do_the_hash($password) {
+		
+		# Standard hash functionality
+		$hash = password_hash($password,PASSWORD_BCRYPT);
+		
+		return $hash;
+		
+	}
+	
+	
+	# Verifies a hashed password
+	private function verify_password($password,$hash) {
+		
+		# Verify the password and return true if verified
+		$valid = password_verify($password,$hash);
+		
+		return $valid;
+		
+	}
+	
+	
+	# Call this in the login process to stop excessive requests
+	private function spam_protection($email) {
 		
 	}
 	

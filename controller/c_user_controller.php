@@ -18,22 +18,22 @@ class User_Controller extends User {
 	
 	public function __construct() {
 		
-		# Check for login cookie
 		
+		# Validate the cookie if its set, and set the user to logged in
+		# Deletes the cookie if it's too old as well
+		if(isset($_COOKIE['openresume_admin'])) {
 		
-		# If no cookie, then user isn't logged in and we stop
-		
-		
-		# Check for logout and end if true
-	
-		
-		# Delete cookie if it's too old
-		
-		
-		# Check for login post data
-		
-		
-		# 
+			$this->validate_cookie($_COOKIE['openresume_admin']);
+			
+		    # Check for logout
+			if($this->logged_in === true && isset($_GET['logout'])) {
+			
+				$this->user_logout($this->id);
+				$this->logged_in = false;
+				
+			}
+			
+		}
 		
 	}	
 	

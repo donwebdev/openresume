@@ -298,13 +298,13 @@ class DB {
 	public $is_mysql = null;
 
 	/**
-	 * Whether to use  over mysql.
+	 * Whether to use mysqli over mysql.
 	 *
 	 * @since 3.9.0
 	 * @access private
 	 * @var bool
 	 */
-	private $use_ = true;
+	private $use_mysqli = true;
 	/**
 	 * Whether we've managed to successfully connect at some point
 	 *
@@ -347,16 +347,16 @@ class DB {
 	public function __construct( $dbuser, $dbpassword, $dbname, $dbhost ) {
 		register_shutdown_function( array( $this, '__destruct' ) );
 
-		/* Use ext/ if it exists and:
+		/* Use ext/mysqli if it exists and:
 		 *  - WP_USE_EXT_MYSQL is defined as false, or
 		 *  - We are a development version of WordPress, or
 		 *  - We are running PHP 5.5 or greater, or
 		 *  - ext/mysql is not loaded.
 		 */
-		if ( function_exists( '_connect' ) ) {
-				$this->use_ = true;			
+		if ( function_exists( 'mysqli_connect' ) ) {
+				$this->use_mysqli = true;			
 		} else {			
-				$this->use_ = false;			
+				$this->use_mysqli = false;			
 		}
 
 		$this->dbuser = $dbuser;
@@ -464,14 +464,14 @@ class DB {
 		if ( ! isset( $collate ) )
 			$collate = $this->collate;
 		if ( $this->has_cap( 'collation' ) && ! empty( $charset ) ) {
-			if ( $this->use_ ) {
-				if ( function_exists( '_set_charset' ) && $this->has_cap( 'set_charset' ) ) {
-					_set_charset( $dbh, $charset );
+			if ( $this->use_mysqli ) {
+				if ( function_exists( 'mysqli_set_charset' ) && $this->has_cap( 'set_charset' ) ) {
+					mysqli_set_charset( $dbh, $charset );
 				} else {
 					$query = $this->prepare( 'SET NAMES %s', $charset );
 					if ( ! empty( $collate ) )
 						$query .= $this->prepare( ' COLLATE %s', $collate );
-					_query( $dbh, $query );
+					mysqli_query( $dbh, $query );
 				}
 			} else {
 				if ( function_exists( 'mysql_set_charset' ) && $this->has_cap( 'set_charset' ) ) {
@@ -498,8 +498,8 @@ class DB {
 	 */
 	public function set_sql_mode( $modes = array() ) {
 		if ( empty( $modes ) ) {
-			if ( $this->use_ ) {
-				$res = _query( $this->dbh, 'SELECT @@SESSION.sql_mode' );
+			if ( $this->use_mysqli ) {
+				$res = mysqli_query( $this->dbh, 'SELECT @@SESSION.sql_mode' );
 			} else {
 				$res = mysql_query( 'SELECT @@SESSION.sql_mode', $this->dbh );
 			}
@@ -508,8 +508,8 @@ class DB {
 				return;
 			}
 
-			if ( $this->use_ ) {
-				$modes_array = _fetch_array( $res );
+			if ( $this->use_mysqli ) {
+				$modes_array = mysqli_fetch_array( $res );
 				if ( empty( $modes_array[0] ) ) {
 					return;
 				}
@@ -544,8 +544,8 @@ class DB {
 
 		$modes_str = implode( ',', $modes );
 
-		if ( $this->use_ ) {
-			_query( $this->dbh, "SET SESSION sql_mode='$modes_str'" );
+		if ( $this->use_mysqli ) {
+			mysqli_query( $this->dbh, "SET SESSION sql_mode='$modes_str'" );
 		} else {
 			mysql_query( "SET SESSION sql_mode='$modes_str'", $this->dbh );
 		}
@@ -567,8 +567,8 @@ class DB {
 		if ( is_null($dbh) )
 			$dbh = $this->dbh;
 
-		if ( $this->use_ ) {
-			$success = _select_db( $dbh, $db );
+		if ( $this->use_mysqli ) {
+			$success = mysqli_select_db( $dbh, $db );
 		} else {
 			$success = mysql_select_db( $db, $dbh );
 		}
@@ -599,9 +599,9 @@ class DB {
 	}
 
 	/**
-	 * Real escape, using _real_escape_string() or mysql_real_escape_string()
+	 * Real escape, using mysqli_real_escape_string() or mysql_real_escape_string()
 	 *
-	 * @see _real_escape_string()
+	 * @see mysqli_real_escape_string()
 	 * @see mysql_real_escape_string()
 	 * @since 2.8.0
 	 * @access private
@@ -611,8 +611,8 @@ class DB {
 	 */
 	function real_escape( $string ) {
 		if ( $this->dbh ) {
-			if ( $this->use_ ) {
-				return _real_escape_string( $this->dbh, $string );
+			if ( $this->use_mysqli ) {
+				return mysqli_real_escape_string( $this->dbh, $string );
 			} else {
 				return mysql_real_escape_string( $string, $this->dbh );
 			}
@@ -792,8 +792,8 @@ class DB {
 		global $EZSQL_ERROR;
 
 		if ( !$str ) {
-			if ( $this->use_ ) {
-				$str = _error( $this->dbh );
+			if ( $this->use_mysqli ) {
+				$str = mysqli_error( $this->dbh );
 			} else {
 				$str = mysql_error( $this->dbh );
 			}
@@ -822,6 +822,7 @@ class DB {
 	/**
 	 * Enables showing of database errors.
 	 *
+
 	 * This function should be used only to enable showing of errors.
 	 * wpdb::hide_errors() should be used instead for hiding of errors. However,
 	 * this function can be used to enable and disable showing of database
@@ -884,18 +885,18 @@ class DB {
 		$this->rows_affected = $this->num_rows = 0;
 		$this->last_error  = '';
 
-		if ( $this->use_ && $this->result instanceof _result ) {
-			_free_result( $this->result );
+		if ( $this->use_mysqli && $this->result instanceof mysqli_result ) {
+			mysqli_free_result( $this->result );
 			$this->result = null;
 
 			// Sanity check before using the handle
-			if ( empty( $this->dbh ) || !( $this->dbh instanceof  ) ) {
+			if ( empty( $this->dbh ) || !( $this->dbh instanceof mysqli ) ) {
 				return;
 			}
 
 			// Clear out any results from a multi-query
-			while ( _more_results( $this->dbh ) ) {
-				_next_result( $this->dbh );
+			while ( mysqli_more_results( $this->dbh ) ) {
+				mysqli_next_result( $this->dbh );
 			}
 		} elseif ( is_resource( $this->result ) ) {
 			mysql_free_result( $this->result );
@@ -918,16 +919,16 @@ class DB {
 		$this->is_mysql = true;
 
 		/*
-		 * Deprecated in 3.9+ when using . No equivalent
-		 * $new_link parameter exists for _* functions.
+		 * Deprecated in 3.9+ when using MySQLi. No equivalent
+		 * $new_link parameter exists for mysqli_* functions.
 		 */
 		$new_link = defined( 'MYSQL_NEW_LINK' ) ? MYSQL_NEW_LINK : true;
 		$client_flags = defined( 'MYSQL_CLIENT_FLAGS' ) ? MYSQL_CLIENT_FLAGS : 0;
 
-		if ( $this->use_ ) {
-			$this->dbh = _init();
+		if ( $this->use_mysqli ) {
+			$this->dbh = mysqli_init();
 
-			// _real_connect doesn't support the host param including a port or socket
+			// mysqli_real_connect doesn't support the host param including a port or socket
 			// like mysql_connect does. This duplicates how mysql_connect detects a port and/or socket file.
 			$port = null;
 			$socket = null;
@@ -947,12 +948,12 @@ class DB {
 				}
 			}
 
-			_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
+			mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
 
 			if ( $this->dbh->connect_errno ) {
 				$this->dbh = null;
 
-				/* It's possible ext/ is misconfigured. Fall back to ext/mysql if:
+				/* It's possible ext/mysqli is misconfigured. Fall back to ext/mysql if:
 		 		 *  - We haven't previously connected, and
 		 		 *  - WP_USE_EXT_MYSQL isn't set to false, and
 		 		 *  - ext/mysql is loaded.
@@ -966,7 +967,7 @@ class DB {
 				}
 
 				if ( $attempt_fallback ) {
-					$this->use_ = false;
+					$this->use_mysqli = false;
 					return $this->db_connect( $allow_bail );
 				}
 			}
@@ -1034,8 +1035,8 @@ class DB {
 	 * @return bool|void True if the connection is up.
 	 */
 	public function check_connection( $allow_bail = true ) {
-		if ( $this->use_ ) {
-			if ( ! empty( $this->dbh ) && _ping( $this->dbh ) ) {
+		if ( $this->use_mysqli ) {
+			if ( ! empty( $this->dbh ) && mysqli_ping( $this->dbh ) ) {
 				return true;
 			}
 		} else {
@@ -1146,8 +1147,8 @@ class DB {
 		// MySQL server has gone away, try to reconnect
 		$mysql_errno = 0;
 		if ( ! empty( $this->dbh ) ) {
-			if ( $this->use_ ) {
-				$mysql_errno = _errno( $this->dbh );
+			if ( $this->use_mysqli ) {
+				$mysql_errno = mysqli_errno( $this->dbh );
 			} else {
 				$mysql_errno = mysql_errno( $this->dbh );
 			}
@@ -1163,8 +1164,8 @@ class DB {
 		}
 
 		// If there is an error then take note of it..
-		if ( $this->use_ ) {
-			$this->last_error = _error( $this->dbh );
+		if ( $this->use_mysqli ) {
+			$this->last_error = mysqli_error( $this->dbh );
 		} else {
 			$this->last_error = mysql_error( $this->dbh );
 		}
@@ -1181,15 +1182,15 @@ class DB {
 		if ( preg_match( '/^\s*(create|alter|truncate|drop)\s/i', $query ) ) {
 			$return_val = $this->result;
 		} elseif ( preg_match( '/^\s*(insert|delete|update|replace)\s/i', $query ) ) {
-			if ( $this->use_ ) {
-				$this->rows_affected = _affected_rows( $this->dbh );
+			if ( $this->use_mysqli ) {
+				$this->rows_affected = mysqli_affected_rows( $this->dbh );
 			} else {
 				$this->rows_affected = mysql_affected_rows( $this->dbh );
 			}
 			// Take note of the insert_id
 			if ( preg_match( '/^\s*(insert|replace)\s/i', $query ) ) {
-				if ( $this->use_ ) {
-					$this->insert_id = _insert_id( $this->dbh );
+				if ( $this->use_mysqli ) {
+					$this->insert_id = mysqli_insert_id( $this->dbh );
 				} else {
 					$this->insert_id = mysql_insert_id( $this->dbh );
 				}
@@ -1198,8 +1199,8 @@ class DB {
 			$return_val = $this->rows_affected;
 		} else {
 			$num_rows = 0;
-			if ( $this->use_ && $this->result instanceof _result ) {
-				while ( $row = _fetch_object( $this->result ) ) {
+			if ( $this->use_mysqli && $this->result instanceof mysqli_result ) {
+				while ( $row = mysqli_fetch_object( $this->result ) ) {
 					$this->last_result[$num_rows] = $row;
 					$num_rows++;
 				}
@@ -1234,8 +1235,8 @@ class DB {
 			$this->timer_start();
 		}
 
-		if ( ! empty( $this->dbh ) && $this->use_ ) {
-			$this->result = _query( $this->dbh, $query );
+		if ( ! empty( $this->dbh ) && $this->use_mysqli ) {
+			$this->result = mysqli_query( $this->dbh, $query );
 		} elseif ( ! empty( $this->dbh ) ) {
 			$this->result = mysql_query( $query, $this->dbh );
 		}
@@ -2222,8 +2223,8 @@ class DB {
 					if ( $this->charset ) {
 						$connection_charset = $this->charset;
 					} else {
-						if ( $this->use_ ) {
-							$connection_charset = _character_set_name( $this->dbh );
+						if ( $this->use_mysqli ) {
+							$connection_charset = mysqli_character_set_name( $this->dbh );
 						} else {
 							$connection_charset = mysql_client_encoding();
 						}
@@ -2408,10 +2409,10 @@ class DB {
 		if ( $this->col_info )
 			return;
 
-		if ( $this->use_ ) {
-			$num_fields = _num_fields( $this->result );
+		if ( $this->use_mysqli ) {
+			$num_fields = mysqli_num_fields( $this->result );
 			for ( $i = 0; $i < $num_fields; $i++ ) {
-				$this->col_info[ $i ] = _fetch_field( $this->result );
+				$this->col_info[ $i ] = mysqli_fetch_field( $this->result );
 			}
 		} else {
 			$num_fields = mysql_num_fields( $this->result );
@@ -2503,8 +2504,8 @@ class DB {
 			return false;
 		}
 
-		if ( $this->use_ ) {
-			$closed = _close( $this->dbh );
+		if ( $this->use_mysqli ) {
+			$closed = mysqli_close( $this->dbh );
 		} else {
 			$closed = mysql_close( $this->dbh );
 		}
@@ -2597,8 +2598,8 @@ class DB {
 				if ( version_compare( $version, '5.5.3', '<' ) ) {
 					return false;
 				}
-				if ( $this->use_ ) {
-					$client_version = _get_client_info();
+				if ( $this->use_mysqli ) {
+					$client_version = mysqli_get_client_info();
 				} else {
 					$client_version = mysql_get_client_info();
 				}
@@ -2628,8 +2629,8 @@ class DB {
 	 * @return null|string Null on failure, version number on success.
 	 */
 	public function db_version() {
-		if ( $this->use_ ) {
-			$server_info = _get_server_info( $this->dbh );
+		if ( $this->use_mysqli ) {
+			$server_info = mysqli_get_server_info( $this->dbh );
 		} else {
 			$server_info = mysql_get_server_info( $this->dbh );
 		}

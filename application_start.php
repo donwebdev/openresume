@@ -43,10 +43,8 @@ require('model/c_visitor.php');
 require('model/c_user.php');
 require('model/c_settings.php');
 
-
 # SpyC for Piwik
 require('libs/spyc/Spyc.php');
-
 
 # Piwik user agent parser
 require('libs/device-detector/DeviceDetector.php');
@@ -60,7 +58,6 @@ require('libs/device-detector/Parser/Client/ClientParserAbstract.php');
 require('libs/device-detector/Parser/Client/Browser/Engine.php');
 require('libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 
-
 # Load the views
 require('view/c_render_contact_form.php');
 require('view/c_render_cover_letter.php');
@@ -72,7 +69,11 @@ require('view/html_footer.php');
 # Load the controllers
 require('controller/c_form_controller.php');
 require('controller/c_contact_controller.php');
+require('controller/c_email_controller.php');
 
+
+# Instantiate controller objects
+$email = new Email_Controller;
 
 $settings = new Settings;
 

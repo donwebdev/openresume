@@ -18,11 +18,8 @@ define('DB_NAME','openresume');
 define('DB_USER','root');
 define('DB_PASSWORD','');
 
-# Password salt, this is generated on install
-define('PW_SALT','random');
-
 # Version Number
 define('VERSION_STATE','Alpha');
-define('VERSION_NUMBER','0.2.03');
+define('VERSION_NUMBER','0.2.13');
 
 ?>

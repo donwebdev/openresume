@@ -42,11 +42,9 @@ class Ajax {
 		
 		if($db->query('SELECT * FROM impressions WHERE visitor_id = '.$this->visitor->id.' AND text_id = "'.$text_id.'"') == 0) { die(); }		
 		
-		
 		# Validate the user or die if login is required
 		if($login_required === true && $user->logged_in === false) { die('5'); }		
 		
-
 		# Make the objects that are requested		
 		$this->instantiate_objects();		
 	

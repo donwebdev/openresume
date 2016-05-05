@@ -14,9 +14,38 @@
 
 
 
+class Email_Controller {
 
-
-
+	
+	public function send_email($email_type,$params) {
+	
+		
+		
+	}
+	
+	
+	private function contact_form($params) {
+	
+		
+		
+	}
+	
+	
+	private function password_reset_request($params) {
+	
+		
+		
+	}
+	
+	
+	private function password_reset($params) {
+	
+	
+		
+	}
+	
+	
+}
 
 
 

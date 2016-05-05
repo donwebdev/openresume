@@ -57,12 +57,6 @@ require('../libs/device-detector/Parser/Client/ClientParserAbstract.php');
 require('../libs/device-detector/Parser/Client/Browser/Engine.php');
 require('../libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 
-
-# Instantiate all the objects we need
-$settings = new Settings;
-$visitor = new Visitor;
-$user = new User; 
-
 # Load the views
 require('../view/c_render_cover_letter.php');
 require('../view/c_render_resume.php');
@@ -70,7 +64,26 @@ require('../view/c_form.php');
 require('../view/html_header_admin.php');
 require('../view/html_footer.php');
 
+# Load the controllers
+require('../controller/c_contact_controller.php');
+require('../controller/c_email_controller.php');
+require('../controller/c_form_controller.php');
+require('../controller/c_login_controller.php');
+require('../controller/c_user_controller.php');
+
+
+# Instantiate view objects
+$settings = new Settings;
+$visitor = new Visitor;
+
+# Instantiate controller objects
+$email = new Email_Controller;
+$user = new User_Controller; 
+
 # Load the language
 require('../language/'.$settings->setting['language'].'/admin.php');
+
+# Make sure that output is set
+$admin_output = '';
 
 ?>

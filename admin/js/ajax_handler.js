@@ -25,7 +25,7 @@ var ajax_handlers = {
 	
 	login_form: function(form_object,r_id) {
 			
-		data = $('#login_form').serialize(); alert(data);
+		data = $('#login_form').serialize();
 		var login_loading = 1;	
 		
 		//Loading Animation Function
@@ -41,7 +41,7 @@ var ajax_handlers = {
 			
 			// Animation for form result success
 			login_loading = 0;
-	
+	$('#login_form').html(html);
 			// Login was successful, refresh the page		
 			if(html == 'Login Successful') {
 
