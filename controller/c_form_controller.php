@@ -38,8 +38,9 @@ class Form_Controller {
 			
 			break;			
 		
-			case 'login_form' :  			
+			case 'login_form' : 
 				
+				$form = new Login_Form_Controller($this);
 			
 			break;
 			

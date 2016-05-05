@@ -32,6 +32,7 @@ class Settings {
 		$defaults['your_phone'] = '(123) 456-7890';
 		$defaults['your_email'] = 'you@email.com';
 		$defaults['your_location'] = 'Timbuktu';
+		$defaults['cookie_time'] = 604800;
 		
 					
 		# Load all current settings, overrides default settings	

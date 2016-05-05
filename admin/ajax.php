@@ -20,8 +20,7 @@ require_once('admin_start.php');
 # Rules for requests
 require_once('controller/c_ajax.php');
 
-$ajax = new Ajax();
-
+$ajax_handler = new Ajax();
 
 # Output the output
 echo $ajax->output();

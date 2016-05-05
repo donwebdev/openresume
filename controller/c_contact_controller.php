@@ -149,7 +149,7 @@ class Contact_Form_Controller {
 		';
 			
 		# Send email to site owner	
-		mail($settings['your_email'],'OpenResume - New message from '.$_POST['name'],$message);
+		mail($settings['your_email'],LANG_EMAIL_SUBJECT.$_POST['name'],$message);
 
 		
 	}
