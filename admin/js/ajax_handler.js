@@ -50,7 +50,7 @@ var ajax_handlers = {
 			// Login failed, just say it failed			
 			} else if(html == 'Login Failed') {
 
-
+				$('#failure_message').html(html);
 
 			// Login returned custom text, put it in the container			
 			} else {

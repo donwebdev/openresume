@@ -1,0 +1,165 @@
+/*
+
+Bootstrap Overrides
+
+*/
+
+body { 
+	background: 	#f3f3f3; 
+	padding: 		0;
+}
+
+.right {
+	float: 			right;	
+}
+
+
+
+
+/*--------------------------------------
+
+OpenResume Styles
+
+These styles all override Bootstrap
+
+---------------------------------------*/
+
+.dutch_orange {
+	color: 			#ff4f00;	
+}
+
+
+.footer {
+	color: 			#999;	
+}
+
+.page_width {
+	width: 			1000px !important;
+}
+
+.admin_page {
+	background-color: 	#fff;	
+	margin: 			0 auto 20px auto;
+	padding: 			20px;
+}
+
+
+/*--------------------------------------
+
+Admin Menu
+
+---------------------------------------*/
+
+.admin_menu {
+	background-color: #fff;	
+	padding: 		0;
+	margin: 		0 auto;
+}
+
+.admin_menu ul {
+    list-style-type: none;
+	margin: 		0;
+	padding: 		0;
+	width: 			100%;
+}
+
+.admin_menu li {
+	display: 		inline-block;
+	vertical-align: middle;
+	margin: 		0;
+	padding: 		0;
+	width: 			16.6%;
+	height: 		60px;
+	border-bottom: 	solid 4px #ccc;
+}
+
+.admin_menu a {
+	display: 		inline-block;
+	vertical-align: middle;
+	width: 			100%;
+	line-height: 	60px;
+	height: 		56px;
+	margin: 		0;
+	padding: 		0 0 0 10px;
+	border-right: 	solid 1px #efefef;
+	font-size: 		16px;
+}
+
+.menu_this_page {
+	border-bottom-color: #ff4f00 !important;	
+}
+
+.menu_this_page a {
+	color: 			#000;
+	font-weight: 	bold;
+}
+
+.logout_link {
+	border: 		none !important;	
+}
+
+.logout_li {
+	width: 			17% !important;
+}
+
+
+/*--------------------------------------
+
+Login Form
+
+---------------------------------------*/
+
+.login_container {
+	z-index:   		101;
+	width: 			350px;
+	height: 		280px;
+	margin: 		0 auto;
+	background: 	#fff;
+	position: 		fixed;
+	top: 			30%;
+	left: 			50%;
+	margin-left: 	-175px;
+	margin-top: 	0;
+    box-shadow: 	0px 0px 10px #ccc;
+	padding: 		18px 25px 0 25px;
+}
+
+.forgotten_password_container {
+	z-index:   		101;
+	width: 			350px;
+	height: 		220px;
+	margin: 		0 auto;
+	background: 	#fff;
+	position: 		fixed;
+	top: 			30%;
+	left: 			50%;
+	margin-left: 	-175px;
+	margin-top: 	0;
+    box-shadow: 	0px 0px 10px #ccc;
+	padding: 		18px 25px 0 25px;	
+}
+
+.login_container button, .forgotten_password_container button {
+	float: left;	
+}
+
+.login_container input, .forgotten_password_container input {
+	margin-bottom: 	8px;
+}
+
+.login_container h1, .forgotten_password_container h1 {
+	margin-bottom: 	20px;
+	font-size: 		28px;
+}
+
+.forgot_password {
+	margin-top: 	8px;
+	margin-right: 	3px;
+}
+
+.failure_message {
+	color: #ff0000;
+	margin-top: 60px;
+	padding: 5px;	
+}
+

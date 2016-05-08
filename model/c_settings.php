@@ -35,6 +35,7 @@ class Settings {
 		$defaults['your_location'] = 'Timbuktu';
 		$defaults['cookie_time'] = 604800;
 		
+		# Default date range
 					
 		# Load all current settings, overrides default settings	
 		$settings = $db->get_results('SELECT * FROM settings');
@@ -48,7 +49,7 @@ class Settings {
 						
 		}
 		
-		
+		# Create the settings array
 		foreach($settings as $row) {
 			$this->setting[$row->name] = $row->value;			
 		}

@@ -82,14 +82,15 @@ $settings = new Settings;
 if(!isset($ajax)) {
 
 # Instantiate all the model objects we need
+$resume = new Resume;
 $visitor = new Visitor;
 $user = new User; 
 $cover_letter = new Cover_Letter;
-$resume = new Resume;
 
 }
 
 # Load the language
 require('language/'.$settings->setting['language'].'/frontend.php');
+require('language/'.$settings->setting['language'].'/email.php');
 
 ?>

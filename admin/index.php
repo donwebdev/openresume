@@ -14,12 +14,13 @@
 require('admin_start.php');
 
 # Check if logged in
-
 if($user->logged_in === false) {
 	
 require('login.php');
 
 } else {
+
+	$admin_pages = array('resume','coverletter','messages','analytics','settings');
 
 	if(!isset($_GET['admin_page'])) {
 		$admin_page = 'resume';	
@@ -27,28 +28,11 @@ require('login.php');
 		$admin_page = $_GET['admin_page'];
 	}
 	
-	switch($admin_page) {
+	# Include the proper admin page
+	if(in_array($admin_page,$admin_pages)) {
 		
-		case 'resume':
-			require('resume.php');
-		break;
-		
-		case 'coverletter':
-			require('coverletter.php');		
-		break;
-		
-		case 'messages':
-			require('contact.php');				
-		break;
-		
-		case 'analytics':
-			require('analytics.php');			
-		break;
-		
-		case 'settings':
-			require('settings.php');			
-		break;
-		
+		include($admin_page.'.php');
+				
 	}
 	
 }

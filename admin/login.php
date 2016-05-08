@@ -61,6 +61,8 @@ if(!isset($_GET['forgot_password']) && !isset($_GET['password_reset'])) {
 		
 		$admin_output .= '
 		
+		<div id="failure_message" class="failure_message"></div>
+		
 	</div>
 ';
 		
@@ -86,8 +88,7 @@ elseif(isset($_GET['forgot_password']) && $_GET['forgot_password'] != '') {
 		$form = new Form('forgotten_password_form',$form);
 	
 		$admin_output .= '
-	<div class="login_overlay">	
-	<div class="container-fluid login_container">
+	<div class="container-fluid forgotten_password_container">
 		
 		<h1>'.LANG_FORGOTTEN_PASSWORD.'</h1>
 		
@@ -104,7 +105,6 @@ elseif(isset($_GET['forgot_password']) && $_GET['forgot_password'] != '') {
 		
 		$admin_output .= '
 		
-	</div>
 	</div>
 ';
 

@@ -32,11 +32,7 @@ class Resume_Output {
 			$this->output .= $this->resume_section($section); 
 			
 		}
-		
-		# Make the footer
-		
-		
-		
+				
 		
 	}
 	

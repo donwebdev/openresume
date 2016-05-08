@@ -40,7 +40,6 @@ class Login_Form_Controller {
 				$this->output = 'Login Failed';
 				
 			}
-
 		}
 		
 		# Process a forgotten password request

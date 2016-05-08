@@ -10,5 +10,15 @@
 #
 #-------------------------------------------------------
 
+# Page container
+$admin_output .= '<div class="admin_page page_width"> hello';
+
+
+
+
+
+
+# Page container end
+$admin_output .= '</div>';
 
 ?>

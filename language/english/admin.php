@@ -10,7 +10,16 @@
 #
 #-------------------------------------------------------
 
-define('LANG_OPENRESUME','Email');
+define('LANG_OPENRESUME','OpenResume');
+
+
+# admin/functions/menu.php
+define('LANG_MENU_RESUME','Resumes');
+define('LANG_MENU_COVERLETTER','Cover Letters');
+define('LANG_MENU_MESSAGES','Messages');
+define('LANG_MENU_ANALYTICS','Analytics');
+define('LANG_MENU_SETTINGS','Settings');
+define('LANG_LOGOUT','Logout');
 
 # admin/login.php
 define('LANG_YOUR_EMAIL','Email');

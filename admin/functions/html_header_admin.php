@@ -5,9 +5,8 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# view/html_header_admin.php
+# admin/functions/html_header_admin.php
 # Load Bootstrap and jQuery and all HTML headers.
-# Build the menu for the admin panel
 #
 #-------------------------------------------------------
 
@@ -57,7 +56,7 @@ $output = '
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1">  
   <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.css">   
-  <link rel="stylesheet" href="../view/styles/admin.css">  
+  <link rel="stylesheet" href="styles/admin.css">  
   <script type="text/javascript" src="../libs/jquery-1.12.1.min.js"></script>
   <script type="text/javascript" src="../libs/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="../libs/notify.js"></script>

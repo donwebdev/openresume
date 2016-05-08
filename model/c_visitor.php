@@ -122,12 +122,9 @@ class Visitor {
 				return;
 			}
 			
-			# Quit if it's admin panel
-			if (strpos($url, '/admin') !== false) {
-				return;
-			}
-			
 			global $db;
+			global $resume;
+			
 			if ($url == '') {
 				if ($_SERVER['SERVER_PORT'] == '443') {
 					$http = 'https://';
@@ -138,6 +135,17 @@ class Visitor {
 				$url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			}
 			
+			# Filter this impression if it's on the admin panel
+			if (strpos($url, '/admin') !== false) {
+				$this->visitor['filtered'] = 1;
+			}
+			
+			if(is_object($resume)) {
+				$resume_id = $resume->id; 
+			} else {
+				$resume_id = NULL;
+			}
+			
 			do { $impression_text_id = $this->random_string(7, 7); } while ($db->get_row('SELECT text_id FROM impressions WHERE text_id = "' . $impression_text_id . '"') != null);
 			
 			$data               = array(
@@ -146,6 +154,7 @@ class Visitor {
 				'filtered' => $this->visitor['filtered'],
 				'created' => $db->current_time(),
 				'visitor_id' => $this->visitor['id'],
+				'resume_id' => $resume_id,
 				'ip_address' => $_SERVER['REMOTE_ADDR'],
 				'impression_url' => $url,
 				'referal_url' => $this->http_referer

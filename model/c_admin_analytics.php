@@ -5,8 +5,9 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# admin/contact.php
-# Runs the admin panel for viewing and responding to messages
+# model/c_admin_analytics.php
+# Object that loads all the analytics data based on
+# arguments in the admin panel
 #
 #-------------------------------------------------------
 

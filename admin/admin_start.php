@@ -61,7 +61,6 @@ require('../libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 require('../view/c_render_cover_letter.php');
 require('../view/c_render_resume.php');
 require('../view/c_form.php');
-require('../view/html_header_admin.php');
 require('../view/html_footer.php');
 
 # Load the controllers
@@ -70,6 +69,11 @@ require('../controller/c_email_controller.php');
 require('../controller/c_form_controller.php');
 require('../controller/c_login_controller.php');
 require('../controller/c_user_controller.php');
+
+# Load the Admin Functions
+require('functions/html_header_admin.php');
+require('functions/menu.php');
+require('functions/url.php');
 
 
 # Instantiate view objects
@@ -82,6 +86,8 @@ $user = new User_Controller;
 
 # Load the language
 require('../language/'.$settings->setting['language'].'/admin.php');
+require('../language/'.$settings->setting['language'].'/email.php');
+
 
 # Make sure that output is set
 $admin_output = '';

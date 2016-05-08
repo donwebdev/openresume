@@ -112,6 +112,7 @@ class Ajax {
 	
 		$output = $form_controller->output;
 	
+	
 		/*
 	
 		POST INFO DEBUGGER

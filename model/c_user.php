@@ -127,11 +127,19 @@ class User {
 	public function user_login_log($user_id,$type) {
 		
 		global $db;
+		global $visitor;
+		
+		if(isset($visitor)) {
+			$visitor_id = $visitor->id;	
+		} else {
+			$visitor_id = NULL;	
+		}
 		
 		$insert_data = array(
 			'id' => NULL,
 			'created' => $db->current_time(),
 			'user_id' => $user_id,
+			'visitor_id' => $visitor_id,
 			'type' => $type,
 			'ip_address' => $_SERVER['REMOTE_ADDR'],
 			'user_agent' => $_SERVER['HTTP_USER_AGENT']
