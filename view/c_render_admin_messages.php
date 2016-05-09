@@ -5,8 +5,8 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# admin/analytics.php
-# Runs the admin panel for viewing analytics
+# view/c_render_admin_messages.php
+# Renders the messages admin page based on the messages model
 #
 #-------------------------------------------------------
 

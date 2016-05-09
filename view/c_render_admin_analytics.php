@@ -5,8 +5,8 @@
 # OPEN RESUME by Don Westendorp
 # © 2016 - Released under GPL v3 Licensing
 #
-# admin/resume.php
-# Runs the admin panel for creating and editing resumes
+# view/c_render_admin_analytics.php
+# Renders the analytics admin page based on the analytics model
 #
 #-------------------------------------------------------
 

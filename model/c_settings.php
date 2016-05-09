@@ -35,7 +35,11 @@ class Settings {
 		$defaults['your_location'] = 'Timbuktu';
 		$defaults['cookie_time'] = 604800;
 		
-		# Default date range
+		# Date Settings
+		$defaults['date_range_type'] = 'AllTime';
+		$defaults['start_date'] = '';
+		$defaults['end_date'] = '';
+		$defaults['time_zone'] = 0;
 					
 		# Load all current settings, overrides default settings	
 		$settings = $db->get_results('SELECT * FROM settings');

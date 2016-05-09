@@ -15,8 +15,7 @@
 
 #Build HTML Output
 $output = html_header_admin();
-$output .= admin_menu();
-$output .= $admin_output;
+$output .= $admin_output->output;
 $output .= html_footer();
 
 

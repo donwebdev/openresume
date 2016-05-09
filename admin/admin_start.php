@@ -36,6 +36,13 @@ if(!$db->has_connected) {
 
 
 # Load the models
+require('../model/c_admin.php');
+require('../model/c_admin_analytics.php');
+require('../model/c_admin_coverletter.php');
+require('../model/c_admin_messages.php');
+require('../model/c_admin_query.php');
+require('../model/c_admin_resume.php');
+require('../model/c_admin_settings.php');
 require('../model/c_cover_letter.php');
 require('../model/c_resume.php');
 require('../model/c_visitor.php');
@@ -57,11 +64,20 @@ require('../libs/device-detector/Parser/Client/ClientParserAbstract.php');
 require('../libs/device-detector/Parser/Client/Browser/Engine.php');
 require('../libs/device-detector/Parser/Device/DeviceParserAbstract.php');
 
-# Load the views
+# Load the views;
+require('../view/c_render_admin.php');
+require('../view/c_render_admin_analytics.php');
+require('../view/c_render_admin_coverletter.php');
+require('../view/c_render_admin_login.php');
+require('../view/c_render_admin_messages.php');
+require('../view/c_render_admin_resume.php');
+require('../view/c_render_admin_settings.php');
 require('../view/c_render_cover_letter.php');
 require('../view/c_render_resume.php');
 require('../view/c_form.php');
+require('../view/c_render_table.php');
 require('../view/html_footer.php');
+require('../view/html_header_admin.php');
 
 # Load the controllers
 require('../controller/c_contact_controller.php');
@@ -69,11 +85,6 @@ require('../controller/c_email_controller.php');
 require('../controller/c_form_controller.php');
 require('../controller/c_login_controller.php');
 require('../controller/c_user_controller.php');
-
-# Load the Admin Functions
-require('functions/html_header_admin.php');
-require('functions/menu.php');
-require('functions/url.php');
 
 
 # Instantiate view objects

@@ -84,8 +84,10 @@ if(!isset($ajax)) {
 # Instantiate all the model objects we need
 $resume = new Resume;
 $visitor = new Visitor;
-$user = new User; 
 $cover_letter = new Cover_Letter;
+
+# Instantiate user controller for front end admin uses
+$user = new User_Controller; 
 
 }
 
