@@ -48,6 +48,7 @@ require('../model/c_resume.php');
 require('../model/c_visitor.php');
 require('../model/c_user.php');
 require('../model/c_settings.php');
+require('../model/c_tables.php');
 
 # SpyC
 require('../libs/spyc/Spyc.php');
@@ -86,6 +87,11 @@ require('../controller/c_form_controller.php');
 require('../controller/c_login_controller.php');
 require('../controller/c_user_controller.php');
 
+
+# Instantiate model objects
+$tables = new Tables;
+# Create the array of table structures
+$tables->table_arrays();
 
 # Instantiate view objects
 $settings = new Settings;

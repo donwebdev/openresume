@@ -24,18 +24,16 @@ class Admin_Resume {
 	public function get_resumes() {
 	
 		global $db;	
+	
 		
 	}
 	
 	public function resume_table_data() {
 		
-	
+		global $db;
 		
-	}
-	
-	
-	
+		
+	}	
 }
-
 
 ?>

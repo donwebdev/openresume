@@ -14,11 +14,12 @@
 class Admin_Query {
 
 	public $query;
-	public $table_name; 
+	public $table_name;
 	public $select;
 	public $where;
 
 	public function __construct($table_name,$where='',$select = '*') {
+
 		
 		
 	}
@@ -75,16 +76,22 @@ class Admin_Query {
 	# Check if table has a deleted column
 	public function deleted() {
 		
+		global $tables;
+		
 	}
 
 	# Creates a filtered statement based on settings
 	# Check if table has a filtered column
 	public function filtered() {
 		
+		global $tables;
+		
 	}
 	
 	# Creates a statement for sorting the results
 	public function sorting() {
+		
+		global $tables;
 		
 	}
 
