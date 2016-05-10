@@ -40,6 +40,10 @@ class Settings {
 		$defaults['start_date'] = '';
 		$defaults['end_date'] = '';
 		$defaults['time_zone'] = 0;
+		
+		# Query settings
+		$defaults['show_deleted'] = 0;
+		$defaults['show_filtered'] = 0;
 					
 		# Load all current settings, overrides default settings	
 		$settings = $db->get_results('SELECT * FROM settings');

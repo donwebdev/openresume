@@ -311,13 +311,18 @@ class Tables {
 			# Get the table fields 
 			preg_match_all("/`(.+)` (\w+)\(? ?(\d*) ?\)?/", $value, $_matches, PREG_SET_ORDER);
 		
-			# Put the table fields into the array
-			$array[$table_name] = $_matches;
-			
+			# Make the matches array more human readable
+			foreach($_matches as $key => $value) {
+				
+				$array[$table_name][$value[1]]['type'] = $value[2];
+				$array[$table_name][$value[1]]['value'] = $value[3];
+				
+			}
+		
 			
 		}
 		
-		print_r($array);
+		$this->table_array = $array;
 		
 	}
 		

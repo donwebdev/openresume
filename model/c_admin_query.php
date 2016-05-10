@@ -14,14 +14,30 @@
 class Admin_Query {
 
 	public $query;
+	public $query_pagination = '';
+	public $pagination_total;
 	public $table_name;
 	public $select;
 	public $where;
+	public $results;
 
-	public function __construct($table_name,$where='',$select = '*') {
+	# Stores total results for accurate pagination
+	public $query_all_results;	
+	
+	public function __construct($table_name,$where='',$select = '*',$get_results = true) {
 
+		$this->table_name = $table_name;
+		$this->where = $where;
+		$this->select = $select;
+		$this->get_results = $get_results;
 		
+		$this->make_query();
 		
+		if($get_results === true) {
+		
+			$this->get_results();
+			
+		}		
 	}
 
 	# Construct the query based on settings
@@ -29,70 +45,175 @@ class Admin_Query {
 
 		$query = 'SELECT '.$this->select.' FROM '.$this->table_name.' ';			
 
+		# Start the where clause if it exists
 		if($this->where != '') {
 		
-			$query .= 'WHERE '.$where.' ';
-			
-		}
-		
-		# Do the necessary methods
-		$query_args .= $this->pagination();
-				
-		$query_args .= $this->deleted();
-		
-		$query_args .= $this->filtered();
-		
-		$query_args .= $this->date_range();
-		
-		# Add a where in case we need it
-		if($this->where == '' && $query_args != '') {
-		
-			$query .= 'WHERE '.$query_args;
+			$where = 'WHERE '.$this->where.' ';
 			
 		} else {
 		
-			$query .= $query_args;	
+			$where = '';	
 			
 		}
 		
-		$query .= $this->sorting();
+		# Get the rest of the arguments for this query
+		$pagination = $this->pagination();				
+		$deleted = $this->deleted();		
+		$filtered = $this->filtered();		
+		$date_range = $this->date_range();
+		
+	
+		# Spaghetti to build the rest of the query
+		# Using spaghetti in case special conditions are needed later
+		if($deleted != '') {
+			
+			$where .= ' AND '.$deleted;	
+			
+		}
+		
+		if($filtered != '') {
+			
+			$where .= ' AND '.$filtered;					
+			
+		}
+		
+		if($date_range != '') {
+			
+			$where .= ' AND '.$date_range;					
+			
+		}
+		
+		# Check if WHERE statement is blank
+		# If so WHERE statement begins with AND and needs fixing
+		if($this->where == '' && ($deleted != '' || $filtered != '' || $date_range != '')) {
+	
+			# Because the 4th argument has to be passed by reference
+			$count = 1;
+	
+			# Only repace the first and with where
+			$where = str_replace(' AND ',' WHERE ',$where, $count);
+			
+		}
+		
+		# Add the where and the sorting to the query
+		$query .= $where;				
+		$query .= $this->sorting();		
+		$query .= $this->pagination();
 
-		return $query;
+		# Create pagination query to get the total amount of results
+		if($pagination != '') {
+		
+			# Get pagination statement to get a full query
+			$this->query_pagination = str_replace($pagination,' 1=1 ',$query);				
+			
+		}		
+		
+		# Final query
+		$this->query = $query;
 
 	}
-
+	
 	# Does the query and returns an array
 	# Use this array to build a table
 	public function get_results() {
-			
+		
+		global $db;
+		
+		$this->results = $db->get_results($this->query,ARRAY_A);
+		
+		# Get the total amount of results for pagination if needed
+		if($this->query_pagination != '') {
+		
+			$this->pagination_total = $db->query($this->query_pagination);
+		
+		}
 	}
 
 	# Creates the appropriate pagination statement for the query
-	public function pagination() {
+	public function pagination($page_num = '', $page_count = '') {
 		
+		# Check if GET variables are set and grab those
+		if($page_num != '' && $page_count != '' && isset($_GET['page_num']) && isset($_GET['page_count']) && is_int($_GET['page_num']) && is_int($_GET['page_count'])) {
+				
+			$page_num = $_GET['page_num'];
+			$page_count = $_GET['page_count'];
+			
+		}	
+		
+			
 	}
 
-	# Don't show deleted entries by default
 	# Check if table has a deleted column
+	# Create a deleted statement based on settings
 	public function deleted() {
 		
 		global $tables;
+		global $settings;
 		
+		# Check to see if the table has a deleted column
+		if(isset($tables->table_array[$this->table_name]['deleted'])) {
+
+			if($settings->setting['show_deleted'] == 0) {
+			
+				return 'deleted = 0';
+				
+			} elseif($settings->setting['show_deleted'] == 1) {
+			
+				return 'deleted = 1';
+				
+			} else {
+			
+				return '';	
+				
+			}
+		}		
 	}
 
-	# Creates a filtered statement based on settings
 	# Check if table has a filtered column
+	# Creates a filtered statement based on settings
 	public function filtered() {
 		
 		global $tables;
+		global $settings;
 		
+		# Check to see if the table has a filtered column
+		if(isset($tables->table_array[$this->table_name]['filtered'])) {
+			
+			if($settings->setting['show_filtered'] == 0) {
+			
+				return 'filtered = 0';
+				
+			} elseif ($settings->setting['show_filtered'] == 1) {
+				
+				return 'filtered = 1';
+				
+			} else {
+			
+				return '';	
+				
+			}		
+		}		
 	}
 	
 	# Creates a statement for sorting the results
-	public function sorting() {
+	public function sorting($sort='',$order='') {
 		
 		global $tables;
 		
+		# Check to see if GET variables are set if function arguments are not
+		if($sort != '' && $order != '' && isset($_GET['sort']) && isset($_GET['order'])) {
+			
+			$sort = $_GET['sort'];
+			$order = $_GET['order'];
+			
+		}
+		
+		# Check to see if the sorting column exists, and that order is set properly
+		if (isset($tables->table_array[$sort]) && ($order == 'asc' || $order == 'desc')) {
+			
+			return 'ORDER BY ' . $sort . ' ' . $order;
+			
+		}		
 	}
 
 	# Creates a date range based on settings	
@@ -213,9 +334,8 @@ class Admin_Query {
 		$settings->set_setting('start_date', date('m/d/Y', $time_1));
 		$settings->set_setting('end_date', date('m/d/Y', $time_2));
 		return $date_field . " BETWEEN '" . $date_1 . "' AND '" . $date_2 . "'";
-	}
 		
-	
+	}	
 }
 
 

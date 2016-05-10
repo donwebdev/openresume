@@ -31,6 +31,15 @@ define('LANG_FORGOTTEN_PASSWORD','Forgotten Password');
 define('LANG_BACK_TO_LOGIN','Back to login');
 define('LANG_RESET_PASSWORD','Reset Password');
 
+# model/c_admin.php
+define('LANG_COLUMN_UNIQUES','Uniques');
+define('LANG_COLUMN_IMPRESSIONS','Impressions');
+define('LANG_COLUMN_MESSAGES','Messages');
+
+# model/c_admin_resume.php
+define('LANG_COLUMN_RESUME_NAME','Name');
+define('LANG_COLUMN_RESUME_TYPE','Resume Type');
+define('LANG_COLUMN_RESUME_STYLE','Resume Style');
 
 
 

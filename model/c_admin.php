@@ -94,7 +94,29 @@ class Admin {
 		$this->output = new Admin_Settings;		
 		
 	}
+	
+	public function columns_to_array($row,$columns) {
 		
+		$output = array();
+		
+		# Iterate through each item in the row
+		foreach($row as $field_name => $field_value) {
+		
+			# Iterate through the columns array to check for matches
+			foreach($columns as $column_key => $column) {
+			
+				# Column matches field name
+				if($field_name == $column['field_name']) {
+			
+					# Add the the value to the output array	
+					$output[$field_name] = $field_value;	
+					
+				}					
+			}			
+		}
+		
+		return $output;		
+	}		
 }
 
 
