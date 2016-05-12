@@ -4,7 +4,7 @@ Bootstrap Overrides
 
 */
 
-body { 
+.admin_body { 
 	background: 	#f3f3f3; 
 	padding: 		0;
 }
@@ -14,11 +14,9 @@ body {
 }
 
 
-
-
 /*--------------------------------------
 
-OpenResume Styles
+OpenResume Admin Styles
 
 These styles all override Bootstrap
 
@@ -41,6 +39,23 @@ These styles all override Bootstrap
 	background-color: 	#fff;	
 	margin: 			0 auto 20px auto;
 	padding: 			20px;
+}
+
+.admin_header {
+	height: 			100px;
+	vertical-align: 	bottom;
+}
+
+.admin_title {
+	display: 			inline-block;
+}
+
+.admin_button {
+	display: 			inline-block;
+}
+
+.admin_date_form_container {
+	float: 				right;
 }
 
 
@@ -162,4 +177,11 @@ Login Form
 	margin-top: 60px;
 	padding: 5px;	
 }
+
+
+/*--------------------------------------
+
+Admin Resume Page
+
+---------------------------------------*/
 

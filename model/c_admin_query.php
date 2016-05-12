@@ -16,6 +16,7 @@ class Admin_Query {
 	public $query;
 	public $query_pagination = '';
 	public $pagination_total;
+	public $total_rows;
 	public $table_name;
 	public $select;
 	public $where;
@@ -91,7 +92,7 @@ class Admin_Query {
 			$count = 1;
 	
 			# Only repace the first and with where
-			$where = str_replace(' AND ',' WHERE ',$where, $count);
+			$where = preg_replace('/ AND /','WHERE ',$where, 1);
 			
 		}
 		
@@ -120,6 +121,9 @@ class Admin_Query {
 		global $db;
 		
 		$this->results = $db->get_results($this->query,ARRAY_A);
+		
+		# Get the total amount of rows
+		$this->total_rows = $db->num_rows;
 		
 		# Get the total amount of results for pagination if needed
 		if($this->query_pagination != '') {
@@ -155,7 +159,7 @@ class Admin_Query {
 
 			if($settings->setting['show_deleted'] == 0) {
 			
-				return 'deleted = 0';
+				return 'deleted IS NULL';
 				
 			} elseif($settings->setting['show_deleted'] == 1) {
 			
@@ -227,7 +231,7 @@ class Admin_Query {
 			
 		# Get the range setting from the settings object	
 		} else {
-			$range = $settings->set_setting('date_range_type');
+			$range = $settings->setting['date_range_type'];
 		}
 		
 		# Create a timezone offset if a timezone has been set

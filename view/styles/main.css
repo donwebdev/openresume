@@ -4,12 +4,12 @@ Bootstrap Overrides
 
 */
 
-body { 
+.openresume_body { 
 	background: 	#f3f3f3; 
 	padding: 		0;
 }
 
-.container, .container-fluid {
+.resume_container .container, .resume_container .container-fluid {
 	margin-top: 	20px;
 	max-width: 		700px;
 	background: 	#fff;

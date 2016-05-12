@@ -13,16 +13,17 @@
 
 class Admin {
 	
-	public $output = array();
+	public $output;
 	public $require_login = true;
 	public $admin_pages = array('resume','coverletter','messages','analytics','settings');
+	public $admin_page;
 	
 	# Check for login, then load the appropriate model
 	public function __construct() {
 			
 		if($this->login_check() === true) {
 		
-			$this->output = $this->instantiate_admin_model();
+			$this->admin_model();
 						
 		}			
 	}
@@ -43,7 +44,7 @@ class Admin {
 	}
 	
 	# Calls the method to create the appropriate admin model
-	private function instantiate_admin_model() {	
+	private function admin_model() {	
 		
 		if(isset($_GET['admin_page'])) {
 			$admin_page = $_GET['admin_page'];
@@ -51,45 +52,49 @@ class Admin {
 			$admin_page = 'resume';	
 		}
 		
-		if(method_exists($this,'instantiate_'.$admin_page) && in_array($admin_page,$this->admin_pages)) {
+		$method = $admin_page.'_model';
+		$this->admin_page = $admin_page;
 		
-			$method = 'instantiate_'.$admin_page;
+		if(method_exists($this,$method) && in_array($admin_page,$this->admin_pages)) {
+		
 		
 			$this->$method();	
 			
 		}		
 	}
 	
+	# Run the correct model and do the correct arguments
+	# This is spaghetti so extra conditions can be added later
 	
-	private function instantiate_resume_model() {
+	private function resume_model() {
 		
-		$this->output = new Admin_Resume;
+		$this->output = new Admin_Resume($this);
 		
 	}
 	
 	
-	private function instantiate_coverletter_model() {
+	private function coverletter_model() {
 		
 		$this->output = new Admin_Coverletter;		
 		
 	}
 	
 	
-	private function instantiate_messages_model() {
+	private function messages_model() {
 		
 		$this->output = new Admin_Messages;		
 		
 	}
 	
 	
-	private function instantiate_analytics_model() {
+	private function analytics_model() {
 		
 		$this->output = new Admin_Analytics;		
 		
 	}
 	
 	
-	private function instantiate_settings_model() {
+	private function settings_model() {
 		
 		$this->output = new Admin_Settings;		
 		

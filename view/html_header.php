@@ -43,7 +43,7 @@ $output = '<!DOCTYPE html>
 
 
 </head>
-<body>	
+<body class="openresume_body">	
 
 <div class="container-fluid resume_container">
 	

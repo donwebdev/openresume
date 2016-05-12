@@ -14,21 +14,46 @@
 class Admin_Resume {
 	
 	public $resumes;
+	public $resume;
+	public $admin;
 	public $columns = array();
 	public $table = array();
 	
-	public function __construct() {
+	public function __construct($admin) {
+	
+		# Create a reference to the admin object that spawned this class
+		# Because variable scope...
+		$this->admin = &$admin;
 		
 		$this->get_resumes();
 		
+		$this->resume_table_columns();
+		
+		$this->resume_table_data();
+		
+		# If there's only one resume, or we're editing a resume
+		# Build a resume model based on the id in $this->table
+		if($this->table['total_items'] == 1) {
+		
+			# Build a resume model from the first id in the table array
+			$this->resume = new Resume($this->table[0]['id']);
+		
+		# Build a resume based on if one needs to be edited
+		} elseif(isset($_GET['edit_resume']) && is_numeric($_GET['edit_resume'])) {
+			
+			$this->resume = new Resume($_GET['edit_resume']);
+			
+		}
 	}
 	
+	# Grabs all resumes matching current admin query parameters
 	public function get_resumes() {
 	
-		$this->results = new Admin_Query('resumes');	
+		$this->resumes = new Admin_Query('resumes');
 		
 	}
 	
+	# The column structure of the resume table
 	public function resume_table_columns() {
 	
 		# Define the columns of this table	
@@ -73,10 +98,10 @@ class Admin_Resume {
 		
 	}
 	
+	# Builds all data for the resume table
 	public function resume_table_data() {
 		
 		global $db;
-		global $admin;
 		
 		$this->table['columns'] = $this->columns;
 		
@@ -84,31 +109,40 @@ class Admin_Resume {
 		$i = 0;
 		
 		# Iterate through results		
-		foreach($this->results as $key => $value) {
+		foreach($this->resumes->results as $key => $resume) {
+		
 		
 			# Add the id to the array
-			$this->table[$i]['id'] = $value['id'];
+			$this->table[$i]['id'] = $resume['id'];
 			
 			# Add custom fields to the array
 			
-			# Get unique visitor count for this Resume
-			$this->table[$i]['uniques'] = 0;
-			
 			# Get impressions for this resume
-			$this->table[$i]['impressions'] = 0;
+			$impressions = new Admin_Query('impressions','resume_id = '.$resume['id'],'visitor_id');
+			
+			$this->table[$i]['impressions'] = $impressions->total_rows;
+			
+			
+			# Get unique visitor count for this Resume
+			$uniques = new Admin_Query('visitors','id IN ('.$impressions->query.')');
+			
+			$this->table[$i]['uniques'] = $uniques->total_rows;
+			
 			
 			# Get messages from this resume
-			$this->table[$i]['messages'] = 0;
+			$messages = new Admin_Query('messages','resume_id = '.$resume['id']);
+			
+			$this->table[$i]['messages'] = $messages->total_rows;
 			
 			# Add the rest of the fields to the array from the result
-			$this->table[$i] = array_merge($this->table[$i],$admin->columns_to_array($value,$this->columns));
+			$this->table[$i] = array_merge($this->table[$i],$this->admin->columns_to_array($resume,$this->columns));
 		
 			$i++;	
 			
 		}		
 	
-			
-		$this->table['total_items'] = $i + 1;
+		# Total amount of resumes in table		
+		$this->table['total_items'] = $i;
 	
 	}	
 }

@@ -21,7 +21,7 @@ class Contact_Form {
 	
 	public function __construct($resume,$ajax=false) {
 
-		# Make this a reference to the resume object instead of a copy
+		# Make this a reference to the resume object
 		$this->resume = &$resume;	
 
 		# Don't render form if we only need this object for ajax

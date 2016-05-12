@@ -12,6 +12,21 @@
 
 define('LANG_OPENRESUME','OpenResume');
 
+# Generic admin words
+define('LANG_RESUME','Resume');
+define('LANG_RESUMES','Resumes');
+define('LANG_COVER_LETTER','Cover Letter');
+define('LANG_COVER_LETTERS','Cover Letters');
+define('LANG_MESSAGE','Message');
+define('LANG_MESSAGES','Messages');
+define('LANG_ANALYTICS','Analytics');
+define('LANG_SETTING','Setting');
+define('LANG_SETTINGS','Settings');
+define('LANG_CREATE_NEW','Create New');
+define('LANG_EDIT','Edit');
+
+
+
 
 # admin/functions/menu.php
 define('LANG_MENU_RESUME','Resumes');
@@ -22,7 +37,6 @@ define('LANG_MENU_SETTINGS','Settings');
 define('LANG_LOGOUT','Logout');
 
 # admin/login.php
-define('LANG_YOUR_EMAIL','Email');
 define('LANG_YOUR_PASSWORD','Password');
 define('LANG_LOGIN','Admin Login');
 define('LANG_LOGIN_BUTTON','Login');

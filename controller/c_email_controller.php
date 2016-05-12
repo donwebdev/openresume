@@ -43,7 +43,7 @@ class Email_Controller {
 		global $db;
 		global $settings;
 		
-		$subject = LANG_EMAIL_SUBJECT.$params['name'];
+		$subject = LANG_CONTACT_EMAIL_SUBJECT.$params['name'];
 			
 		$message = '
 			
@@ -54,13 +54,13 @@ class Email_Controller {
 			
 			'.$params['message'].'
 			
-			<a href="'.$settings['admin_url'].'">'.LANG_EMAIL_LOGIN_TO_ADMIN.'</a>
+			<a href="'.$settings->setting['admin_url'].'">'.LANG_EMAIL_LOGIN_TO_ADMIN.'</a>
 	
 			'.LANG_EMAIL_GENERATED_BY.' '.VERSION_STATE.' '.VERSION_NUMBER.'
 		
 		';
 	
-		$this->email($settings['your_email'],$subject,$message,$settings['site_email']);	
+		$this->email($settings->setting['your_email'],$subject,$message,$settings->setting['site_email']);	
 		
 	}
 	

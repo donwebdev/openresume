@@ -21,17 +21,18 @@ class Settings {
 		global $db;
 					
 		# Default settings	
+		$defaults['site_url'] = '';	
 		$defaults['admin_url'] = '';		
 		$defaults['gmt_offset'] = 0;		
 		$defaults['site_title'] = 'Open Resume';
 		$defaults['fixed_header'] = '1';
 		$defaults['language'] = 'english';
-		$defaults['contact_form_email'] = 1;
 		$defaults['your_name'] = 'Your Name';
 		$defaults['your_address_1'] = '';
 		$defaults['your_address_2'] = '';
 		$defaults['your_phone'] = '(123) 456-7890';
 		$defaults['your_email'] = 'you@email.com';
+		$defaults['site_email'] = 'noreply@email.com';
 		$defaults['your_location'] = 'Timbuktu';
 		$defaults['cookie_time'] = 604800;
 		

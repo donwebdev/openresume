@@ -73,6 +73,7 @@ require('../view/c_render_admin_login.php');
 require('../view/c_render_admin_messages.php');
 require('../view/c_render_admin_resume.php');
 require('../view/c_render_admin_settings.php');
+require('../view/c_render_contact_form.php');
 require('../view/c_render_cover_letter.php');
 require('../view/c_render_resume.php');
 require('../view/c_form.php');
@@ -103,6 +104,7 @@ $user = new User_Controller;
 
 # Load the language
 require('../language/'.$settings->setting['language'].'/admin.php');
+require('../language/'.$settings->setting['language'].'/frontend.php');
 require('../language/'.$settings->setting['language'].'/email.php');
 
 

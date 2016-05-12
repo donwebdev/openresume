@@ -17,11 +17,11 @@ class Admin_Output {
 	public $model;
 	
 	# Take the model and return the proper output
-	public function __construct($model,$show_menu = 1) {
+	public function __construct($model,$show_menu = true) {
 		
 		global $user;
 	
-		$this->model = &$model;
+		$this->model = &$model; 
 		
 		# Load the login form
 		if($this->model->require_login === true) {
@@ -34,15 +34,82 @@ class Admin_Output {
 		} elseif($user->logged_in === true) {
 		
 			# Show menu if not overridden
-			if($show_menu === 1) {
+			if($show_menu === true) {
 			
 				$this->output = $this->admin_menu();	
 				
 			}
 			
-			# Render the view based on the model type
-						
+			$method = $this->model->admin_page.'_view';
+			
+			# Render the view based on the model type			
+			if(method_exists($this,$method)) {
+				
+				$this->$method();
+				
+			}						
 		}		
+	}
+	
+	
+	# Methods for each view
+	# Using spaghetti so special behaviors can be easily created
+	private function resume_view() {
+		
+		$view = new Admin_Resume_Output($this);
+		$this->output .= $view->output;
+		
+	}
+	
+	
+	private function coverletter_view() {
+		
+		$view = new Admin_Coverletter_Output;		
+		
+	}
+	
+	
+	private function messages_view() {
+		
+		$view = new Admin_Messages_Output;		
+		
+	}
+	
+	
+	private function analytics_view() {
+		
+		$view = new Admin_Analytics_Output;		
+		
+	}
+	
+	
+	private function settings_view() {
+		
+		$view = new Admin_Settings_Output;		
+		
+	}
+	
+	
+	# Renders page container start
+	public function page_container_start() {
+	
+		$output = '
+	<div class="container-fluid admin_page page_width">	
+		';
+	
+		return $output;	
+	
+	}
+	
+	# Renders page container end
+	public function page_container_end() {
+	
+		$output = '
+	</div>	
+		';
+		
+		return $output;
+		
 	}
 	
 	
@@ -58,8 +125,8 @@ class Admin_Output {
 			
 		# Menu Container
 		$output .= '
-		<div class="admin_menu page_width">
-			<ul>';
+	<div class="admin_menu page_width">
+		<ul>';
 		
 		foreach($this->model->admin_pages as $key => $value) {
 		
@@ -83,7 +150,7 @@ class Admin_Output {
 		
 		# Menu Container Close
 		$output .= '
-		</div>'; 
+	</div>'; 
 		
 		}
 	

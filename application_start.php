@@ -70,6 +70,7 @@ require('view/html_footer.php');
 require('controller/c_form_controller.php');
 require('controller/c_contact_controller.php');
 require('controller/c_email_controller.php');
+require('controller/c_user_controller.php');
 
 
 # Instantiate controller objects

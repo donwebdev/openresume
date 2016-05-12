@@ -15,12 +15,15 @@
 class Resume_Output {
 	
 	public $output;
+	public $admin;
 	
-	public function __construct($resume,$cover_letter,$contact_form) {
+	public function __construct($resume, $cover_letter, $contact_form, $admin = false) {
 		
 		global $db;
 		global $settings;
-		global $cover_letter;
+		
+		# Set the boolean if this is on the admin panel or not
+		$this->admin = $admin;
 		
 		# Make the header
 		$this->output = $this->resume_header($resume,$cover_letter,$contact_form);
@@ -49,7 +52,7 @@ class Resume_Output {
 		if($resume->portrait!='') {			
 			
 			$output .= '
-				<img class="img-responsive media-object portrait" src="images/'.$resume->portrait.'">
+				<img class="img-responsive media-object portrait" src="'.$settings->setting['site_url'].'/images/'.$resume->portrait.'">
 			';
 			
 		}	
@@ -85,7 +88,7 @@ class Resume_Output {
 	</header>';	
 	
 	
-	if($settings->setting['fixed_header'] == 1) {
+	if($settings->setting['fixed_header'] == 1 && $this->admin === false) {
 		
 		$output .= '
 	<div id="resume_fixed_header" class="resume_fixed_header resume_fixed_header_hidden">

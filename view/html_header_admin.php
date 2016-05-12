@@ -16,6 +16,7 @@ function html_header_admin($page_title='') {
 global $settings;
 global $visitor;
 global $user;
+global $admin;
 
 if($page_title == '') {
 	
@@ -44,6 +45,15 @@ if($user->logged_in === false) {
 	';
 	
 }
+
+# Load the style of the resume if one is loaded
+$resume_style = '';
+
+if(isset($admin->output->resume->style)) {
+	
+	$resume_style = '<link rel="stylesheet" id="resume_style" href="../view/styles/'.$admin->output->resume->style.'">';	
+
+}
 	
 $output = '
 
@@ -55,6 +65,7 @@ $output = '
   
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1">  
+  '.$resume_style.'
   <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.css">   
   <link rel="stylesheet" href="styles/admin.css">  
   <script type="text/javascript" src="../libs/jquery-1.12.1.min.js"></script>
@@ -64,15 +75,11 @@ $output = '
   <script type="text/javascript" src="../libs/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="../view/js/contact.js"></script>
   <script type="text/javascript" src="js/ajax_handler.js"></script>
-
   '.$custom_css.'
-
 </head>
 
-<body>	
+<body class="admin_body">	
 	
-<div class="container-fluid admin_container">
-
 ';
 	
 	
