@@ -24,7 +24,26 @@ define('LANG_SETTING','Setting');
 define('LANG_SETTINGS','Settings');
 define('LANG_CREATE_NEW','Create New');
 define('LANG_EDIT','Edit');
+define('LANG_UNIQUE','Unique');
+define('LANG_UNIQUES','Uniques');
+define('LANG_IMPRESSION','Impression');
+define('LANG_IMPRESSIONS','Impressions');
+define('LANG_APPLY','Apply');
+define('LANG_TO','To');
+define('LANG_FROM','From');
+define('LANG_BACK','Back');
 
+
+# Date Ranges
+define('LANG_DATE','Date');
+define('LANG_TODAY','Today');
+define('LANG_YESTERDAY','Yesterday');
+define('LANG_LAST_7_DAYS','Last 7 Days');
+define('LANG_THIS_MONTH','This Month');
+define('LANG_LAST_MONTH','Last Month');
+define('LANG_THIS_YEAR','This Year');
+define('LANG_ALL_TIME','All Time');
+define('LANG_CUSTOM','Custom');
 
 
 

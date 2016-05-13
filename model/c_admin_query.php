@@ -21,16 +21,18 @@ class Admin_Query {
 	public $select;
 	public $where;
 	public $results;
+	public $ignore_daterange;
 
 	# Stores total results for accurate pagination
 	public $query_all_results;	
 	
-	public function __construct($table_name,$where='',$select = '*',$get_results = true) {
+	public function __construct($table_name,$where='',$select = '*', $ignore_daterange = false, $get_results = true) {
 
 		$this->table_name = $table_name;
 		$this->where = $where;
 		$this->select = $select;
 		$this->get_results = $get_results;
+		$this->ignore_daterange = $ignore_daterange;
 		
 		$this->make_query();
 		
@@ -78,7 +80,7 @@ class Admin_Query {
 			
 		}
 		
-		if($date_range != '') {
+		if($date_range != '' && $this->ignore_daterange === false) {
 			
 			$where .= ' AND '.$date_range;					
 			

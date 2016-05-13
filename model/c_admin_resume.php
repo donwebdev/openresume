@@ -49,7 +49,7 @@ class Admin_Resume {
 	# Grabs all resumes matching current admin query parameters
 	public function get_resumes() {
 	
-		$this->resumes = new Admin_Query('resumes');
+		$this->resumes = new Admin_Query('resumes','','*',true);
 		
 	}
 	
@@ -124,7 +124,7 @@ class Admin_Resume {
 			
 			
 			# Get unique visitor count for this Resume
-			$uniques = new Admin_Query('visitors','id IN ('.$impressions->query.')');
+			$uniques = new Admin_Query('visitors','id IN ('.$impressions->query.')','*',true);
 			
 			$this->table[$i]['uniques'] = $uniques->total_rows;
 			

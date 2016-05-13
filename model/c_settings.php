@@ -107,7 +107,11 @@ class Settings {
 			
 			$db->update('settings', $data, $where);
 			
-		}	   
+		}
+		
+		# Set the current setting to the new setting
+		$this->setting[$name] = $value;
+		
 	}
 	
    	
