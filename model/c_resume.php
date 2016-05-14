@@ -134,10 +134,12 @@ class Resume {
 		$k = $section->item_order;
 		
 		# Section fields the view needs
+		$output_array['id'] = $section->id;
 		$output_array['title'] = $section->title;
 		$output_array['sub_title'] = $section->sub_title;
 		$output_array['description'] = $section->description;
 		$output_array['section_type'] = $section->section_type;
+		$output_array['order'] = $section->item_order;
 		
 		# Section item array for the view
 		$output_array['section_items'] = array();
@@ -149,32 +151,28 @@ class Resume {
 						
 			foreach($section_items as $row) {
 		
-				$output_array['section_items'][$row->item_order]['value'] = $row->value;				
+				$output_array['section_items'][$row->item_order]['id'] = $row->id;	
+				$output_array['section_items'][$row->item_order]['value'] = $row->value;			
+				$output_array['section_items'][$row->item_order]['order'] = $row->item_order;		
 				
 	
 				# Get item type for this item if it has one
 				if($row->resume_item_type_id !== null) {
 							
 					$item_type = $db->get_row('SELECT * FROM resume_item_types WHERE id = '.$item['resume_item_type_id']);							
-					$output_array['section_items'][$row->item_order]['item_type'] = $item_type->name;
-				
+					$output_array['section_items'][$row->item_order]['item_type'] = $item_type->name;				
 														
-				}
-			
-			}
-			
+				}			
+			}			
 		}
 		
 		
 		# Next item type will go here
-		
-		
+				
 		
 		return $output_array;
 		
-	}
-	
+	}	
 }
-
 
 ?>

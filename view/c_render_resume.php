@@ -26,8 +26,7 @@ class Resume_Output {
 		$this->admin = $admin;
 		
 		# Make the header
-		$this->output = $this->resume_header($resume,$cover_letter,$contact_form);
-		
+		$this->output = $this->resume_header($resume,$cover_letter,$contact_form);		
 		
 		# Iterate the section arrays to make the sections
 		foreach($resume->resume_sections as $section) {
@@ -36,6 +35,8 @@ class Resume_Output {
 			
 		}
 				
+		# Make the footer		
+		$this->output .= $this->resume_footer();				
 		
 	}
 	
@@ -46,6 +47,8 @@ class Resume_Output {
 		global $settings;
 		
 		$output = '
+	<div class="resume_container">
+	<div class="container-fluid">	
 	<header class="row resume_header" id="resume_header">';
 			
 		# Get portrait here		
@@ -101,7 +104,7 @@ class Resume_Output {
 		if($resume->portrait!='') {			
 			
 			$output .= '
-				<img class="img-responsive media-object portrait" src="images/'.$resume->portrait.'">
+			<img class="img-responsive media-object portrait" src="images/'.$resume->portrait.'">
 			';
 			
 		}	
@@ -137,17 +140,17 @@ class Resume_Output {
 	public function resume_section($section) {
 		
 		$output = '
-	<div class="row section">';
+	<div class="row section" id="section_container_'.$section['id'].'" order="'.$section['order'].'">';
 		
 		# Section type specific behavior here
 		
 		if($section['section_type']=='Bullet Points') {
 			
 			$output .= '
-		<h3 class="section_name section_bullet_points">'.$section['title'].'</h3>';
+		<h3 class="section_name section_bullet_points" id="section_title_'.$section['id'].'">'.$section['title'].'</h3>';
 			
 			$output .= '
-			<ul>';		
+			<ul id="section_ul_'.$section['id'].'">';		
 		
 			# Load all the resume section items normally
 			
@@ -165,34 +168,40 @@ class Resume_Output {
 			
 		} else {			
 		
-			# Load all the resume section items normally
-			
+			# Load all the resume section items normally			
 			$output .= '
-		<h3 class="section_name">'.$section['title'].'</h3>';
+		<h3 class="section_name" id="section_title_'.$section['id'].'">'.$section['title'].'</h3>
+		';
 			
 			foreach($section['section_items'] as $key => $value) {
 			
 				$output .= $this->resume_item($section,$value);	
 				
-			}
-			
+			}			
 		}
 		
 		
 		$output .= '
 	</div>';
 		
+		# Load the section edit controls
+		if($this->admin === true) {
+			
+			$output .= $this->edit_section($section['id'],$section['section_type']);
+			
+		}
+		
 		return $output;
 		
 	}
 	
-	public function resume_item($section,$item) {
+	public function resume_item($section,$item) { 
 		
 		# Text
 		if($section['section_type']=='Text') {
 		
 			$output = '
-			<p>'.$item['value'].'</p>';
+			<p id="item_'.$item['id'].'" order="'.$item['order'].'" section="'.$section['id'].'">'.$item['value'].'</p>';
 		
 		}
 		
@@ -201,25 +210,61 @@ class Resume_Output {
 		elseif($section['section_type']=='Bullet Points') {
 		
 			$output = '
-				<li>'.$item['value'].'</li>';
+				<li id="item_'.$item['id'].'" order="'.$item['order'].'" section="'.$section['id'].'">'.$item['value'].'</li>';
 		
 		}
 		
 		else {
 		
 			$output = '
-				'.$item['value'];
+				'.$item['value'];			
 			
+		}	
+		
+		# Load the item edit controls
+		if($this->admin === true) {
 			
-		}		
+			$output .= $this->edit_item($item['id'],$section['section_type']);
+			
+		}	
 		
 		return $output;
 		
 	}
 	
 	public function resume_footer() {
+	
+		$output =  '
+	</div></div>';
+	
+		return $output;
 		
 	}
+	
+	# Admin edit functions
+	# Most of the editing actually happens in javascript/ajax
+	# This just populates the html
+	public function edit_section($id,$type) {
+	
+		$output = '		
+	<div class="admin_edit_section" id="edit_section_'.$id.'">Edit Section</div>
+	
+	';
+		
+		return $output;
+		
+	}
+	
+	public function edit_item($id,$type='') {
+		
+		$output = '		
+			<div class="admin_edit_item" id="edit_item_'.$id.'">Edit Item</div>			
+			';
+		
+		return $output;
+		
+	}
+	
 	
 }
 

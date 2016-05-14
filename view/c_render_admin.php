@@ -190,7 +190,7 @@ class Admin_Output {
 		# Blow up the current URL
 		foreach ($current_url as $key => $value) {
 			$argument = explode('=', $value);
-			if ($accepted_arguments == '') {
+			if ($accepted_arguments == '' && isset($argument[1])) {
 				$url[$argument[0]] = $argument[1];
 			} elseif (isset($accepted_arguments[$argument[0]]) && $accepted_arguments[$argument[0]] == 1) {
 				$url[$argument[0]] = $argument[1];

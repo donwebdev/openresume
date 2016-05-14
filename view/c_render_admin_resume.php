@@ -41,12 +41,8 @@ class Admin_Resume_Output {
 		
 			$this->output .= $this->admin_output->page_container_end();
 		
-			# The resume itself	
-			$this->output .= '<div class="resume_container"><div class="container-fluid">';
-			
+			# The resume itself				
 			$this->output .= $resume->output;
-			
-			$this->output .= '</div></div>';
 		
 			# Form for editing and adding resume sections
 			

@@ -74,6 +74,7 @@ $output = '
   <script type="text/javascript" src="../libs/verify.php?r_id='.$visitor->impression_id.'&language='.$settings->setting['language'].'"></script>
   <script type="text/javascript" src="../libs/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="../view/js/contact.js"></script>
+  <script type="text/javascript" src="js/resume_editor.php"></script>
   <script type="text/javascript" src="js/ajax_handler.js"></script>
   '.$custom_css.'
 </head>

@@ -13,7 +13,8 @@
 
 class Render_Table {
 
-	public $admin_output;	
+	public $admin_output;
+	public $date_ranges = array();
 
 	public function __construct($admin_output) {
 		
@@ -42,64 +43,64 @@ class Render_Table {
 		
 	}
 	
+	# Array of possible date ranges
+	public function date_ranges() {
 	
+		$array = array();
+		
+		$array['Today'] = LANG_TODAY;
+		$array['Yesterday'] = LANG_YESTERDAY;
+		$array['Last7'] = LANG_LAST_7_DAYS;
+		$array['ThisMonth'] = LANG_THIS_MONTH;
+		$array['LastMonth'] = LANG_LAST_MONTH;
+		$array['ThisYear'] = LANG_THIS_YEAR;
+		$array['AllTime'] = LANG_ALL_TIME;
+		$array['Custom'] = LANG_CUSTOM;
+	
+		return $array;
+		
+	}
+	
+	# Does the html for the date form
 	public function date_range_form() {
 	
 		global $settings;
-
 		
+		$date_ranges = $this->date_ranges();
+		
+		# Get the current date range setting
 		$range = $settings->setting['date_range_type'];
+		
+		# Date range form containers
 		$output  = '<div class="admin_date_form_container"><div id="admin_date_presets"';
 		
 		if ($range == 'Custom') {
 			$output .= 'style="display:none;"';
 		}
 		
-		$output .= '> <form name="custom_date_range" method="post" action="' . $this->admin_output->url('date=Custom') . '"> <input type="hidden" name="form_id" value="custom_date_range"> <ul class="admin_date_list"> <li>'.LANG_DATE.':</li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=Today&delete_page=') . '"';
+		$output .= '>
 		
-		if ($range == 'Today') {
-			$output .= ' class="admin_current" ';
+		 <form name="custom_date_range" method="post" action="' . $this->admin_output->url('date=Custom') . '">
+		 	<input type="hidden" name="form_id" value="custom_date_range">
+		 		<ul class="admin_date_list">
+		 			<li>'.LANG_DATE.':</li>';
+					
+		foreach($date_ranges as $key => $value) {
+		
+			$output .= '
+					<li><a href="' . $this->admin_output->url('date='.$key) . '"';
+					
+			# Change class if this date range is selected
+			if($range == $key) {
+								
+				$output .= ' class="admin_current" ';
+				
+			}	
+			
+			$output .= '>'.$value.'</a></li>';		
 		}
-		
-		$output .= '>'.LANG_TODAY.'</a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=Yesterday&delete_page=') . '"';
-		
-		if ($range == 'Yesterday') {
-			$output .= ' class="admin_current" ';
-		}
-		
-		$output .= '>'.LANG_YESTERDAY.'</a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=Last7&delete_page=') . '"';
-		
-		if ($range == 'Last7') {
-			$output .= ' class="admin_current" ';
-		}
-		$output .= '>'.LANG_LAST_7_DAYS.'</a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=ThisMonth&delete_page=') . '"';
-		
-		if ($range == 'ThisMonth') {
-			$output .= ' class="admin_current" ';
-		}
-		$output .= '>'.LANG_THIS_MONTH.'</span></a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=LastMonth&delete_page=') . '"';
-		
-		if ($range == 'LastMonth') {
-			$output .= ' class="admin_current" ';
-		}
-		$output .= '>'.LANG_LAST_MONTH.'</span></a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=ThisYear&delete_page=') . '"';
-		
-		if ($range == 'ThisYear') {
-			$output .= ' class="admin_current" ';
-		}
-		$output .= '>'.LANG_THIS_YEAR.'</span></a></li>';
-		$output .= '<li><a href="' . $this->admin_output->url('date=AllTime&delete_page=') . '"';
-		
-		if ($range == 'AllTime') {
-			$output .= ' class="admin_current" ';
-		}
-		$output .= '>'.LANG_ALL_TIME.'</span></a></li>';
+		 
+
 		$output .= '<li><a href="javascript:void(0)" onclick="jQuery(\'#date_custom\').fadeIn(200);jQuery(\'#date_presets\').hide();" ';
 		
 		if ($range == 'Custom') {
