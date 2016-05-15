@@ -16,8 +16,9 @@ class Resume_Output {
 	
 	public $output;
 	public $admin;
+	public $total_sections;
 	
-	public function __construct($resume, $cover_letter, $contact_form, $admin = false) {
+	public function __construct($resume, $cover_letter, $contact_form, $admin = false, $ajax = false) {
 		
 		global $db;
 		global $settings;
@@ -25,19 +26,25 @@ class Resume_Output {
 		# Set the boolean if this is on the admin panel or not
 		$this->admin = $admin;
 		
-		# Make the header
-		$this->output = $this->resume_header($resume,$cover_letter,$contact_form);		
-		
-		# Iterate the section arrays to make the sections
-		foreach($resume->resume_sections as $section) {
+			# Don't render anything if we're using this object for ajax
+			if($ajax === false) {
 			
-			$this->output .= $this->resume_section($section); 
+			# Make the header
+			$this->output = $this->resume_header($resume,$cover_letter,$contact_form);		
 			
-		}
+			$this->total_sections =  count($resume->resume_sections);
+			
+			# Iterate the section arrays to make the sections
+			foreach($resume->resume_sections as $section) {
 				
-		# Make the footer		
-		$this->output .= $this->resume_footer();				
-		
+				$this->output .= $this->resume_section($section); 
+				
+			}
+					
+			# Make the footer		
+			$this->output .= $this->resume_footer();	
+					
+		}
 	}
 	
 	
@@ -139,10 +146,14 @@ class Resume_Output {
 	
 	public function resume_section($section) {
 		
-		$output = '';	
+		# Add a tag if the section is the last one on the page
+		$last = '';
+		if($section['order'] == $this->total_sections) {
+			$last = ' last="last"';
+		}
 		
-		$output .= '
-	<div class="row section" id="section_container_'.$section['id'].'" order="'.$section['order'].'" type="'.$section['section_type'].'">';
+		$output = '
+	<div class="row section" id="section_container_'.$section['id'].'" order="'.$section['order'].'" type="'.$section['section_type'].'"'.$last.'>';
 			
 		# Load the section edit controls if admin
 		if($this->admin === true) {

@@ -24,9 +24,20 @@ $( document ).ready(function() {
   	// Get all resume sections 
  	resume_sections = $('[id^="section_container_"]');
  
+ 	var i = 0;
+ 
 	// Apply resume section listener to each section
 	$.each(resume_sections, function(key, resume_section) {
-		edit_resume_section_listener(resume_section.id);
+	
+		// Create hover effects and behaviors for sections
+	
+		// Make a cool cascading slide in effect on the controls	
+		setTimeout(function(){
+			edit_resume_section_listener(resume_section.id);
+		}, i);
+		
+		i += 100;
+	
 	});
 	
 	// Resume items listener
@@ -34,7 +45,12 @@ $( document ).ready(function() {
 	
 	// Apply resume item listener to each item
 	$.each(resume_items, function(key, resume_item) {
+		
+		// Create hover effects and behaviors for items
+	
+		// Add listeners to resume items	
 		edit_resume_item_listener(resume_item.id)
+		
 	});
 	
   
@@ -54,23 +70,29 @@ function edit_resume_section_listener(id) {
 	
 	// Create onclick events for all editable section items
 	$('#section_title_'+section_id).click(function() { edit_resume_section(section_id,'title') });
-	$('#section_date_'+section_id).click(function() { edit_resume_section(section_id,'title') });
+	$('#section_date_'+section_id).click(function() { edit_resume_section(section_id,'date') });
 	
 	// Create onclick events for section control buttons
 	$('#edit_section_delete_'+section_id).click(function() { delete_resume_section(section_id) });
 	$('#edit_section_add_'+section_id).click(function() { add_resume_item(section_id) });
-	$('#edit_section_up_'+section_id).click(function() { edit_resume_section_order(section_id,'up') });
-	$('#edit_section_down_'+section_id).click(function() { edit_resume_section_order(section_id,'down') });
+	$('#edit_section_up_'+section_id).click(function() { edit_resume_section_order(section_id,order,'up') });
+	$('#edit_section_down_'+section_id).click(function() { edit_resume_section_order(section_id,order,'down') });
 	
 	// Grey out the appropriate section controls and disable their functionality
-	// Grey out up arrow as this is the highest order
+	// Grey out up arrow if first section
 	if(order == '1') {
 		$('#edit_section_up_'+section_id).attr('class','admin_edit_icon_disabled');
 		$('#edit_section_up_'+section_id).unbind('click');
 	}
 	
+	//Grey out down arrow if last section
+	if($('#'+id).attr('last')=='last') {
+		$('#edit_section_down_'+section_id).attr('class','admin_edit_icon_disabled');
+		$('#edit_section_down_'+section_id).unbind('click');			
+	}
+	
 	// Fade in the section controls
-	$('#edit_section_'+section_id).fadeIn(1000);
+	$('#edit_section_'+section_id).animate({opacity: 1, top: '+=20'},200);
 	
 }
 
@@ -91,17 +113,149 @@ function edit_resume_item_listener(id) {
 	
 	
 // Swaps section id with an item above or below it
-function edit_resume_section_order(id,type) {
-	alert('order '+type);
+function edit_resume_section_order(id,order,type) {
+	
+	// The new order of the item
+	if(type == 'up') {
+		var new_order = parseInt(order) - 1;
+	} else {
+		var new_order = parseInt(order) + 1;	
+	}
+	
+	/*
+	
+	AJAX Request, swaps containers on success	
+	
+	*/
+	
+	// Stop function if orders are out of range
+	// This should be impossible, but this is a failsafe
+	if(new_order < 1 || ( $('#section_container_'+id).attr('last')=='last' && order == 'down')) {
+		return;	
+	}
+	
+	// Get section to move
+	var section_1 = $('#section_container_'+id);
+	
+	// Get section to be replaced	
+	var section_2 = $( '[order="'+new_order+'"][id^="section_container_"]' );
+	var section_2_id = $( '[order="'+new_order+'"][id^="section_container_"]' ).attr('id');
+	
+	// The id of the 2nd section, splits section_container_XX
+	var section_2_id = section_2_id.split("_");
+	var section_2_id = section_2_id[2];
+	
+	// Fade the divs out	
+	$('#section_container_'+section_2_id).animate({opacity: 0},200);
+	$('#section_container_'+id).animate({opacity: 0},200);
+	
+	// Clone the first div
+	var section_1_clone = section_1.clone();
+	var section_2_clone = section_2.clone();
+	
+	// Replace the divs
+	setTimeout(function(){
+		section_1.replaceWith(section_2_clone);
+		section_2.replaceWith(section_1_clone);
+	
+	// Update order attributes
+	$('#section_container_'+section_2_id).attr('order',order);
+	$('#section_container_'+id).attr('order',new_order);
+	
+	// Update click handlers of current section
+	$('#edit_section_up_'+id).unbind('click');
+	$('#edit_section_down_'+id).unbind('click');
+	$('#edit_section_up_'+id).click(function() { edit_resume_section_order(id,new_order,'up') });
+	$('#edit_section_down_'+id).click(function() { edit_resume_section_order(id,new_order,'down') });
+	
+	// Update click handlers of new section
+	$('#edit_section_up_'+section_2_id).unbind('click');
+	$('#edit_section_down_'+section_2_id).unbind('click');
+	$('#edit_section_up_'+section_2_id).click(function() { edit_resume_section_order(section_2_id,order,'up') });
+	$('#edit_section_down_'+section_2_id).click(function() { edit_resume_section_order(section_2_id,order,'down') });
+	
+	// Disable/Reenable Up arrows
+	if(new_order == '1' || order == '1') {
+		
+		// A new item was moved into the top 
+		if(new_order == 1) {
+			
+			$('#edit_section_up_'+section_2_id).attr('class','admin_edit_icon');	
+			$('#edit_section_up_'+id).attr('class','admin_edit_icon_disabled');
+			$('#edit_section_up_'+id).unbind('click');		
+						
+		}
+		
+		// The first item was moved down
+		if(order == 1) {
+			
+			$('#edit_section_up_'+id).attr('class','admin_edit_icon');	
+			$('#edit_section_up_'+section_2_id).attr('class','admin_edit_icon_disabled');
+			$('#edit_section_up_'+section_2_id).unbind('click');	
+			
+		}		
+		
+	}
+	
+	// Disable/Reenable Down arrows
+	if($('#section_container_'+id).attr('last')=='last' || $('#section_container_'+section_2_id).attr('last')=='last') {
+	
+				
+		// Last item was replaced with the one above it
+		if($('#section_container_'+section_2_id).attr('last')=='last') {
+
+			$('#edit_section_down_'+section_2_id).attr('class','admin_edit_icon');	
+			$('#edit_section_down_'+id).attr('class','admin_edit_icon_disabled');
+			$('#edit_section_down_'+id).unbind('click');	
+			$('#section_container_'+section_2_id).removeAttr('last');
+			$('#section_container_'+id).attr('last','last');		
+			
+		}	
+		
+		// Last item was moved up
+		else if($('#section_container_'+id).attr('last')=='last') {
+			
+			$('#edit_section_down_'+id).attr('class','admin_edit_icon');	
+			$('#edit_section_down_'+section_2_id).attr('class','admin_edit_icon_disabled');
+			$('#edit_section_down_'+section_2_id).unbind('click');	
+			$('#section_container_'+id).removeAttr('last');
+			$('#section_container_'+section_2_id).attr('last','last');				
+			
+		}
+	}	
+	
+		$('#section_container_'+section_2_id).css('opacity','0');
+		$('#section_container_'+id).css('opacity','0');
+	
+	},199);	
+	
+	// Fade the divs in
+	setTimeout( function() {
+		$('#section_container_'+section_2_id).animate({opacity: 1},200);
+		$('#section_container_'+id).animate({opacity: 1},200);
+	},225);
 }
+
 
 // Displays editing prompts based on this section type
 function edit_resume_section(id,section_type) {
-	alert(id+' '+section_type);		
+		
+	// Edit a section title with a simple form
+	if(section_type=='title') {
+	
+		$('#section_title_'+id);
+		
+	}
+
 }
 
 // Saves the section after its been edited
-function save_resume_section_edit(id) {
+function save_resume_section_edit(id,type) {
+
+}
+
+// Saves the section after its been edited
+function cancel_resume_section_edit(id,type) {
 
 }
 

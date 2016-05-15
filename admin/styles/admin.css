@@ -223,9 +223,9 @@ Admin Resume Page
 
 .admin_edit_section {
 	position: 		absolute;
-	top: 			10px;
+	top: 			-10px;
 	left: 			-165px;
-	display: 		none;
+	opacity: 		0;
 }
 
 .admin_edit_item {
