@@ -179,7 +179,7 @@ Login Form
 }
 
 .login_container button, .forgotten_password_container button {
-	float: left;	
+	float: 			left;	
 }
 
 .login_container input, .forgotten_password_container input {
@@ -197,13 +197,13 @@ Login Form
 }
 
 .failure_message {
-	color: #ff0000;
-	margin-top: 60px;
-	padding: 5px;	
+	color: 			#ff0000;
+	margin-top: 	60px;
+	padding: 		5px;	
 }
 
 .admin_date_range {
-	width: 90px;	
+	width: 			90px;	
 }
 
 
@@ -213,3 +213,53 @@ Admin Resume Page
 
 ---------------------------------------*/
 
+.admin_edit_section_container {
+	position: 		relative;
+}
+
+.admin_edit_item_container {
+	position: 		relative;	
+}
+
+.admin_edit_section {
+	position: 		absolute;
+	top: 			10px;
+	left: 			-165px;
+	display: 		none;
+}
+
+.admin_edit_item {
+	position: 		absolute;
+	left: 			-150px;
+	display: 		none;
+}
+
+.admin_edit_icon {
+	opacity: 		0.3;
+	cursor: 		pointer;
+	margin-left: 	5px;
+}
+
+.admin_delete_icon {
+	opacity: 		0.1;	
+	cursor: 		pointer;
+}
+
+.admin_edit_icon:hover {
+	opacity: 		1.0;
+}
+
+.admin_delete_icon:hover {
+	opacity: 		1.0;
+}
+
+.admin_edit_icon_disabled {
+	opacity: 		0.2;	
+	-webkit-filter: grayscale(100%);
+	filter: 		grayscale(100%);	
+	margin-left: 	5px;
+}
+
+.section_name, .section p, .section li {
+	cursor: 		pointer;	
+}

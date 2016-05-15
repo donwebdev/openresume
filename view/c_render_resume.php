@@ -139,8 +139,17 @@ class Resume_Output {
 	
 	public function resume_section($section) {
 		
-		$output = '
-	<div class="row section" id="section_container_'.$section['id'].'" order="'.$section['order'].'">';
+		$output = '';	
+		
+		$output .= '
+	<div class="row section" id="section_container_'.$section['id'].'" order="'.$section['order'].'" type="'.$section['section_type'].'">';
+			
+		# Load the section edit controls if admin
+		if($this->admin === true) {
+			
+			$output .= $this->edit_section($section['id'],$section['section_type']);
+			
+		}	
 		
 		# Section type specific behavior here
 		
@@ -183,24 +192,26 @@ class Resume_Output {
 		
 		$output .= '
 	</div>';
-		
-		# Load the section edit controls
-		if($this->admin === true) {
-			
-			$output .= $this->edit_section($section['id'],$section['section_type']);
-			
-		}
-		
+	
 		return $output;
 		
 	}
 	
-	public function resume_item($section,$item) { 
+	public function resume_item($section,$item) { 	
+		
+		$output = '';
+		
+		# Load the item edit controls if admin
+		if($this->admin === true) {
+			
+			$output .= $this->edit_item($item['id'],$section['section_type']);
+			
+		}	
 		
 		# Text
 		if($section['section_type']=='Text') {
 		
-			$output = '
+			$output .= '
 			<p id="item_'.$item['id'].'" order="'.$item['order'].'" section="'.$section['id'].'">'.$item['value'].'</p>';
 		
 		}
@@ -209,7 +220,7 @@ class Resume_Output {
 		# Bullet Points
 		elseif($section['section_type']=='Bullet Points') {
 		
-			$output = '
+			$output .= '
 				<li id="item_'.$item['id'].'" order="'.$item['order'].'" section="'.$section['id'].'">'.$item['value'].'</li>';
 		
 		}
@@ -219,14 +230,7 @@ class Resume_Output {
 			$output = '
 				'.$item['value'];			
 			
-		}	
-		
-		# Load the item edit controls
-		if($this->admin === true) {
-			
-			$output .= $this->edit_item($item['id'],$section['section_type']);
-			
-		}	
+		}
 		
 		return $output;
 		
@@ -246,8 +250,17 @@ class Resume_Output {
 	# This just populates the html
 	public function edit_section($id,$type) {
 	
-		$output = '		
-	<div class="admin_edit_section" id="edit_section_'.$id.'">Edit Section</div>
+	global $settings;
+	
+		$output = '	
+		
+	<div class="admin_edit_section_container">		
+		<div class="admin_edit_section" id="edit_section_'.$id.'">
+		
+			<img src="'.$settings->setting['admin_url'].'/images/edit_icon_delete.png" id="edit_section_delete_'.$id.'" class="admin_delete_icon"><img src="'.$settings->setting['admin_url'].'/images/edit_icon_add.png" class="admin_edit_icon" id="edit_section_add_'.$id.'"><img src="'.$settings->setting['admin_url'].'/images/edit_icon_arrow_up.png" class="admin_edit_icon" id="edit_section_up_'.$id.'"><img src="'.$settings->setting['admin_url'].'/images/edit_icon_arrow_down.png" class="admin_edit_icon" id="edit_section_down_'.$id.'">
+		
+		</div>
+	</div>
 	
 	';
 		
@@ -257,8 +270,14 @@ class Resume_Output {
 	
 	public function edit_item($id,$type='') {
 		
-		$output = '		
-			<div class="admin_edit_item" id="edit_item_'.$id.'">Edit Item</div>			
+		$output = '	
+		<div class="admin_edit_item_container">			
+			<div class="admin_edit_item" id="edit_item_'.$id.'">
+			
+				Edit Item
+			
+			</div>	
+		</div>		
 			';
 		
 		return $output;
