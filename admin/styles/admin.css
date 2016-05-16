@@ -13,6 +13,11 @@ Bootstrap Overrides
 	float: 			right;	
 }
 
+.row {
+    margin: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
 /*--------------------------------------
 
@@ -223,15 +228,17 @@ Admin Resume Page
 
 .admin_edit_section {
 	position: 		absolute;
-	top: 			-10px;
-	left: 			-165px;
+	top: 			5px;
+	left: 			-180px;
 	opacity: 		0;
 }
 
 .admin_edit_item {
 	position: 		absolute;
 	left: 			-150px;
-	display: 		none;
+	background-color: #f00;
+	width: 100%;
+	display: none;
 }
 
 .admin_edit_icon {
@@ -262,4 +269,12 @@ Admin Resume Page
 
 .section_name, .section p, .section li {
 	cursor: 		pointer;	
+}
+
+.admin_hover {
+	background-color: rgba(255,255,153,1.00);
+}
+
+.admin_hover_out {	
+	background-color: rgba(255,255,255,0);	
 }

@@ -8,10 +8,12 @@
 # admin/js/resume_editor.php
 # Javascript for using the resume editor
 # Everything is built off listeners
-# No javascript is present in the resume itself
+# No admin javascript is present in the resume itself
 #
 #-------------------------------------------------------
 
+# Load the language
+require('../../language/'.$_GET['language'].'/frontend.php');
 
 ?>
 
@@ -68,31 +70,49 @@ function edit_resume_section_listener(id) {
 	var order = $('#'+id).attr('order');
 	var section_type = $('#'+id).attr('type');
 	
+	// Bind events here
+	edit_resume_section_events(id,section_id,order);
+	
+	// Fade in the section controls
+	$('#edit_section_'+section_id).animate({opacity: 1, top: '+=10'},300);
+	
+}
+
+// Bind all events to the specified section
+function edit_resume_section_events(id,section_id,order) {
+	
+	// Create hover events for this resume section
+	$('#section_title_'+section_id).hover(function() { resume_section_hover(section_id,'title') },function() { resume_section_hover_out(section_id,'title') });
+	
 	// Create onclick events for all editable section items
 	$('#section_title_'+section_id).click(function() { edit_resume_section(section_id,'title') });
-	$('#section_date_'+section_id).click(function() { edit_resume_section(section_id,'date') });
 	
 	// Create onclick events for section control buttons
 	$('#edit_section_delete_'+section_id).click(function() { delete_resume_section(section_id) });
 	$('#edit_section_add_'+section_id).click(function() { add_resume_item(section_id) });
 	$('#edit_section_up_'+section_id).click(function() { edit_resume_section_order(section_id,order,'up') });
-	$('#edit_section_down_'+section_id).click(function() { edit_resume_section_order(section_id,order,'down') });
+	$('#edit_section_down_'+section_id).click(function() { edit_resume_section_order(section_id,order,'down') });	
 	
 	// Grey out the appropriate section controls and disable their functionality
 	// Grey out up arrow if first section
 	if(order == '1') {
 		$('#edit_section_up_'+section_id).attr('class','admin_edit_icon_disabled');
 		$('#edit_section_up_'+section_id).unbind('click');
+	} else {
+		$('#edit_section_up_'+section_id).attr('class','admin_edit_icon');		
 	}
 	
 	//Grey out down arrow if last section
 	if($('#'+id).attr('last')=='last') {
 		$('#edit_section_down_'+section_id).attr('class','admin_edit_icon_disabled');
 		$('#edit_section_down_'+section_id).unbind('click');			
+	
+	// Insure the arrow is on
+	} else {		
+		$('#edit_section_down_'+section_id).attr('class','admin_edit_icon');
 	}
 	
-	// Fade in the section controls
-	$('#edit_section_'+section_id).animate({opacity: 1, top: '+=20'},200);
+	console.log(id,section_id,order);
 	
 }
 
@@ -162,51 +182,13 @@ function edit_resume_section_order(id,order,type) {
 	$('#section_container_'+section_2_id).attr('order',order);
 	$('#section_container_'+id).attr('order',new_order);
 	
-	// Update click handlers of current section
-	$('#edit_section_up_'+id).unbind('click');
-	$('#edit_section_down_'+id).unbind('click');
-	$('#edit_section_up_'+id).click(function() { edit_resume_section_order(id,new_order,'up') });
-	$('#edit_section_down_'+id).click(function() { edit_resume_section_order(id,new_order,'down') });
-	
-	// Update click handlers of new section
-	$('#edit_section_up_'+section_2_id).unbind('click');
-	$('#edit_section_down_'+section_2_id).unbind('click');
-	$('#edit_section_up_'+section_2_id).click(function() { edit_resume_section_order(section_2_id,order,'up') });
-	$('#edit_section_down_'+section_2_id).click(function() { edit_resume_section_order(section_2_id,order,'down') });
-	
-	// Disable/Reenable Up arrows
-	if(new_order == '1' || order == '1') {
-		
-		// A new item was moved into the top 
-		if(new_order == 1) {
-			
-			$('#edit_section_up_'+section_2_id).attr('class','admin_edit_icon');	
-			$('#edit_section_up_'+id).attr('class','admin_edit_icon_disabled');
-			$('#edit_section_up_'+id).unbind('click');		
-						
-		}
-		
-		// The first item was moved down
-		if(order == 1) {
-			
-			$('#edit_section_up_'+id).attr('class','admin_edit_icon');	
-			$('#edit_section_up_'+section_2_id).attr('class','admin_edit_icon_disabled');
-			$('#edit_section_up_'+section_2_id).unbind('click');	
-			
-		}		
-		
-	}
-	
-	// Disable/Reenable Down arrows
+	// Move last=last to the right section if necessary 
 	if($('#section_container_'+id).attr('last')=='last' || $('#section_container_'+section_2_id).attr('last')=='last') {
 	
 				
 		// Last item was replaced with the one above it
 		if($('#section_container_'+section_2_id).attr('last')=='last') {
-
-			$('#edit_section_down_'+section_2_id).attr('class','admin_edit_icon');	
-			$('#edit_section_down_'+id).attr('class','admin_edit_icon_disabled');
-			$('#edit_section_down_'+id).unbind('click');	
+			
 			$('#section_container_'+section_2_id).removeAttr('last');
 			$('#section_container_'+id).attr('last','last');		
 			
@@ -215,9 +197,6 @@ function edit_resume_section_order(id,order,type) {
 		// Last item was moved up
 		else if($('#section_container_'+id).attr('last')=='last') {
 			
-			$('#edit_section_down_'+id).attr('class','admin_edit_icon');	
-			$('#edit_section_down_'+section_2_id).attr('class','admin_edit_icon_disabled');
-			$('#edit_section_down_'+section_2_id).unbind('click');	
 			$('#section_container_'+id).removeAttr('last');
 			$('#section_container_'+section_2_id).attr('last','last');				
 			
@@ -226,8 +205,13 @@ function edit_resume_section_order(id,order,type) {
 	
 		$('#section_container_'+section_2_id).css('opacity','0');
 		$('#section_container_'+id).css('opacity','0');
+		
+		// Recreate events
+		edit_resume_section_events('section_container_'+id,id,new_order);
+		edit_resume_section_events('section_container_'+section_2_id,section_2_id,order);
 	
 	},199);	
+	
 	
 	// Fade the divs in
 	setTimeout( function() {
@@ -246,7 +230,6 @@ function edit_resume_section(id,section_type) {
 		$('#section_title_'+id);
 		
 	}
-
 }
 
 // Saves the section after its been edited
@@ -254,9 +237,44 @@ function save_resume_section_edit(id,type) {
 
 }
 
-// Saves the section after its been edited
+// Cancels the edit and returns normal html
 function cancel_resume_section_edit(id,type) {
 
+}
+
+// Hover effects for the section id
+function resume_section_hover(id,type) {
+		
+	// Edit a section title with a simple form
+	if(type=='title') {
+	
+		// Add the hover out class if not exist
+		if(!$('#section_title_'+id).hasClass("admin_hover_out") && !$('#section_title_'+id).hasClass("admin_hover")){
+   			$('#section_title_'+id).addClass("admin_hover_out");
+ 		}
+		
+		// Animate the class switch
+		$('#section_title_'+id).switchClass('admin_hover_out','admin_hover', 300);
+		
+		console.log('over');
+		
+	}
+	
+}
+
+// Effects for when the user stops hovering a section
+function resume_section_hover_out(id,type) {
+	
+	if(type=='title') {
+
+		// Animate switching back after a delay	
+		var timeout = setTimeout(function() {
+			$('#section_title_'+id).switchClass('admin_hover','admin_hover_out', 200);
+		}, 300);
+		
+		// Stop timeout if hovered
+		$('#section_title_'+id).hover(function() { clearTimeout(timeout);}, function() { } );
+	}	
 }
 
 // Sets a section to deleted status

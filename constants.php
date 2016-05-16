@@ -20,6 +20,6 @@ define('DB_PASSWORD','');
 
 # Version Number
 define('VERSION_STATE','Alpha');
-define('VERSION_NUMBER','0.2.13');
+define('VERSION_NUMBER','0.3.01');
 
 ?>

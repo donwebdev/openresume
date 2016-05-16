@@ -223,12 +223,12 @@ Contact Form Styles
 	display: 		inline-block;
 	background: 	#0275d8;
 	color: 			#fff !important;
-	padding: 		16px 30px;
+	padding: 		16px 30px !important;
 	margin: 		0;
 	margin-bottom:  10px;
-	font-size: 		14px;
-	line-height: 	14px;
-	font-weight: 	bold;
+	font-size: 		14px !important;
+	line-height: 	14px !important;
+	font-weight: 	bold !important;
 	vertical-align: top;	
 }
 
@@ -245,7 +245,7 @@ Contact Form Styles
 	display: 		inline-block;
 	line-height: 	14px;
 	margin:  		0;
-	padding: 		16px 30px;
+	padding: 		16px 30px !important;
 	vertical-align: top;	
 }
 
@@ -363,8 +363,10 @@ Resume Styles
 }
 
 .section_name {
-	color: 			#ff4f00;	
-}
+	color: 			#ff4f00;
+	margin: 		0;
+	padding:     	20px 0 10px 0;
+ }
 
 
 .section ul {
@@ -373,8 +375,16 @@ Resume Styles
 
 .section p {	
 	text-align: 	justify;
-	margin-left: 	5px;		
+	margin: 		0;
+	padding: 		0 0 10px 5px;		
 }
+
+.section li {	
+	text-align: 	justify;
+	margin: 		0;
+	padding: 		0 0 4px 0;		
+}
+
 
 .footer {
 	margin-top: 	20px;
